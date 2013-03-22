@@ -2,18 +2,18 @@ module CustomizedId
   extend ActiveSupport::Concern
 
   included do
-    field :_id, type: Hash, default: ->{
-      time       = attributes.delete('time')
-      site_token = attributes.delete('site_token')
-      { t: time, s: site_token }
+    field :_id, type: Hash, default: -> {
+      { 't' => attributes.delete('time'),
+        's' => attributes.delete('site_token') }
     }
   end
 
   def time
-    id[:t]
+    p id['t'].class
+    id['t']
   end
 
   def site_token
-    id[:s]
+    id['s']
   end
 end

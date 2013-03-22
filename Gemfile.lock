@@ -71,6 +71,7 @@ GEM
     crack (0.3.2)
     daemons (1.1.9)
     dalli (2.6.2)
+    database_cleaner (0.9.1)
     diff-lcs (1.2.1)
     erubis (2.7.0)
     eventmachine (1.0.3)
@@ -233,6 +234,7 @@ DEPENDENCIES
   airbrake
   configurator!
   dalli
+  database_cleaner
   factory_girl_rails
   guard-pow
   guard-rspec
