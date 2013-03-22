@@ -8,6 +8,8 @@ gem 'rails', '4.0.0.beta1'
 gem 'sublime_video_private_api', '~> 1.0' # hosted on gemfury
 gem 'configurator', github: 'jilion/configurator'
 
+gem 'mongoid', github: 'mongoid/mongoid'
+
 gem 'sidekiq'
 
 gem 'airbrake'
@@ -38,7 +40,9 @@ group :development do
 end
 
 group :test do
+  gem 'timecop'
   gem 'shoulda-matchers'
+  gem 'mongoid-rspec'
   gem 'webmock', '>= 1.8.0', '< 1.10'
   gem 'vcr'
   gem 'factory_girl_rails'

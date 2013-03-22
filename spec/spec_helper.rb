@@ -2,6 +2,7 @@ ENV["RAILS_ENV"] ||= 'test'
 
 require_relative "../config/environment"
 require 'rspec/rails'
+require 'timecop'
 require 'shoulda-matchers'
 require 'factory_girl_rails'
 

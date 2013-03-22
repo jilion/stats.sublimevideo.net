@@ -13,6 +13,8 @@ Bundler.setup(*Rails.groups(assets: %w(development test)))
 require 'sublime_video_private_api'
 require 'librato-rails'
 require 'newrelic_rpm'
+require 'moped'
+require 'mongoid'
 
 module StatsSublimeVideo
   class Application < Rails::Application
