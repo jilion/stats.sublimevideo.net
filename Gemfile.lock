@@ -16,7 +16,7 @@ GIT
 
 GIT
   remote: git://github.com/mongoid/mongoid.git
-  revision: 3166986b66a5f386c71ad4a13b019865ba872b2b
+  revision: 6c8b3f2501ad12dbd453a86d3fe2374a4d14378c
   specs:
     mongoid (4.0.0)
       activemodel (~> 4.0.0.beta)
@@ -81,7 +81,7 @@ GEM
     factory_girl_rails (4.2.1)
       factory_girl (~> 4.2.0)
       railties (>= 3.0.0)
-    faraday (0.8.6)
+    faraday (0.8.7)
       multipart-post (~> 1.1)
     guard (1.6.2)
       listen (>= 0.6.0)
@@ -129,10 +129,10 @@ GEM
       mongoid (>= 3.0.1)
       rake
       rspec (>= 2.9)
-    moped (1.4.3)
-    multi_json (1.7.1)
+    moped (1.4.4)
+    multi_json (1.7.2)
     multipart-post (1.2.0)
-    newrelic_rpm (3.5.8.72)
+    newrelic_rpm (3.6.0.78)
     origin (1.0.11)
     polyglot (0.3.3)
     pry (0.9.12)
@@ -183,7 +183,7 @@ GEM
       rspec-expectations (~> 2.13.0)
       rspec-mocks (~> 2.13.0)
     ruby_gntp (0.3.4)
-    shoulda-matchers (1.5.2)
+    shoulda-matchers (1.5.4)
       activesupport (>= 3.0.0)
       bourne (~> 1.3)
     sidekiq (2.8.0)
