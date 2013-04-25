@@ -10,8 +10,9 @@ describe Statsable do
   end
   subject { StatsableModel }
 
-  it { should have_field(:vl).with_alias(:video_loads).of_type(Hash) }
-  it { should have_field(:vs).with_alias(:video_starts).of_type(Hash) }
-  it { should have_field(:td).with_alias(:tech_by_device).of_type(Hash) }
-  it { should have_field(:bp).with_alias(:browser_and_plateform).of_type(Hash) }
+  it { should have_field(:lo).with_alias(:loads).of_type(Hash) }
+  it { should have_field(:st).with_alias(:starts).of_type(Hash) }
+  it { should have_field(:de).with_alias(:devises).of_type(Hash) }
+  it { should have_field(:co).with_alias(:countries).of_type(Hash) }
+  it { should have_field(:bp).with_alias(:browser_and_platform).of_type(Hash) }
 end
