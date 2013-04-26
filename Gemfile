@@ -10,6 +10,7 @@ gem 'configurator', github: 'jilion/configurator'
 
 gem 'mongoid', github: 'mongoid/mongoid'
 
+gem 'kiqstand', github: 'mongoid/kiqstand'
 gem 'sidekiq'
 
 gem 'airbrake'

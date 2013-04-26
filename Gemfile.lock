@@ -15,6 +15,14 @@ GIT
       rails (>= 3.0)
 
 GIT
+  remote: git://github.com/mongoid/kiqstand.git
+  revision: fdd5ea62293707fe044180a220670b0142314d04
+  specs:
+    kiqstand (1.2.0)
+      mongoid (~> 4.0)
+      moped (~> 1.4)
+
+GIT
   remote: git://github.com/mongoid/mongoid.git
   revision: 7a7da870c523cae9311601fc01ab2d6b2b3db1e3
   specs:
@@ -188,7 +196,7 @@ GEM
     ruby_gntp (0.3.4)
     shoulda-matchers (2.0.0)
       activesupport (>= 3.0.0)
-    sidekiq (2.11.0)
+    sidekiq (2.11.1)
       celluloid (~> 0.13.0)
       connection_pool (~> 1.0)
       multi_json (~> 1)
@@ -242,6 +250,7 @@ DEPENDENCIES
   guard-pow
   guard-rspec
   has_scope
+  kiqstand!
   librato-rails!
   lograge
   mongoid!
