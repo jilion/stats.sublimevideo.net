@@ -3,7 +3,7 @@ class LastPlay
   include Mongoid::Timestamps::Created::Short # For c_at only.
 
   field :s, as: :site_token
-  field :u, as: :uid
+  field :u, as: :video_uid
 
   field :du, as: :document_url
   field :ru, as: :referrer_url
@@ -13,6 +13,6 @@ class LastPlay
   field :co, as: :country
 
   index site_token: 1, created_at: -1
-  index site_token: 1, uid: 1, created_at: -1
+  index site_token: 1, video_uid: 1, created_at: -1
   index({ created_at: 1 }, expire_after_seconds: 61.minutes.to_i)
 end
