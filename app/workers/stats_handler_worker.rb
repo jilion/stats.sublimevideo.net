@@ -1,5 +1,8 @@
 require 'sidekiq'
 
+require 'last_site_stat_updater_worker'
+require 'last_video_stat_updater_worker'
+
 class StatsHandlerWorker
   include Sidekiq::Worker
   sidekiq_options queue: 'stats'
@@ -19,12 +22,20 @@ class StatsHandlerWorker
   private
 
   def handle_l_event
-    LastSiteStatUpdaterWorker.perform_async(site_token, time, :loads)
-    LastVideoStatUpdaterWorker.perform_async(site_token, video_uid, time, :loads)
+    LastSiteStatUpdaterWorker.perform_async(site_args, :loads)
+    LastVideoStatUpdaterWorker.perform_async(video_args, :loads)
   end
 
   def handle_s_event
-    LastSiteStatUpdaterWorker.perform_async(site_token, time, :starts)
-    LastVideoStatUpdaterWorker.perform_async(site_token, video_uid, time, :starts)
+    LastSiteStatUpdaterWorker.perform_async(site_args, :starts)
+    LastVideoStatUpdaterWorker.perform_async(video_args, :starts)
+  end
+
+  def site_args
+    { site_token: site_token, time: time }
+  end
+
+  def video_args
+    site_args.merge(video_uid: video_uid)
   end
 end

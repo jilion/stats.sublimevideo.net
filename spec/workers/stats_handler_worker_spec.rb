@@ -1,8 +1,6 @@
 require 'fast_spec_helper'
 
 require 'stats_handler_worker'
-require 'last_site_stat_updater_worker'
-require 'last_video_stat_updater_worker'
 
 describe StatsHandlerWorker do
   let(:site_token) { 'site_token' }
@@ -21,12 +19,18 @@ describe StatsHandlerWorker do
     } }
 
     it "delays site stat updater worker" do
-      LastSiteStatUpdaterWorker.should_receive(:perform_async).with(site_token, time, :loads)
+      LastSiteStatUpdaterWorker.should_receive(:perform_async).with(
+        { site_token: site_token, time: time },
+        :loads
+      )
       StatsHandlerWorker.new.perform('l', data)
     end
 
     it "delays video stat updater worker" do
-      LastVideoStatUpdaterWorker.should_receive(:perform_async).with(site_token, video_uid, time, :loads)
+      LastVideoStatUpdaterWorker.should_receive(:perform_async).with(
+        { site_token: site_token, video_uid: video_uid, time: time },
+        :loads
+      )
       StatsHandlerWorker.new.perform('l', data)
     end
   end
@@ -39,12 +43,18 @@ describe StatsHandlerWorker do
     } }
 
     it "delays site stat updater worker" do
-      LastSiteStatUpdaterWorker.should_receive(:perform_async).with(site_token, time, :starts)
+      LastSiteStatUpdaterWorker.should_receive(:perform_async).with(
+        { site_token: site_token, time: time },
+        :starts
+      )
       StatsHandlerWorker.new.perform('s', data)
     end
 
     it "delays video stat updater worker" do
-      LastVideoStatUpdaterWorker.should_receive(:perform_async).with(site_token, video_uid, time, :starts)
+      LastVideoStatUpdaterWorker.should_receive(:perform_async).with(
+        { site_token: site_token, video_uid: video_uid, time: time },
+        :starts
+      )
       StatsHandlerWorker.new.perform('s', data)
     end
   end
