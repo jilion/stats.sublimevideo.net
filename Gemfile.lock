@@ -6,6 +6,12 @@ GIT
       activesupport (>= 3.2.12)
 
 GIT
+  remote: git://github.com/jilion/useragent.git
+  revision: 9fd0f887527850994c543caa7cf5327bd635dc02
+  specs:
+    useragent (0.2.3)
+
+GIT
   remote: git://github.com/librato/librato-rails.git
   revision: 82a95ae54f2ed990135a7b655293107384da2796
   branch: feature/rack_first
@@ -268,5 +274,6 @@ DEPENDENCIES
   sublime_video_private_api (~> 1.0)
   thin
   timecop
+  useragent!
   vcr
   webmock (>= 1.8.0, < 1.10)

@@ -2,9 +2,15 @@ require 'spec_helper'
 
 describe LastPlay do
   it { should be_kind_of Mongoid::Document }
-  it { should be_kind_of Mongoid::Timestamps::Created::Short }
+  it { should be_kind_of HourlyExpirable }
 
-  it { should have_index_for(s: 1, c_at: -1) }
-  it { should have_index_for(s: 1, u: 1, c_at: -1) }
-  it { should have_index_for(c_at: 1).with_options(expireAfterSeconds: 61.minutes.to_i) }
+  it { should have_index_for(s: 1, t: -1) }
+  it { should have_index_for(s: 1, u: 1, t: -1) }
+
+  it "casts Boolean for external field" do
+    LastPlay.new(external: '0').external.should be_false
+    LastPlay.new(external:  0).external.should be_false
+    LastPlay.new(external: '1').external.should be_true
+    LastPlay.new(external: 1).external.should be_true
+  end
 end

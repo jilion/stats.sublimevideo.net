@@ -39,8 +39,14 @@ describe StatsHandlerWorker do
     let(:data) { {
       's' => site_token,
       'u' => video_uid,
-      't' => time
+      't' => time,
+      'foo' => 'bar'
     } }
+
+    it "delays play creator worker" do
+      LastPlayCreatorWorker.should_receive(:perform_async).with(data)
+      StatsHandlerWorker.new.perform('s', data)
+    end
 
     it "delays site stat updater worker" do
       LastSiteStatUpdaterWorker.should_receive(:perform_async).with(

@@ -1,10 +1,12 @@
 require 'mongoid'
 
+require 'hourly_expirable'
 require 'last_statsable'
 require 'incrementable_stat'
 
 class LastVideoStat
   include Mongoid::Document
+  include HourlyExpirable
   include LastStatsable
   include IncrementableStat
 
@@ -13,7 +15,6 @@ class LastVideoStat
   field :t, as: :time, type: Time # seconds precision
 
   index site_token: 1, video_uid: 1, time: -1
-  index({ time: 1 }, expire_after_seconds: 61.minutes.to_i)
 
   def self.time_precision
     { seconds: 0 }

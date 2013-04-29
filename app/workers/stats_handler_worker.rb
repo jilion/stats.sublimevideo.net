@@ -1,5 +1,6 @@
 require 'sidekiq'
 
+require 'last_play_creator_worker'
 require 'last_site_stat_updater_worker'
 require 'last_video_stat_updater_worker'
 
@@ -7,14 +8,10 @@ class StatsHandlerWorker
   include Sidekiq::Worker
   sidekiq_options queue: 'stats'
 
-  attr_accessor :site_token, :video_uid, :time, :data
-
+  attr_accessor :data
 
   def perform(event_key, data)
-    @site_token = data.delete('s')
-    @video_uid  = data.delete('u')
-    @time       = data.delete('t')
-    @data       = data
+    @data = data
 
     send("handle_#{event_key}_event")
   end
@@ -27,15 +24,16 @@ class StatsHandlerWorker
   end
 
   def handle_s_event
+    LastPlayCreatorWorker.perform_async(data)
     LastSiteStatUpdaterWorker.perform_async(site_args, :starts)
     LastVideoStatUpdaterWorker.perform_async(video_args, :starts)
   end
 
   def site_args
-    { site_token: site_token, time: time }
+    { site_token: data['s'], time: data['t'] }
   end
 
   def video_args
-    site_args.merge(video_uid: video_uid)
+    site_args.merge(video_uid: data['u'])
   end
 end
