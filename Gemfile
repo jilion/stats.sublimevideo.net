@@ -20,6 +20,8 @@ gem 'rack-status'
 gem 'has_scope'
 gem 'newrelic_rpm'
 
+gem 'geoip'
+
 group :staging, :production do
   gem 'thin'
   gem 'lograge'

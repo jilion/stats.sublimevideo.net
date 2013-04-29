@@ -89,6 +89,7 @@ GEM
       multipart-post (~> 1.1)
     ffi (1.8.1)
     formatador (0.2.4)
+    geoip (1.2.1)
     guard (1.8.0)
       formatador (>= 0.2.4)
       listen (>= 1.0.0)
@@ -247,6 +248,7 @@ DEPENDENCIES
   dalli
   database_cleaner
   factory_girl_rails
+  geoip
   guard-pow
   guard-rspec
   has_scope
