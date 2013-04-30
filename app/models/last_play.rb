@@ -7,6 +7,8 @@ class LastPlay
   field :s, as: :site_token
   field :u, as: :video_uid
   field :t, as: :time, type: Time # seconds precision
+  index site_token: 1, time: -1
+  index site_token: 1, video_uid: 1, time: -1
 
   field :du, as: :document_url
   field :ru, as: :referrer_url
@@ -14,7 +16,4 @@ class LastPlay
   field :br, as: :browser
   field :pl, as: :platform
   field :co, as: :country
-
-  index site_token: 1, time: -1
-  index site_token: 1, video_uid: 1, time: -1
 end

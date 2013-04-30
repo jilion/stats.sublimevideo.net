@@ -12,7 +12,6 @@ class LastSiteStat
 
   field :s, as: :site_token
   field :t, as: :time, type: Time # seconds precision
-
   index site_token: 1, time: -1
 
   def self.time_precision
