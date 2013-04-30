@@ -1,9 +1,9 @@
 source 'https://rubygems.org'
 source 'https://8dezqz7z7HWea9vtaFwg@gem.fury.io/me/' # thibaud@jilion.com account
 
-ruby '1.9.3'
+ruby '2.0.0'
 
-gem 'rails', '4.0.0.beta1'
+gem 'rails', '4.0.0.rc1'
 
 gem 'sublime_video_private_api', '~> 1.0' # hosted on gemfury
 gem 'configurator', github: 'jilion/configurator'
