@@ -14,8 +14,7 @@ module LastStatsable
       stat.find_and_modify(
         { :$inc => { database_field_name(field) => 1 } },
         upsert: true,
-        new: true
-      )
+        new: true)
     end
   end
 end

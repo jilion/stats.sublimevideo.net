@@ -14,34 +14,34 @@ class StatsHandlerWorker
 
   def perform(event_key, data)
     @data = data
-    send("handle_#{event_key}_event")
+    send("_handle_#{event_key}_event")
   end
 
   private
 
-  def handle_l_event
-    LastSiteStatUpdaterWorker.perform_async(site_args, :loads)
-    LastVideoStatUpdaterWorker.perform_async(video_args, :loads)
+  def _handle_l_event
+    LastSiteStatUpdaterWorker.perform_async(_site_args, :loads)
+    LastVideoStatUpdaterWorker.perform_async(_video_args, :loads)
 
-    SiteStatUpdaterWorker.perform_async(site_args, data)
-    VideoStatUpdaterWorker.perform_async(video_args, data)
+    SiteStatUpdaterWorker.perform_async(_site_args, :loads, data.slice('ex'))
+    VideoStatUpdaterWorker.perform_async(_video_args, :loads, data.slice('ex'))
   end
 
-  def handle_s_event
+  def _handle_s_event
     LastPlayCreatorWorker.perform_async(data)
 
-    LastSiteStatUpdaterWorker.perform_async(site_args, :starts)
-    LastVideoStatUpdaterWorker.perform_async(video_args, :starts)
+    LastSiteStatUpdaterWorker.perform_async(_site_args, :starts)
+    LastVideoStatUpdaterWorker.perform_async(_video_args, :starts)
 
-    SiteStatUpdaterWorker.perform_async(site_args, data)
-    VideoStatUpdaterWorker.perform_async(video_args, data)
+    SiteStatUpdaterWorker.perform_async(_site_args, :starts, data)
+    VideoStatUpdaterWorker.perform_async(_video_args, :starts, data)
   end
 
-  def site_args
+  def _site_args
     @site_args ||= { site_token: data.delete('s'), time: data.delete('t') }
   end
 
-  def video_args
-    @video_args ||= site_args.merge(video_uid: data.delete('u'))
+  def _video_args
+    @video_args ||= _site_args.merge(video_uid: data.delete('u'))
   end
 end

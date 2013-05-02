@@ -12,25 +12,24 @@ class LastPlayCreatorWorker
 
   def perform(data)
     @data = data
-    LastPlay.create(params)
+    LastPlay.create(_params)
   end
 
   private
 
-  def params
+  def _params
     hash = data.slice(*%w[s u t du ru ex])
-    hash['co'] = country_code_from_ip
-    hash['br'], hash['pl'] = browser_code_and_platform_code_from_user_agent
+    hash['co'] = _country_code_from_ip
+    hash['br'], hash['pl'] = _browser_code_and_platform_code_from_user_agent
     hash
   end
 
-  def country_code_from_ip
+  def _country_code_from_ip
     GeoIPWrapper.country(data['ip'])
   end
 
-  def browser_code_and_platform_code_from_user_agent
+  def _browser_code_and_platform_code_from_user_agent
     user_agent = UserAgentWrapper.new(data['ua'])
     [user_agent.browser_code, user_agent.platform_code]
   end
-
 end

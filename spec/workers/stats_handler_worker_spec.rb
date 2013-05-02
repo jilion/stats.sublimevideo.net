@@ -10,7 +10,8 @@ describe StatsHandlerWorker do
     's' => site_token,
     'u' => video_uid,
     't' => time,
-    'foo' => 'bar'
+    'foo' => 'bar',
+    'ex' => '1',
   } }
 
   it "delays job in stats queue" do
@@ -37,7 +38,8 @@ describe StatsHandlerWorker do
     it "delays site stat updater worker" do
       SiteStatUpdaterWorker.should_receive(:perform_async).with(
         { site_token: site_token, time: time },
-        'foo' => 'bar'
+        :loads,
+        'ex' => '1'
       )
       StatsHandlerWorker.new.perform('l', data)
     end
@@ -45,7 +47,8 @@ describe StatsHandlerWorker do
     it "delays video stat updater worker" do
       VideoStatUpdaterWorker.should_receive(:perform_async).with(
         { site_token: site_token, video_uid: video_uid, time: time },
-        'foo' => 'bar'
+        :loads,
+        'ex' => '1'
       )
       StatsHandlerWorker.new.perform('l', data)
     end
@@ -76,7 +79,8 @@ describe StatsHandlerWorker do
     it "delays site stat updater worker" do
       SiteStatUpdaterWorker.should_receive(:perform_async).with(
         { site_token: site_token, time: time },
-        'foo' => 'bar'
+        :starts,
+        'foo' => 'bar', 'ex' => '1'
       )
       StatsHandlerWorker.new.perform('s', data)
     end
@@ -84,7 +88,8 @@ describe StatsHandlerWorker do
     it "delays video stat updater worker" do
       VideoStatUpdaterWorker.should_receive(:perform_async).with(
         { site_token: site_token, video_uid: video_uid, time: time },
-        'foo' => 'bar'
+        :starts,
+        'foo' => 'bar', 'ex' => '1'
       )
       StatsHandlerWorker.new.perform('s', data)
     end

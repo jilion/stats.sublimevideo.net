@@ -12,8 +12,8 @@ describe SiteStatUpdaterWorker do
     let(:data) { { foo: 'bar' } }
 
     it "increments stats on SiteStat" do
-      SiteStat.should_receive(:inc_stats).with(site_args, data)
-      SiteStatUpdaterWorker.new.perform(site_args, data)
+      SiteStat.should_receive(:inc_stats).with(site_args, :loads, data)
+      SiteStatUpdaterWorker.new.perform(site_args, :loads, data)
     end
   end
 end

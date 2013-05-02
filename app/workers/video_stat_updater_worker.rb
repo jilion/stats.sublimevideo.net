@@ -6,7 +6,7 @@ class VideoStatUpdaterWorker
   include Sidekiq::Worker
   sidekiq_options queue: 'stats'
 
-  def perform(video_args, data)
-    VideoStat.inc_stats(video_args, data)
+  def perform(video_args, event_field, data)
+    VideoStat.inc_stats(video_args, event_field, data)
   end
 end

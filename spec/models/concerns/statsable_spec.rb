@@ -1,12 +1,12 @@
-require 'fast_spec_helper'
-require 'config/mongoid'
-
-require 'statsable'
+require 'spec_helper'
 
 describe Statsable do
   class StatsableModel
     include Mongoid::Document
     include Statsable
+
+    field :time, as: :t, type: Time
+    field :key_id
   end
   subject { StatsableModel }
 
@@ -15,6 +15,63 @@ describe Statsable do
   it { should have_field(:de).with_alias(:devices).of_type(Hash) }
   it { should have_field(:co).with_alias(:countries).of_type(Hash) }
   it { should have_field(:bp).with_alias(:browser_and_platform).of_type(Hash) }
+
+  describe ".inc_stats" do
+    let(:key_id) { 'key_id' }
+    let(:time) { Time.now.to_i }
+    let(:args) { { key_id: key_id, time: time } }
+
+    it "precises time to hour" do
+      StatsableModel.inc_stats(args, :loads, {})
+      StatsableModel.last.time.should eq Time.at(time).change(min: 0).utc
+    end
+
+    it "updates existing stat" do
+      expect{ StatsableModel.inc_stats(args, :loads, {}) }
+        .to change{StatsableModel.count}.from(0).to(1)
+    end
+
+    context "with loads event field" do
+      let(:event_field) { :loads }
+
+      context "external event" do
+        let(:data) { { 'ex' => '1' } }
+
+        it "increments externals loads" do
+          StatsableModel.inc_stats(args, event_field, data)
+          StatsableModel.last.external(:loads).should eq 1
+        end
+      end
+    end
+
+    context "with starts event field" do
+      let(:event_field) { :starts }
+
+      context "external event" do
+        let(:data) { {
+          'd'  => 'm',
+          'ua' => 'USER AGENT',
+          'ip' => '84.226.128.23'
+        } }
+        before {
+          GeoIPWrapper.stub(:country).with('84.226.128.23') { 'ch' }
+          UserAgentWrapper.stub(:new).with('USER AGENT') { mock('UserAgent',
+            browser_code: 'saf',
+            platform_code: 'osx'
+          ) }
+        }
+
+        it "increments website stats" do
+          StatsableModel.inc_stats(args, event_field, data)
+          stat = StatsableModel.last
+          stat.website(:starts).should eq 1
+          stat.website(:devices).should eq({'m' => 1})
+          stat.website(:countries).should eq({'ch' => 1})
+          stat.website(:browser_and_platform).should eq({'saf-osx' => 1})
+        end
+      end
+    end
+  end
 
   context "with a model with stats" do
     let(:model) { StatsableModel.new(
@@ -37,19 +94,25 @@ describe Statsable do
       it "returns website countries" do
         model.website(:countries).should eq({})
       end
+      it "returns website browser_and_platform" do
+        model.website(:browser_and_platform).should eq({})
+      end
     end
     describe "#external" do
       it "returns external loads" do
         model.external(:loads).should eq 4
       end
-      it "returns website starts" do
+      it "returns external starts" do
         model.external(:starts).should eq 3
       end
       it "returns external devices" do
         model.external(:devices).should eq({ 'm' => 5, 'd' => 10 })
       end
-      it "returns website countries" do
+      it "returns external countries" do
         model.external(:countries).should eq({ 'ch' => 5, 'fr' => 10 })
+      end
+      it "returns external browser_and_platform" do
+        model.external(:browser_and_platform).should eq({})
       end
     end
     describe "#all" do
@@ -64,6 +127,9 @@ describe Statsable do
       end
       it "returns all countries" do
         model.all(:countries).should eq({ 'ch' => 5, 'fr' => 10 })
+      end
+      it "returns all browser_and_platform" do
+        model.all(:browser_and_platform).should eq({})
       end
     end
   end
