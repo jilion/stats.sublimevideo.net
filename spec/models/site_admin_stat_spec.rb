@@ -5,6 +5,8 @@ describe SiteAdminStat do
   it { should be_kind_of SiteIdentifiable }
 
   it { should have_field(:al).with_alias(:app_loads).of_type(Hash) }
-  it { should have_field(:st).with_alias(:stage).of_type(Array) }
+  it { should have_field(:lo).with_alias(:loads).of_type(Hash) }
+  it { should have_field(:st).with_alias(:starts).of_type(Hash) }
+  it { should have_field(:sa).with_alias(:stage).of_type(Array) }
   it { should have_field(:ss).with_alias(:ssl).of_type(Mongoid::Boolean) }
 end

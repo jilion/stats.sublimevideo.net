@@ -15,26 +15,39 @@ class StatsHandlerWorker
   def perform(event_key, data)
     @data = data
     send("_handle_#{event_key}_event")
+    # LibratoIncrementer.perform_async(event_key, data)
   end
 
   private
 
-  def _handle_l_event
-    LastSiteStatUpdaterWorker.perform_async(_site_args, :loads)
-    LastVideoStatUpdaterWorker.perform_async(_video_args, :loads)
+  def _handle_al_event
+    # SiteAdminStatUpdaterWorker.perform_async(_site_args, :app_loads, data
+  end
 
-    SiteStatUpdaterWorker.perform_async(_site_args, :loads, data.slice('ex'))
-    VideoStatUpdaterWorker.perform_async(_video_args, :loads, data.slice('ex'))
+  def _handle_l_event
+    if _valid_video_uid?
+      LastSiteStatUpdaterWorker.perform_async(_site_args, :loads)
+      LastVideoStatUpdaterWorker.perform_async(_video_args, :loads)
+
+      SiteStatUpdaterWorker.perform_async(_site_args, :loads, data.slice('ex'))
+      VideoStatUpdaterWorker.perform_async(_video_args, :loads, data.slice('ex'))
+    end
+
+    # SiteAdminStatUpdaterWorker.perform_async(_site_args, :loads, data.slice('ex'))
   end
 
   def _handle_s_event
-    LastPlayCreatorWorker.perform_async(data)
+    if _valid_video_uid?
+      LastPlayCreatorWorker.perform_async(data)
 
-    LastSiteStatUpdaterWorker.perform_async(_site_args, :starts)
-    LastVideoStatUpdaterWorker.perform_async(_video_args, :starts)
+      LastSiteStatUpdaterWorker.perform_async(_site_args, :starts)
+      LastVideoStatUpdaterWorker.perform_async(_video_args, :starts)
 
-    SiteStatUpdaterWorker.perform_async(_site_args, :starts, data)
-    VideoStatUpdaterWorker.perform_async(_video_args, :starts, data)
+      SiteStatUpdaterWorker.perform_async(_site_args, :starts, data)
+      VideoStatUpdaterWorker.perform_async(_video_args, :starts, data)
+    end
+
+    # SiteAdminStatUpdaterWorker.perform_async(_site_args, :starts, data.slice('ex'))
   end
 
   def _site_args
@@ -43,5 +56,9 @@ class StatsHandlerWorker
 
   def _video_args
     @video_args ||= _site_args.merge(video_uid: data.delete('u'))
+  end
+
+  def _valid_video_uid?
+    data.key?('u')
   end
 end
