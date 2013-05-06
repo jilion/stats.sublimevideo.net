@@ -21,11 +21,10 @@ describe LastPlayCreatorWorker do
       'ip' => '84.226.128.23'
     } }
     before {
-      GeoIPWrapper.stub(:country).with('84.226.128.23') { 'ch' }
-      UserAgentWrapper.stub(:new).with('USER AGENT') { mock('UserAgent',
-        browser_code: 'saf',
-        platform_code: 'osx'
-      ) }
+      DataAnalyzer.stub(:new) { data }
+      data.stub(:country_code) { 'ch' }
+      data.stub(:browser_code) { 'saf' }
+      data.stub(:platform_code) { 'osx' }
     }
 
     it "creates last play with good params" do
@@ -38,8 +37,7 @@ describe LastPlayCreatorWorker do
         'ru' => 'http://referrer.url/foo/bar',
         'co' => 'ch',
         'br' => 'saf',
-        'pl' => 'osx'
-      )
+        'pl' => 'osx')
       LastPlayCreatorWorker.new.perform(data)
     end
   end

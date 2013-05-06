@@ -3,6 +3,7 @@ require 'sidekiq'
 require 'last_play_creator_worker'
 require 'last_site_stat_updater_worker'
 require 'last_video_stat_updater_worker'
+require 'site_admin_stat_updater_worker'
 require 'site_stat_updater_worker'
 require 'video_stat_updater_worker'
 
@@ -21,33 +22,28 @@ class StatsHandlerWorker
   private
 
   def _handle_al_event
-    # SiteAdminStatUpdaterWorker.perform_async(_site_args, :app_loads, data
+    SiteAdminStatUpdaterWorker.perform_async(_site_args, :app_loads, data)
   end
 
   def _handle_l_event
     if _valid_video_uid?
       LastSiteStatUpdaterWorker.perform_async(_site_args, :loads)
       LastVideoStatUpdaterWorker.perform_async(_video_args, :loads)
-
       SiteStatUpdaterWorker.perform_async(_site_args, :loads, data.slice('ex'))
       VideoStatUpdaterWorker.perform_async(_video_args, :loads, data.slice('ex'))
     end
-
-    # SiteAdminStatUpdaterWorker.perform_async(_site_args, :loads, data.slice('ex'))
+    SiteAdminStatUpdaterWorker.perform_async(_site_args, :loads, data.slice('ex'))
   end
 
   def _handle_s_event
     if _valid_video_uid?
       LastPlayCreatorWorker.perform_async(data)
-
       LastSiteStatUpdaterWorker.perform_async(_site_args, :starts)
       LastVideoStatUpdaterWorker.perform_async(_video_args, :starts)
-
       SiteStatUpdaterWorker.perform_async(_site_args, :starts, data)
       VideoStatUpdaterWorker.perform_async(_video_args, :starts, data)
     end
-
-    # SiteAdminStatUpdaterWorker.perform_async(_site_args, :starts, data.slice('ex'))
+    SiteAdminStatUpdaterWorker.perform_async(_site_args, :starts, data.slice('ex'))
   end
 
   def _site_args

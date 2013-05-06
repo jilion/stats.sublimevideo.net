@@ -20,22 +20,25 @@ describe Statsable do
     let(:key_id) { 'key_id' }
     let(:time) { Time.now.to_i }
     let(:args) { { key_id: key_id, time: time } }
+    let(:data) { mock('DataAnalyzer', source_provenance: 'w') }
 
     it "precises time to hour" do
-      StatsableModel.inc_stats(args, :loads, {})
-      StatsableModel.last.time.should eq Time.at(time).change(min: 0).utc
+      StatsableModel.inc_stats(args, :loads, data)
+      StatsableModel.last.time.should eq Time.at(time).utc.change(min: 0)
     end
 
     it "updates existing stat" do
-      expect{ StatsableModel.inc_stats(args, :loads, {}) }
+      expect{ StatsableModel.inc_stats(args, :loads, data) }
         .to change{StatsableModel.count}.from(0).to(1)
+      expect{ StatsableModel.inc_stats(args, :loads, data) }
+        .to_not change{ StatsableModel.count }
     end
 
     context "with loads event field" do
       let(:event_field) { :loads }
 
       context "external event" do
-        let(:data) { { 'ex' => '1' } }
+        before { data.stub(source_provenance: 'e') }
 
         it "increments externals loads" do
           StatsableModel.inc_stats(args, event_field, data)
@@ -48,17 +51,11 @@ describe Statsable do
       let(:event_field) { :starts }
 
       context "external event" do
-        let(:data) { {
-          'd'  => 'm',
-          'ua' => 'USER AGENT',
-          'ip' => '84.226.128.23'
-        } }
         before {
-          GeoIPWrapper.stub(:country).with('84.226.128.23') { 'ch' }
-          UserAgentWrapper.stub(:new).with('USER AGENT') { mock('UserAgent',
-            browser_code: 'saf',
-            platform_code: 'osx'
-          ) }
+          data.stub(d: 'm')
+          data.stub(country_code: 'ch')
+          data.stub(browser_code: 'saf')
+          data.stub(platform_code: 'osx')
         }
 
         it "increments website stats" do
@@ -78,8 +75,8 @@ describe Statsable do
       loads: { 'w' => 2, 'e' => 4 },
       starts: { 'e' => 3 },
       devices: { 'w' => { 'm' => 3, 'd' => 5 }, 'e' => { 'm' => 5, 'd' => 10 } },
-      countries: { 'e' => { 'ch' => 5, 'fr' => 10 } }
-    ) }
+      countries: { 'e' => { 'ch' => 5, 'fr' => 10 } })
+    }
 
     describe "#website" do
       it "returns website loads" do

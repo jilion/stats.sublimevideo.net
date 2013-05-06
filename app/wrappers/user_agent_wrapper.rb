@@ -10,8 +10,7 @@ class UserAgentWrapper
     "Android"           => "and",
     "BlackBerry"        => "rim",
     "webOS"             => "weo",
-    "Opera"             => "ope"
-  }
+    "Opera"             => "ope"}
 
   SUPPORTED_PLATEFORM = {
     "Windows"       => "win",
@@ -23,8 +22,7 @@ class UserAgentWrapper
     "Android"       => "and",
     "BlackBerry"    => "rim",
     "webOS"         => "weo",
-    "Windows Phone" => "wip"
-  }
+    "Windows Phone" => "wip"}
 
   attr_accessor :user_agent
 

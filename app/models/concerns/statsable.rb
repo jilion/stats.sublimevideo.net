@@ -1,8 +1,5 @@
 require 'mongoid'
 
-require 'geoip_wrapper'
-require 'user_agent_wrapper'
-
 module Statsable
   extend ActiveSupport::Concern
 
@@ -27,37 +24,20 @@ module Statsable
     private
 
     def _hour_precise_time(args)
-      args[:time] = Time.at(args[:time]).change(min: 0)
+      args[:time] = Time.at(args[:time]).utc.change(min: 0)
       args
     end
 
     def _incs(event_field, data)
-      source_provenance = _source_provenance(data)
       case event_field
       when :loads
-        { "lo.#{source_provenance}" => 1 }
+        { "lo.#{data.source_provenance}" => 1 }
       when :starts
-        { "st.#{source_provenance}" => 1,
-          "de.#{source_provenance}.#{data['d']}" => 1,
-          "co.#{source_provenance}.#{_country_code(data)}" => 1,
-          "bp.#{source_provenance}.#{_browser_code_and_platform_code_from_user_agent(data)}" => 1 }
+        { "st.#{data.source_provenance}" => 1,
+          "de.#{data.source_provenance}.#{data.d}" => 1,
+          "co.#{data.source_provenance}.#{data.country_code}" => 1,
+          "bp.#{data.source_provenance}.#{data.browser_code}-#{data.platform_code}" => 1 }
       end
-    end
-
-    def _source_provenance(data)
-      case data['ex']
-      when 1, '1' then 'e'
-      else 'w'
-      end
-    end
-
-    def _country_code(data)
-      GeoIPWrapper.country(data['ip'])
-    end
-
-    def _browser_code_and_platform_code_from_user_agent(data)
-      user_agent = UserAgentWrapper.new(data['ua'])
-      "#{user_agent.browser_code}-#{user_agent.platform_code}"
     end
   end
 

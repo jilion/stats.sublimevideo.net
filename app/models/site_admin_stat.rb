@@ -9,7 +9,7 @@ class SiteAdminStat
   field :al, as: :app_loads, type: Hash # { m(main): 1, e(extra): 3, s(staging): 5, d(dev): 11, i(invalid): 1 }
   field :lo, as: :loads, type: Hash # { w(website): 3, e(external): 9 }, even without video_uid
   field :st, as: :starts, type: Hash # { w(website): 3, e(external): 9 }, even without video_uid
-  field :sa, as: :stage, type: Array # Stages used this day
+  field :sa, as: :stages, type: Array # Stages used this day
   field :ss, as: :ssl, type: Mongoid::Boolean # SSL used this day
 
   def self.update_stats(args, updates)
@@ -21,10 +21,20 @@ class SiteAdminStat
       new: true)
   end
 
+  def stages
+    read_attribute(:sa).map do |stage|
+      case stage
+      when 'a' then 'alpha'
+      when 'b' then 'beta'
+      when 's' then 'stable'
+      end
+    end
+  end
+
   private
 
   def self._day_precise_time(args)
-    args[:time] = Time.at(args[:time]).change(hour: 0)
+    args[:time] = Time.at(args[:time]).utc.change(hour: 0)
     args
   end
 end
