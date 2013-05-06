@@ -15,6 +15,7 @@ gem 'sidekiq'
 
 gem 'airbrake'
 gem 'librato-rails', github: 'librato/librato-rails', branch: 'feature/rack_first'
+gem 'librato-sidekiq'
 
 gem 'rack-status'
 gem 'has_scope'
