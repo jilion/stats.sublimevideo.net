@@ -21,7 +21,7 @@ describe LastPlayCreatorWorker do
       'ip' => '84.226.128.23'
     } }
     before {
-      DataAnalyzer.stub(:new) { data }
+      DataHash.stub(:new) { data }
       data.stub(:country_code) { 'ch' }
       data.stub(:browser_code) { 'saf' }
       data.stub(:platform_code) { 'osx' }

@@ -21,6 +21,11 @@ describe StatsHandlerWorker do
     } }
 
     context "app_load (al) event" do
+      it "delays librato stats incrementer worker" do
+        LibratoStatsIncrementerWorker.should_receive(:perform_async).with('al',data)
+        StatsHandlerWorker.new.perform('al', data)
+      end
+
       it "delays site admin stat updater worker" do
         SiteAdminStatUpdaterWorker.should_receive(:perform_async).with(
           { site_token: site_token, time: time },
@@ -31,6 +36,11 @@ describe StatsHandlerWorker do
     end
 
     context "load (l) event" do
+      it "delays librato stats incrementer worker" do
+        LibratoStatsIncrementerWorker.should_receive(:perform_async).with('l',data)
+        StatsHandlerWorker.new.perform('l', data)
+      end
+
       it "delays last site stat updater worker" do
         LastSiteStatUpdaterWorker.should_receive(:perform_async).with(
           { site_token: site_token, time: time },
@@ -71,6 +81,11 @@ describe StatsHandlerWorker do
     end
 
     context "start (s) event" do
+      it "delays librato stats incrementer worker" do
+        LibratoStatsIncrementerWorker.should_receive(:perform_async).with('s',data)
+        StatsHandlerWorker.new.perform('s', data)
+      end
+
       it "delays play creator worker" do
         LastPlayCreatorWorker.should_receive(:perform_async).with(data)
         StatsHandlerWorker.new.perform('s', data)
@@ -125,6 +140,11 @@ describe StatsHandlerWorker do
     } }
 
     context "app_load (al) event" do
+      it "delays librato stats incrementer worker" do
+        LibratoStatsIncrementerWorker.should_receive(:perform_async).with('al',data)
+        StatsHandlerWorker.new.perform('al', data)
+      end
+
       it "delays site admin stat updater worker" do
         SiteAdminStatUpdaterWorker.should_receive(:perform_async).with(
           { site_token: site_token, time: time },
@@ -135,6 +155,11 @@ describe StatsHandlerWorker do
     end
 
     context "load (l) event" do
+      it "delays librato stats incrementer worker" do
+        LibratoStatsIncrementerWorker.should_receive(:perform_async).with('l',data)
+        StatsHandlerWorker.new.perform('l', data)
+      end
+
       it "doesn't delay last site stat updater worker" do
         LastSiteStatUpdaterWorker.should_not_receive(:perform_async)
         StatsHandlerWorker.new.perform('l', data)
@@ -165,6 +190,11 @@ describe StatsHandlerWorker do
     end
 
     context "start (s) event" do
+      it "delays librato stats incrementer worker" do
+        LibratoStatsIncrementerWorker.should_receive(:perform_async).with('s',data)
+        StatsHandlerWorker.new.perform('s', data)
+      end
+
       it "doesn't delay play creator worker" do
         LastPlayCreatorWorker.should_not_receive(:perform_async)
         StatsHandlerWorker.new.perform('s', data)

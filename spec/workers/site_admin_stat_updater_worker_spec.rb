@@ -9,8 +9,8 @@ describe SiteAdminStatUpdaterWorker do
 
   describe ".perform" do
     let(:site_args) { { site_token: 'site_token', time: Time.now.to_i } }
-    let(:analyzed_data) { OpenStruct.new(data) }
-    before { DataAnalyzer.stub(:new) { analyzed_data } }
+    let(:data_hash) { OpenStruct.new(data) }
+    before { DataHash.stub(:new) { data_hash } }
 
     context "app_loads event" do
       let(:event_field) { :app_loads }
@@ -28,7 +28,7 @@ describe SiteAdminStatUpdaterWorker do
     context "loads event" do
       let(:event_field) { :loads }
       let(:data) { { 'ex' => '1' } }
-      before { analyzed_data.stub(:source_provenance) { 'e' } }
+      before { data_hash.stub(:source_key) { 'e' } }
 
       it "increments app_loads stats" do
         SiteAdminStat.should_receive(:update_stats).with(site_args,
@@ -40,7 +40,7 @@ describe SiteAdminStatUpdaterWorker do
     context "starts event" do
       let(:event_field) { :starts }
       let(:data) { { } }
-      before { analyzed_data.stub(:source_provenance) { 'w' } }
+      before { data_hash.stub(:source_key) { 'w' } }
 
       it "increments app_loads stats" do
         SiteAdminStat.should_receive(:update_stats).with(site_args,

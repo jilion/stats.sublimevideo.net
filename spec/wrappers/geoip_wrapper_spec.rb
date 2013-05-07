@@ -34,7 +34,7 @@ describe GeoIPWrapper do
     end
 
     it "returns nil for non ip" do
-      GeoIPWrapper.country('I am not an IP').should be_nil
+      GeoIPWrapper.country('').should be_nil
     end
   end
 

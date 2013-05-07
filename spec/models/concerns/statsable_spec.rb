@@ -20,7 +20,7 @@ describe Statsable do
     let(:key_id) { 'key_id' }
     let(:time) { Time.now.to_i }
     let(:args) { { key_id: key_id, time: time } }
-    let(:data) { mock('DataAnalyzer', source_provenance: 'w') }
+    let(:data) { mock('DataHash', source_key: 'w') }
 
     it "precises time to hour" do
       StatsableModel.inc_stats(args, :loads, data)
@@ -38,7 +38,7 @@ describe Statsable do
       let(:event_field) { :loads }
 
       context "external event" do
-        before { data.stub(source_provenance: 'e') }
+        before { data.stub(source_key: 'e') }
 
         it "increments externals loads" do
           StatsableModel.inc_stats(args, event_field, data)

@@ -31,12 +31,12 @@ module Statsable
     def _incs(event_field, data)
       case event_field
       when :loads
-        { "lo.#{data.source_provenance}" => 1 }
+        { "lo.#{data.source_key}" => 1 }
       when :starts
-        { "st.#{data.source_provenance}" => 1,
-          "de.#{data.source_provenance}.#{data.d}" => 1,
-          "co.#{data.source_provenance}.#{data.country_code}" => 1,
-          "bp.#{data.source_provenance}.#{data.browser_code}-#{data.platform_code}" => 1 }
+        { "st.#{data.source_key}" => 1,
+          "de.#{data.source_key}.#{data.d}" => 1,
+          "co.#{data.source_key}.#{data.country_code}" => 1,
+          "bp.#{data.source_key}.#{data.browser_code}-#{data.platform_code}" => 1 }
       end
     end
   end

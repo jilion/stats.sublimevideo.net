@@ -1,7 +1,7 @@
 require 'sidekiq'
 
 require 'last_play'
-require 'data_analyzer'
+require 'data_hash'
 
 class LastPlayCreatorWorker
   include Sidekiq::Worker
@@ -10,7 +10,7 @@ class LastPlayCreatorWorker
   attr_accessor :data
 
   def perform(data)
-    @data = DataAnalyzer.new(data)
+    @data = DataHash.new(data)
     LastPlay.create(_params)
   end
 

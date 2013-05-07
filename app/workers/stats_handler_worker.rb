@@ -1,5 +1,6 @@
 require 'sidekiq'
 
+require 'librato_stats_incrementer_worker'
 require 'last_play_creator_worker'
 require 'last_site_stat_updater_worker'
 require 'last_video_stat_updater_worker'
@@ -16,7 +17,7 @@ class StatsHandlerWorker
   def perform(event_key, data)
     @data = data
     send("_handle_#{event_key}_event")
-    # LibratoIncrementer.perform_async(event_key, data)
+    LibratoStatsIncrementerWorker.perform_async(event_key, data)
   end
 
   private
