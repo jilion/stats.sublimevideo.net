@@ -30,7 +30,7 @@ GIT
 
 GIT
   remote: git://github.com/mongoid/mongoid.git
-  revision: cbc53678425b077ad95b4a08dac7d2d70f34803f
+  revision: fe7f43430580860db6d1d89cea27eda24ab60ab1
   specs:
     mongoid (4.0.0)
       activemodel (~> 4.0.0.rc1)
@@ -73,19 +73,17 @@ GEM
       builder
       json
     arel (4.0.0)
-    atomic (1.1.8)
+    atomic (1.1.9)
     builder (3.1.4)
     celluloid (0.13.0)
       timers (>= 1.0.0)
     coderay (1.0.9)
     connection_pool (1.0.0)
     crack (0.3.2)
-    daemons (1.1.9)
     dalli (2.6.2)
     database_cleaner (0.9.1)
     diff-lcs (1.2.4)
     erubis (2.7.0)
-    eventmachine (1.0.3)
     factory_girl (4.2.0)
       activesupport (>= 3.0.0)
     factory_girl_rails (4.2.1)
@@ -119,12 +117,12 @@ GEM
     kaminari (0.14.1)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
+    kgio (2.8.0)
     librato-metrics (1.0.4)
       aggregate (~> 0.2.2)
       faraday (~> 0.7)
       multi_json
-    librato-sidekiq (0.1.0)
-      librato-rails
+    librato-sidekiq (0.1.1)
       sidekiq
     listen (1.0.3)
       rb-fsevent (>= 0.9.3)
@@ -174,6 +172,7 @@ GEM
       activesupport (= 4.0.0.rc1)
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
+    raindrops (0.11.0)
     rake (10.0.4)
     rb-fsevent (0.9.3)
     rb-inotify (0.9.0)
@@ -226,10 +225,6 @@ GEM
       multi_json
       rescue_me
       responders
-    thin (1.5.1)
-      daemons (>= 1.0.9)
-      eventmachine (>= 0.12.6)
-      rack (>= 1.0.0)
     thor (0.18.1)
     thread_safe (0.1.0)
       atomic
@@ -240,6 +235,10 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     tzinfo (0.3.37)
+    unicorn (4.6.2)
+      kgio (~> 2.6)
+      rack
+      raindrops (~> 0.7)
     vcr (2.4.0)
     webmock (1.9.3)
       addressable (>= 2.2.7)
@@ -273,8 +272,8 @@ DEPENDENCIES
   shoulda-matchers
   sidekiq
   sublime_video_private_api (~> 1.0)
-  thin
   timecop
+  unicorn
   useragent!
   vcr
   webmock (>= 1.8.0, < 1.10)
