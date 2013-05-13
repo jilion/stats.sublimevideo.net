@@ -30,7 +30,7 @@ GIT
 
 GIT
   remote: git://github.com/mongoid/mongoid.git
-  revision: fe7f43430580860db6d1d89cea27eda24ab60ab1
+  revision: 7b7647ccd6fe6f159cfc41965fe31163ee02dbf8
   specs:
     mongoid (4.0.0)
       activemodel (~> 4.0.0.rc1)
@@ -75,12 +75,12 @@ GEM
     arel (4.0.0)
     atomic (1.1.9)
     builder (3.1.4)
-    celluloid (0.13.0)
+    celluloid (0.14.0)
       timers (>= 1.0.0)
     coderay (1.0.9)
     connection_pool (1.0.0)
     crack (0.3.2)
-    dalli (2.6.2)
+    dalli (2.6.3)
     database_cleaner (0.9.1)
     diff-lcs (1.2.4)
     erubis (2.7.0)
@@ -102,7 +102,7 @@ GEM
       thor (>= 0.14.6)
     guard-pow (1.0.0)
       guard (>= 1.1)
-    guard-rspec (2.6.0)
+    guard-rspec (3.0.0)
       guard (>= 1.8)
       rspec (~> 2.13)
     has_scope (0.5.1)
@@ -124,7 +124,7 @@ GEM
       multi_json
     librato-sidekiq (0.1.1)
       sidekiq
-    listen (1.0.3)
+    listen (1.1.0)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
       rb-kqueue (>= 0.2)
@@ -146,10 +146,10 @@ GEM
     moped (1.4.5)
     multi_json (1.7.3)
     multipart-post (1.2.0)
-    newrelic_rpm (3.6.1.88)
+    newrelic_rpm (3.6.2.96)
     origin (1.1.0)
     polyglot (0.3.3)
-    pry (0.9.12.1)
+    pry (0.9.12.2)
       coderay (~> 1.0.5)
       method_source (~> 0.8)
       slop (~> 3.4)
@@ -228,7 +228,7 @@ GEM
     thor (0.18.1)
     thread_safe (0.1.0)
       atomic
-    tilt (1.4.0)
+    tilt (1.4.1)
     timecop (0.6.1)
     timers (1.1.0)
     treetop (1.4.12)

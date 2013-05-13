@@ -3,8 +3,6 @@ require 'user_agent_wrapper'
 
 class DataHash < Hash
 
-  attr_accessor :data
-
   def initialize(data = {})
     self.replace(data)
     self
