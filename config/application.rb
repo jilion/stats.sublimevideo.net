@@ -9,6 +9,7 @@ require "action_controller/railtie"
 
 Bundler.setup(:default, Rails.env)
 
+require 'dotenv-rails' if Rails.env.in?(%w[test development])
 require 'sublime_video_private_api'
 require 'librato-rails'
 require 'newrelic_rpm'

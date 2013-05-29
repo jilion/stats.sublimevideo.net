@@ -1,11 +1,4 @@
 GIT
-  remote: git://github.com/jilion/configurator.git
-  revision: 3a8df3f51dea0e414bc9cd86fea1f85b1a30745a
-  specs:
-    configurator (1.0.0)
-      activesupport (>= 3.2.12)
-
-GIT
   remote: git://github.com/jilion/useragent.git
   revision: 9fd0f887527850994c543caa7cf5327bd635dc02
   specs:
@@ -68,10 +61,6 @@ GEM
       tzinfo (~> 0.3.37)
     addressable (2.3.4)
     aggregate (0.2.2)
-    airbrake (3.1.12)
-      activesupport
-      builder
-      json
     arel (4.0.0)
     atomic (1.1.9)
     builder (3.1.4)
@@ -83,6 +72,9 @@ GEM
     dalli (2.6.3)
     database_cleaner (0.9.1)
     diff-lcs (1.2.4)
+    dotenv (0.7.0)
+    dotenv-rails (0.7.0)
+      dotenv (= 0.7.0)
     erubis (2.7.0)
     factory_girl (4.2.0)
       activesupport (>= 3.0.0)
@@ -112,8 +104,10 @@ GEM
       faraday (~> 0.8)
       multi_json (~> 1.7)
     hike (1.2.2)
+    honeybadger (1.6.2)
+      json
     i18n (0.6.4)
-    json (1.7.7)
+    json (1.8.0)
     kaminari (0.14.1)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
@@ -248,15 +242,15 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  airbrake
-  configurator!
   dalli
   database_cleaner
+  dotenv-rails
   factory_girl_rails
   geoip
   guard-pow
   guard-rspec
   has_scope
+  honeybadger
   kiqstand!
   librato-rails!
   librato-sidekiq

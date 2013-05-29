@@ -6,14 +6,13 @@ ruby '2.0.0'
 gem 'rails', '4.0.0.rc1'
 
 gem 'sublime_video_private_api', '~> 1.0' # hosted on gemfury
-gem 'configurator', github: 'jilion/configurator'
 
 gem 'mongoid', github: 'mongoid/mongoid'
 
 gem 'kiqstand', github: 'mongoid/kiqstand'
 gem 'sidekiq'
 
-gem 'airbrake'
+gem 'honeybadger'
 gem 'librato-rails', github: 'librato/librato-rails', branch: 'feature/rack_first'
 gem 'librato-sidekiq'
 
@@ -33,6 +32,7 @@ end
 
 group :development, :test do
   gem 'rspec-rails'
+  gem 'dotenv-rails'
 end
 
 group :development do
