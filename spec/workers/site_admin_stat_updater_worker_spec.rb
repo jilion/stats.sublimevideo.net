@@ -39,12 +39,13 @@ describe SiteAdminStatUpdaterWorker do
 
     context "starts event" do
       let(:event_field) { :starts }
-      let(:data) { { } }
+      let(:data) { { 'du' => 'document_url' } }
       before { data_hash.stub(:source_key) { 'w' } }
 
-      it "increments app_loads stats" do
+      it "increments app_loads stats and pushes document url to pages" do
         SiteAdminStat.should_receive(:update_stats).with(site_args,
-          :$inc => { 'st.w' => 1 })
+          :$inc => { 'st.w' => 1 },
+          :$push => { 'pa' => { :$each => 'document_url', :$slice => -10 } })
         SiteAdminStatUpdaterWorker.new.perform(site_args, event_field, data)
       end
     end

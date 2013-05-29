@@ -11,6 +11,7 @@ class SiteAdminStat
   field :st, as: :starts, type: Hash # { w(website): 3, e(external): 9 }, even without video_uid
   field :sa, as: :stages, type: Array # Stages used this day
   field :ss, as: :ssl, type: Mongoid::Boolean # SSL used this day
+  field :pa, as: :pages, type: Array # Last 10 active pages
 
   def self.update_stats(args, updates)
     args = _day_precise_time(args)
@@ -19,6 +20,15 @@ class SiteAdminStat
       updates,
       upsert: true,
       new: true)
+  end
+
+  def self.last_pages(site_token, days: 30, limit: 10)
+    stats = self.where(site_token: site_token, time: { :$gte => days.days.ago })
+    scored_pages = stats.inject(Hash.new(0)) { |pages, stat|
+      stat.pages.each { |p| pages[p] += 1 }
+      pages }
+    pages = scored_pages.keys.sort { |a, b| scored_pages[b] <=> scored_pages[a] }
+    pages.shift(limit)
   end
 
   def stages
