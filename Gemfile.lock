@@ -23,7 +23,7 @@ GIT
 
 GIT
   remote: git://github.com/mongoid/mongoid.git
-  revision: 7b7647ccd6fe6f159cfc41965fe31163ee02dbf8
+  revision: 11e45e5a30a45458b83db99ab6c9d9ccc337e66f
   specs:
     mongoid (4.0.0)
       activemodel (~> 4.0.0.rc1)
@@ -64,13 +64,13 @@ GEM
     arel (4.0.0)
     atomic (1.1.9)
     builder (3.1.4)
-    celluloid (0.14.0)
+    celluloid (0.14.1)
       timers (>= 1.0.0)
     coderay (1.0.9)
     connection_pool (1.0.0)
     crack (0.3.2)
-    dalli (2.6.3)
-    database_cleaner (0.9.1)
+    dalli (2.6.4)
+    database_cleaner (1.0.1)
     diff-lcs (1.2.4)
     dotenv (0.7.0)
     dotenv-rails (0.7.0)
@@ -94,11 +94,11 @@ GEM
       thor (>= 0.14.6)
     guard-pow (1.0.0)
       guard (>= 1.1)
-    guard-rspec (3.0.0)
+    guard-rspec (3.0.1)
       guard (>= 1.8)
       rspec (~> 2.13)
     has_scope (0.5.1)
-    her (0.6.6)
+    her (0.6.7)
       activemodel (>= 3.0.0)
       activesupport (>= 3.0.0)
       faraday (~> 0.8)
@@ -116,9 +116,9 @@ GEM
       aggregate (~> 0.2.2)
       faraday (~> 0.7)
       multi_json
-    librato-sidekiq (0.1.1)
+    librato-sidekiq (0.1.2)
       sidekiq
-    listen (1.1.0)
+    listen (1.1.5)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
       rb-kqueue (>= 0.2)
@@ -126,21 +126,20 @@ GEM
       actionpack
       activesupport
     lumberjack (1.0.3)
-    mail (2.5.3)
-      i18n (>= 0.4.0)
+    mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     method_source (0.8.1)
     mime-types (1.23)
     minitest (4.7.4)
-    mongoid-rspec (1.8.1)
+    mongoid-rspec (1.8.2)
       mongoid (>= 3.0.1)
       rake
       rspec (>= 2.9)
-    moped (1.4.5)
-    multi_json (1.7.3)
+    moped (1.5.0)
+    multi_json (1.7.5)
     multipart-post (1.2.0)
-    newrelic_rpm (3.6.2.96)
+    newrelic_rpm (3.6.3.104)
     origin (1.1.0)
     polyglot (0.3.3)
     pry (0.9.12.2)
@@ -186,7 +185,7 @@ GEM
     rspec-expectations (2.13.0)
       diff-lcs (>= 1.1.3, < 2.0)
     rspec-mocks (2.13.1)
-    rspec-rails (2.13.1)
+    rspec-rails (2.13.2)
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       railties (>= 3.0)
@@ -196,14 +195,14 @@ GEM
     ruby_gntp (0.3.4)
     shoulda-matchers (2.1.0)
       activesupport (>= 3.0.0)
-    sidekiq (2.11.2)
-      celluloid (>= 0.13.0)
+    sidekiq (2.12.1)
+      celluloid (>= 0.14.1)
       connection_pool (>= 1.0.0)
-      multi_json
+      json
       redis (>= 3.0)
       redis-namespace
-    slop (3.4.4)
-    sprockets (2.9.3)
+    slop (3.4.5)
+    sprockets (2.10.0)
       hike (~> 1.2)
       multi_json (~> 1.0)
       rack (~> 1.0)
@@ -233,7 +232,7 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
-    vcr (2.4.0)
+    vcr (2.5.0)
     webmock (1.9.3)
       addressable (>= 2.2.7)
       crack (>= 0.3.2)
