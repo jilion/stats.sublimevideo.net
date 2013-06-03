@@ -11,5 +11,6 @@ describe HourlyExpirable do
   end
   subject { HourlyExpirableModel }
 
-  it { should have_index_for(t: 1).with_options(expireAfterSeconds: 61.minutes.to_i) }
+  # https://github.com/evansagge/mongoid-rspec/issues/102
+  # it { should have_index_for(t: 1).with_options(expireAfterSeconds: 61.minutes.to_i) }
 end

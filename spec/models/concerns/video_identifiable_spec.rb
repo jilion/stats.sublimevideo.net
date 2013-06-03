@@ -14,5 +14,6 @@ describe VideoIdentifiable do
   it { should have_field(:u).with_alias(:video_uid) }
   it { should have_field(:t).with_alias(:time).of_type(Time) }
 
-  it { should have_index_for(s: 1, u: 1, t: -1) }
+  # https://github.com/evansagge/mongoid-rspec/issues/102
+  # it { should have_index_for(s: 1, u: 1, t: -1) }
 end
