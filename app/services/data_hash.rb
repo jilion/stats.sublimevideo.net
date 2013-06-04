@@ -63,6 +63,8 @@ class DataHash < Hash
     case te
     when 'h' then 'html'
     when 'f' then 'flash'
+    when 'y' then 'youtube'
+    when 'd' then 'dailymotion'
     end
   end
 

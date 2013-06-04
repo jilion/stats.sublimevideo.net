@@ -63,5 +63,7 @@ describe DataHash do
   describe "#tech" do
     specify { DataHash.new('te' => 'h').tech.should eq 'html' }
     specify { DataHash.new('te' => 'f').tech.should eq 'flash' }
+    specify { DataHash.new('te' => 'y').tech.should eq 'youtube' }
+    specify { DataHash.new('te' => 'd').tech.should eq 'dailymotion' }
   end
 end
