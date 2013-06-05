@@ -1,5 +1,3 @@
-require 'mongoid'
-
 module LastStatsable
   extend ActiveSupport::Concern
 

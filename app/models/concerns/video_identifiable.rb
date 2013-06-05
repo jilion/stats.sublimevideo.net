@@ -1,5 +1,3 @@
-require 'mongoid'
-
 module VideoIdentifiable
   extend ActiveSupport::Concern
 

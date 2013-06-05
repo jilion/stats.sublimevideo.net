@@ -1,5 +1,3 @@
-require 'mongoid'
-
 module SiteIdentifiable
   extend ActiveSupport::Concern
 

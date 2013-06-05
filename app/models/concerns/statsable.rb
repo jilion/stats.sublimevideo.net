@@ -1,5 +1,3 @@
-require 'mongoid'
-
 module Statsable
   extend ActiveSupport::Concern
 

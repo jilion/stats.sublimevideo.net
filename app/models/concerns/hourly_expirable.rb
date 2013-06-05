@@ -1,5 +1,3 @@
-require 'mongoid'
-
 module HourlyExpirable
   extend ActiveSupport::Concern
 
