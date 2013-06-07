@@ -7,7 +7,8 @@ describe SiteAdminStatUpdaterWorker do
     SiteAdminStatUpdaterWorker.sidekiq_options_hash['queue'].should eq 'stats'
   end
 
-  describe ".perform" do
+  describe "#perform" do
+    let(:worker) { SiteAdminStatUpdaterWorker.new }
     let(:site_args) { { site_token: 'site_token', time: Time.now.to_i } }
     let(:data_hash) { OpenStruct.new(data) }
     before { DataHash.stub(:new) { data_hash } }
@@ -21,7 +22,7 @@ describe SiteAdminStatUpdaterWorker do
           :$inc => { 'al.m' => 1 },
           :$set => { 'ss' => '1' },
           :$addToSet => { 'sa' => 'a' })
-        SiteAdminStatUpdaterWorker.new.perform(site_args, event_field, data)
+        worker.perform(site_args, event_field, data)
       end
     end
 
@@ -33,7 +34,7 @@ describe SiteAdminStatUpdaterWorker do
       it "increments app_loads stats" do
         SiteAdminStat.should_receive(:update_stats).with(site_args,
           :$inc => { 'lo.e' => 1 })
-        SiteAdminStatUpdaterWorker.new.perform(site_args, event_field, data)
+        worker.perform(site_args, event_field, data)
       end
     end
 
@@ -46,7 +47,7 @@ describe SiteAdminStatUpdaterWorker do
         SiteAdminStat.should_receive(:update_stats).with(site_args,
           :$inc => { 'st.w' => 1 },
           :$push => { 'pa' => { :$each => 'document_url', :$slice => -10 } })
-        SiteAdminStatUpdaterWorker.new.perform(site_args, event_field, data)
+        worker.perform(site_args, event_field, data)
       end
     end
 
