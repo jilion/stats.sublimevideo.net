@@ -28,6 +28,77 @@ describe StatsMigratorWorker do
         worker.perform(stat_class, data)
       end
     end
-  end
 
+    context "with Stat::Video::Day stat" do
+      let(:stat_class) { 'Stat::Video::Day' }
+      let(:time) { 3.days.ago.utc.beginning_of_day }
+      let(:data) { {
+        'site_token' => 'site_token',
+        'video_uid' => video_uid,
+        'time' => time,
+        'video_views' => { 'm' => 1, 'e' => 2, 's' => 3, 'd' => 4, 'i' => 5, 'em' => 6 },
+        'video_loads' => { 'm' => 1, 'e' => 2, 's' => 3, 'd' => 4, 'i' => 5, 'em' => 6 },
+        'player_mode_and_device' => { 'h' => { 'd' => 1, 'm' => 2 }, 'f' => { 'd' => 3, 'm' => 4 } },
+        'browser_and_platform' => { "saf-win" => 2, "saf-osx" => 4 } } }
+      before {
+        SiteAdminStat.stub(:update_stats)
+        SiteStat.stub(:update_stats)
+        VideoStat.stub(:update_stats)
+      }
+
+      context "with valid uid" do
+        let(:video_uid) { 'valid_uid' }
+
+        it "updates SiteAdminStat" do
+          SiteAdminStat.should_receive(:update_stats).with(
+            { site_token: 'site_token', time: time },
+            { :$inc => {
+              'lo.w' => 1 + 2, 'lo.e' => 6,
+              'st.w' => 1 + 2, 'st.e' => 6 } })
+          worker.perform(stat_class, data)
+        end
+
+        it "updates SiteStat" do
+          SiteStat.should_receive(:update_stats).with(
+            { site_token: 'site_token', time: time },
+            { :$inc => {
+              'lo.w' => 1 + 2, 'lo.e' => 6,
+              'st.w' => 1 + 2, 'st.e' => 6,
+              'de.w.d' => 1 + 3, 'de.w.m' => 2 + 4,
+              'bp.w.saf-win' => 2, 'bp.w.saf-osx' => 4 } })
+          worker.perform(stat_class, data)
+        end
+
+        it "updates VideoStat" do
+          VideoStat.should_receive(:update_stats).with(
+            { site_token: 'site_token', video_uid: video_uid, time: time },
+            { :$inc => {
+              'lo.w' => 1 + 2, 'lo.e' => 6,
+              'st.w' => 1 + 2, 'st.e' => 6,
+              'de.w.d' => 1 + 3, 'de.w.m' => 2 + 4,
+              'bp.w.saf-win' => 2, 'bp.w.saf-osx' => 4 } })
+          worker.perform(stat_class, data)
+        end
+      end
+
+      context "with invalid uid" do
+        let(:video_uid) { 'invalid_uid!$%?' }
+
+        it "updates SiteAdminStat" do
+          SiteAdminStat.should_receive(:update_stats)
+          worker.perform(stat_class, data)
+        end
+
+        it "doesn't updates SiteStat" do
+          SiteStat.should_not_receive(:update_stats)
+          worker.perform(stat_class, data)
+        end
+
+        it "doesn't updates VideoStat" do
+          VideoStat.should_not_receive(:update_stats)
+          worker.perform(stat_class, data)
+        end
+      end
+    end
+  end
 end
