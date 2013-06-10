@@ -20,7 +20,7 @@ describe Statsable do
     let(:key_id) { 'key_id' }
     let(:time) { Time.now.to_i }
     let(:args) { { key_id: key_id, time: time } }
-    let(:data) { mock('DataHash', source_key: 'w') }
+    let(:data) { mock('DataHash', source_key: 'w', hostname: 'main') }
 
     it "precises time to hour" do
       StatsableModel.inc_stats(args, :loads, data)
@@ -37,7 +37,7 @@ describe Statsable do
     context "with loads event field" do
       let(:event_field) { :loads }
 
-      context "external event" do
+      context "main external event" do
         before { data.stub(source_key: 'e') }
 
         it "increments externals loads" do
@@ -45,12 +45,32 @@ describe Statsable do
           StatsableModel.last.external(:loads).should eq 1
         end
       end
+
+      context "extra website event" do
+        before { data.stub(hostname: 'extra') }
+
+        it "increments externals loads" do
+          StatsableModel.inc_stats(args, event_field, data)
+          StatsableModel.last.website(:loads).should eq 1
+        end
+      end
+
+      %w[staging dev invalid].each do |hostname|
+        context "#{hostname} website event" do
+          before { data.stub(hostname: hostname) }
+
+          it "doesn't increments stat" do
+            StatsableModel.inc_stats(args, event_field, data)
+            StatsableModel.last.should be_nil
+          end
+        end
+      end
     end
 
     context "with starts event field" do
       let(:event_field) { :starts }
 
-      context "external event" do
+      context "main website event" do
         before {
           data.stub(d: 'm')
           data.stub(country_code: 'ch')
@@ -65,6 +85,37 @@ describe Statsable do
           stat.website(:devices).should eq({'m' => 1})
           stat.website(:countries).should eq({'ch' => 1})
           stat.website(:browser_and_platform).should eq({'saf-osx' => 1})
+        end
+      end
+
+      context "extra external event" do
+        before {
+          data.stub(hostname: 'extra')
+          data.stub(source_key: 'e')
+          data.stub(d: 'm')
+          data.stub(country_code: 'ch')
+          data.stub(browser_code: 'saf')
+          data.stub(platform_code: 'osx')
+        }
+
+        it "increments website stats" do
+          StatsableModel.inc_stats(args, event_field, data)
+          stat = StatsableModel.last
+          stat.external(:starts).should eq 1
+          stat.external(:devices).should eq({'m' => 1})
+          stat.external(:countries).should eq({'ch' => 1})
+          stat.external(:browser_and_platform).should eq({'saf-osx' => 1})
+        end
+      end
+
+      %w[staging dev invalid].each do |hostname|
+        context "#{hostname} website event" do
+          before { data.stub(hostname: hostname) }
+
+          it "doesn't increments stat" do
+            StatsableModel.inc_stats(args, event_field, data)
+            StatsableModel.last.should be_nil
+          end
         end
       end
     end

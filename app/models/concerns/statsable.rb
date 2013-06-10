@@ -11,6 +11,7 @@ module Statsable
 
   module ClassMethods
     def inc_stats(args, event_field, data)
+      return unless data.hostname.in? %w[main extra]
       args = _hour_precise_time(args)
       stat = where(args)
       stat.find_and_modify(
