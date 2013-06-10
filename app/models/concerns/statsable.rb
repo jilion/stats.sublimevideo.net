@@ -10,14 +10,16 @@ module Statsable
   end
 
   module ClassMethods
-    def inc_stats(args, event_field, data)
-      return unless data.hostname.in? %w[main extra]
+    def update_stats(args, updates)
       args = _hour_precise_time(args)
       stat = where(args)
-      stat.find_and_modify(
-        { :$inc => _incs(event_field, data) },
-        upsert: true,
-        new: true)
+      stat.find_and_modify(updates, upsert: true, new: true)
+    end
+
+    def inc_stats(args, event_field, data)
+      return unless data.hostname.in? %w[main extra]
+      updates = { :$inc => _incs(event_field, data) }
+      update_stats(args, updates)
     end
 
     private
