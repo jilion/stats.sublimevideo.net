@@ -1,4 +1,5 @@
 require 'sidekiq'
+require 'kiqstand'
 
 Sidekiq.configure_server do |config|
   # http://mongoid.org/en/mongoid/docs/tips.html#sidekiq
