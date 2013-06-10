@@ -29,8 +29,8 @@ describe SiteAdminStat do
     end
 
     it "updates with $set" do
-      SiteAdminStat.update_stats(args, :$set => { 'ss' => true })
-      SiteAdminStat.last.ssl.should be_true
+      SiteAdminStat.update_stats(args, :$set => { 'ss' => false })
+      SiteAdminStat.last.ssl.should be_false
     end
 
     it "updates with $addToSet" do

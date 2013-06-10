@@ -15,16 +15,16 @@ describe StatsMigratorWorker do
       let(:time) { 3.days.ago.utc.beginning_of_day }
       let(:data) { {
         'site_token' => 'site_token',
-        'time' => time,
-        'app_loads' => { 'm' => 1, 'e' => 2, 's' => 3, 'd' => 4, 'i' => 5, 'em' => 6 },
-        'stages' => %w[stable beta],
-        'ssl' => true } }
+        'time' => time.to_s,
+        'app_loads' => { 'm' => '1', 'e' => '2', 's' => '3', 'd' => '4', 'i' => '5', 'em' => '6' },
+        'stages' => %w[s b],
+        'ssl' => 'true' } }
 
       it "updates SiteAdminStat" do
         SiteAdminStat.should_receive(:update_stats).with(
           { site_token: 'site_token', time: time },
           { :$inc => { 'al.m' => 1, 'al.e' => 2, 'al.s' => 3, 'al.d' => 4, 'al.i' => 5 },
-            :$set => { 'ss' => true, 'sa' => %w[stable beta] } })
+            :$set => { 'ss' => true, 'sa' => %w[s b] } })
         worker.perform(stat_class, data)
       end
     end
@@ -35,11 +35,11 @@ describe StatsMigratorWorker do
       let(:data) { {
         'site_token' => 'site_token',
         'video_uid' => video_uid,
-        'time' => time,
-        'video_views' => { 'm' => 1, 'e' => 2, 's' => 3, 'd' => 4, 'i' => 5, 'em' => 6 },
-        'video_loads' => { 'm' => 1, 'e' => 2, 's' => 3, 'd' => 4, 'i' => 5, 'em' => 6 },
-        'player_mode_and_device' => { 'h' => { 'd' => 1, 'm' => 2 }, 'f' => { 'd' => 3, 'm' => 4 } },
-        'browser_and_platform' => { "saf-win" => 2, "saf-osx" => 4 } } }
+        'time' => time.to_s,
+        'video_views' => { 'm' => '1', 'e' => '2', 's' => '3', 'd' => '4', 'i' => '5', 'em' => '6' },
+        'video_loads' => { 'm' => '1', 'e' => '2', 's' => '3', 'd' => '4', 'i' => '5', 'em' => '6' },
+        'player_mode_and_device' => { 'h' => { 'd' => '1', 'm' => '2' }, 'f' => { 'd' => '3', 'm' => '4' } },
+        'browser_and_platform' => { "saf-win" => '2', "saf-osx" => '4' } } }
       before {
         SiteAdminStat.stub(:update_stats)
         SiteStat.stub(:update_stats)

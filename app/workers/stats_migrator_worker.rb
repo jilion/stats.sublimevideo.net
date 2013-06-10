@@ -20,13 +20,15 @@ class StatsMigratorWorker
   def _migrate_stat_site_day
     updates = {
       :$inc => _app_loads_inc,
-      :$set => { 'ss' => data[:ssl], 'sa' => data[:stages] } }
+      :$set => {
+        'ss' => data[:ssl] == 'true',
+        'sa' => data[:stages] } }
     SiteAdminStat.update_stats(_site_args, updates)
   end
 
   def _app_loads_inc
     loads = data[:app_loads].slice(*%w[m e s d i])
-    loads = loads.map { |k, v| ["al.#{k}", v] }
+    loads = loads.map { |k, v| ["al.#{k}", v.to_i] }
     Hash[*loads.flatten]
   end
 
@@ -40,28 +42,23 @@ class StatsMigratorWorker
 
   def _admin_stat_updates
     { :$inc => [
-      _video_loads_inc,
-      _video_views_inc
+      _sum_inc(:video_loads, :lo),
+      _sum_inc(:video_views, :st)
     ].inject(:merge) }
   end
 
   def _stat_updates
     { :$inc => [
-      _video_loads_inc,
-      _video_views_inc,
+      _sum_inc(:video_loads, :lo),
+      _sum_inc(:video_views, :st),
       _player_mode_and_device_inc,
       _browser_and_platform_inc
     ].inject(:merge) }
   end
 
-  def _video_loads_inc
-    { 'lo.w' => data[:video_loads]['m'] + data[:video_loads]['e'],
-      'lo.e' => data[:video_loads]['em'] }
-  end
-
-  def _video_views_inc
-    { 'st.w' => data[:video_views]['m'] + data[:video_views]['e'],
-      'st.e' => data[:video_views]['em'] }
+  def _sum_inc(key, field)
+    { "#{field}.w" => data[key]['m'].to_i + data[key]['e'].to_i,
+      "#{field}.e" => data[key]['em'].to_i }
   end
 
   def _player_mode_and_device_inc
@@ -72,16 +69,20 @@ class StatsMigratorWorker
   end
 
   def _browser_and_platform_inc
-    bp = data[:browser_and_platform].map { |k, v| ["bp.w.#{k}", v] }
+    bp = data[:browser_and_platform].map { |k, v| ["bp.w.#{k}", v.to_i] }
     Hash[*bp.flatten]
   end
 
   def _site_args
-    data.slice(:site_token, :time)
+    data.slice(:site_token).merge(time: _parsed_time)
   end
 
   def _video_args
-    data.slice(:site_token, :video_uid, :time)
+    data.slice(:site_token, :video_uid).merge(time: _parsed_time)
+  end
+
+  def _parsed_time
+    Time.parse(data[:time])
   end
 
   def _valid_video_uid?
