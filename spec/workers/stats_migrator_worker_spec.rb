@@ -36,8 +36,8 @@ describe StatsMigratorWorker do
         'site_token' => 'site_token',
         'video_uid' => video_uid,
         'time' => time.to_s,
-        'video_views' => { 'm' => '1', 'e' => '2', 's' => '3', 'd' => '4', 'i' => '5', 'em' => '6' },
-        'video_loads' => { 'm' => '1', 'e' => '2', 's' => '3', 'd' => '4', 'i' => '5', 'em' => '6' },
+        'loads' => { 'm' => '1', 'e' => '2', 's' => '3', 'd' => '4', 'i' => '5', 'em' => '6' },
+        'starts' => { 'm' => '1', 'e' => '2', 's' => '3', 'd' => '4', 'i' => '5', 'em' => '6' },
         'player_mode_and_device' => { 'h' => { 'd' => '1', 'm' => '2' }, 'f' => { 'd' => '3', 'm' => '4' } },
         'browser_and_platform' => { "saf-win" => '2', "saf-osx" => '4' } } }
       before {

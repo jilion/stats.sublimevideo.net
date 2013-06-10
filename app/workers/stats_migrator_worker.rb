@@ -42,15 +42,15 @@ class StatsMigratorWorker
 
   def _admin_stat_updates
     { :$inc => [
-      _sum_inc(:video_loads, :lo),
-      _sum_inc(:video_views, :st)
+      _sum_inc(:loads, :lo),
+      _sum_inc(:starts, :st)
     ].inject(:merge) }
   end
 
   def _stat_updates
     { :$inc => [
-      _sum_inc(:video_loads, :lo),
-      _sum_inc(:video_views, :st),
+      _sum_inc(:loads, :lo),
+      _sum_inc(:starts, :st),
       _player_mode_and_device_inc,
       _browser_and_platform_inc
     ].inject(:merge) }
