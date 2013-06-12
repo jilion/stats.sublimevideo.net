@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe SiteAdminStat do
+  let(:site_token) { 'site_token' }
+
   it { should be_kind_of Mongoid::Document }
   it { should be_kind_of SiteIdentifiable }
 
@@ -13,7 +15,7 @@ describe SiteAdminStat do
 
   describe ".update_stats" do
     let(:time) { Time.now.to_i }
-    let(:args) { { site_token: 'site_token', time: time } }
+    let(:args) { { site_token: site_token, time: time } }
     let(:updates) { { :$inc => { 'al.m' => 1 } } }
 
     it "precises time to day" do
@@ -47,8 +49,6 @@ describe SiteAdminStat do
   end
 
   describe ".last_pages" do
-    let(:site_token) { 'site_token' }
-
     before {
       SiteAdminStat.create(site_token: site_token, time: 1.days.ago, pages: %w[url1 url2])
       SiteAdminStat.create(site_token: site_token, time: 2.days.ago, pages: %w[url2 url3 url4])
@@ -57,6 +57,16 @@ describe SiteAdminStat do
 
     it "returns last most used pages" do
       SiteAdminStat.last_pages(site_token, limit: 3).should eq %w[url2 url3 url1]
+    end
+  end
+
+  describe ".last_without_pages" do
+    let!(:stat1) { SiteAdminStat.create(site_token: site_token, time: 3.days.ago) }
+    let!(:stat2) { SiteAdminStat.create(site_token: site_token, time: 2.days.ago) }
+    let!(:stat3) { SiteAdminStat.create(site_token: site_token, time: 1.days.ago, pages: %w[url1]) }
+
+    it "returns last without pages" do
+      SiteAdminStat.last_without_pages(site_token).should eq stat2
     end
   end
 end

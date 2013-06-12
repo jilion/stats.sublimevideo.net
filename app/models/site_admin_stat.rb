@@ -28,6 +28,10 @@ class SiteAdminStat
     pages.shift(limit)
   end
 
+  def self.last_without_pages(site_token)
+    where(site_token: site_token, pages: nil).order_by(time: :desc).first
+  end
+
   def stages
     read_attribute(:sa).map do |stage|
       case stage
