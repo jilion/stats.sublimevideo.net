@@ -3,7 +3,7 @@ source 'https://8dezqz7z7HWea9vtaFwg@gem.fury.io/me/' # thibaud@jilion.com accou
 
 ruby '2.0.0'
 
-gem 'rails', '4.0.0.rc2'
+gem 'rails', '4.0.0'
 
 gem 'sublime_video_private_api', '~> 1.0' # hosted on gemfury
 
