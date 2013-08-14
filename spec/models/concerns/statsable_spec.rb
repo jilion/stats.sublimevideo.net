@@ -20,7 +20,7 @@ describe Statsable do
     let(:key_id) { 'key_id' }
     let(:time) { Time.now.to_i }
     let(:args) { { key_id: key_id, time: time } }
-    let(:data) { mock('DataHash', source_key: 'w', hostname: 'main') }
+    let(:data) { double('DataHash', source_key: 'w', hostname: 'main') }
 
     it "precises time to hour" do
       StatsableModel.inc_stats(args, :loads, data)

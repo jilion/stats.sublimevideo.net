@@ -29,14 +29,14 @@ describe DataHash do
 
   describe "#browser_code" do
     it "uses UserAgentWrapper" do
-      UserAgentWrapper.should_receive(:new).with('user agent') { mock('user_agent', browser_code: 'saf' ) }
+      UserAgentWrapper.should_receive(:new).with('user agent') { double('user_agent', browser_code: 'saf' ) }
       DataHash.new('ua' => 'user agent').browser_code.should eq 'saf'
     end
   end
 
   describe "#platform_code" do
     it "uses UserAgentWrapper" do
-      UserAgentWrapper.should_receive(:new).with('user agent') { mock('user_agent', platform_code: 'osx' ) }
+      UserAgentWrapper.should_receive(:new).with('user agent') { double('user_agent', platform_code: 'osx' ) }
       DataHash.new('ua' => 'user agent').platform_code.should eq 'osx'
     end
   end

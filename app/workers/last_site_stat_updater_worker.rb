@@ -7,6 +7,6 @@ class LastSiteStatUpdaterWorker
   sidekiq_options queue: 'stats'
 
   def perform(site_args, field)
-    LastSiteStat.inc_stat(site_args, field)
+    LastSiteStat.inc_stat(site_args.symbolize_keys, field)
   end
 end

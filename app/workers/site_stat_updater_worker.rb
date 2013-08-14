@@ -9,6 +9,6 @@ class SiteStatUpdaterWorker
 
   def perform(site_args, event_field, data)
     data = DataHash.new(data)
-    SiteStat.inc_stats(site_args, event_field, data)
+    SiteStat.inc_stats(site_args.symbolize_keys, event_field, data)
   end
 end

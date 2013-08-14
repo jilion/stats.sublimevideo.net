@@ -9,6 +9,6 @@ class VideoStatUpdaterWorker
 
   def perform(video_args, event_field, data)
     data = DataHash.new(data)
-    VideoStat.inc_stats(video_args, event_field, data)
+    VideoStat.inc_stats(video_args.symbolize_keys, event_field, data)
   end
 end

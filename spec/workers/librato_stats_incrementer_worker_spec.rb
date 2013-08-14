@@ -8,7 +8,7 @@ describe LibratoStatsIncrementerWorker do
   end
 
   describe ".perform" do
-    let(:data_hash) { mock('dataHash',
+    let(:data_hash) { double('dataHash',
       country_code: 'ch',
       browser_code: 'saf',
       platform_code: 'osx'

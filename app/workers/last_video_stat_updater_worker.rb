@@ -7,6 +7,6 @@ class LastVideoStatUpdaterWorker
   sidekiq_options queue: 'stats'
 
   def perform(video_args, field)
-    LastVideoStat.inc_stat(video_args, field)
+    LastVideoStat.inc_stat(video_args.symbolize_keys, field)
   end
 end

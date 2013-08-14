@@ -12,7 +12,7 @@ describe SiteAdminPagesMigratorWorker do
   describe "#perform" do
     let(:site_token) { 'site_token' }
     let(:pages) { %w[old_url] }
-    let(:site_admin_stat) { mock(SiteAdminStat) }
+    let(:site_admin_stat) { double(SiteAdminStat) }
 
     it "updates last site_admin_stat without pages" do
       SiteAdminStat.should_receive(:last_without_pages).with(site_token) { site_admin_stat }
