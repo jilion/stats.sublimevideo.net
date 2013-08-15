@@ -46,7 +46,7 @@ describe SiteAdminStatUpdaterWorker do
       it "increments app_loads stats and pushes document url to pages" do
         SiteAdminStat.should_receive(:update_stats).with(site_args,
           :$inc => { 'st.w' => 1 },
-          :$push => { 'pa' => { :$each => 'document_url', :$slice => -10 } })
+          :$push => { 'pa' => { :$each => ['document_url'], :$slice => -10 } })
         worker.perform(site_args, event_field, data)
       end
     end

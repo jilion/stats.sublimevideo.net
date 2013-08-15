@@ -29,6 +29,6 @@ class SiteAdminStatUpdaterWorker
 
   def _updates_for_starts
     { :$inc =>  { "st.#{data.source_key}" => 1 },
-      :$push => { 'pa' => { :$each => data.du, :$slice => -10 } } }
+      :$push => { 'pa' => { :$each => [data.du].compact, :$slice => -10 } } }
   end
 end
