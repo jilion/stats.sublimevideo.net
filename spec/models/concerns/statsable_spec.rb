@@ -72,7 +72,7 @@ describe Statsable do
 
       context "main website event" do
         before {
-          data.stub(d: 'm')
+          data.stub(de: 'm')
           data.stub(country_code: 'ch')
           data.stub(browser_code: 'saf')
           data.stub(platform_code: 'osx')
@@ -92,7 +92,7 @@ describe Statsable do
         before {
           data.stub(hostname: 'extra')
           data.stub(source_key: 'e')
-          data.stub(d: 'm')
+          data.stub(de: 'm')
           data.stub(country_code: 'ch')
           data.stub(browser_code: 'saf')
           data.stub(platform_code: 'osx')

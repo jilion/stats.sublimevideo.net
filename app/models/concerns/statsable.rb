@@ -35,7 +35,7 @@ module Statsable
         { "lo.#{data.source_key}" => 1 }
       when :starts
         { "st.#{data.source_key}" => 1,
-          "de.#{data.source_key}.#{data.d}" => 1,
+          "de.#{data.source_key}.#{data.de}" => 1,
           "co.#{data.source_key}.#{data.country_code}" => 1,
           "bp.#{data.source_key}.#{data.browser_code}-#{data.platform_code}" => 1 }
       end
