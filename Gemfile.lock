@@ -1,11 +1,11 @@
 GIT
-  remote: git://github.com/jilion/useragent.git
+  remote: https://github.com/jilion/useragent.git
   revision: 9fd0f887527850994c543caa7cf5327bd635dc02
   specs:
     useragent (0.2.3)
 
 GIT
-  remote: git://github.com/librato/librato-rails.git
+  remote: https://github.com/librato/librato-rails.git
   revision: 82a95ae54f2ed990135a7b655293107384da2796
   branch: feature/rack_first
   specs:
@@ -14,7 +14,7 @@ GIT
       rails (>= 3.0)
 
 GIT
-  remote: git://github.com/mongoid/kiqstand.git
+  remote: https://github.com/mongoid/kiqstand.git
   revision: fdd5ea62293707fe044180a220670b0142314d04
   specs:
     kiqstand (1.2.0)
@@ -22,8 +22,8 @@ GIT
       moped (~> 1.4)
 
 GIT
-  remote: git://github.com/mongoid/mongoid.git
-  revision: 29672adc7ccbe51c7dce49934432d391a4a0b13a
+  remote: https://github.com/mongoid/mongoid.git
+  revision: 80ed36f0b7697df988ec8ba15003a6c055686707
   specs:
     mongoid (4.0.0)
       activemodel (~> 4.0.0)

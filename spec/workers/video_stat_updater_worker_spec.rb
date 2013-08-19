@@ -13,7 +13,7 @@ describe VideoStatUpdaterWorker do
 
     it "increments stats on VideoStat" do
       VideoStat.should_receive(:inc_stats).with(video_args, :loads, data)
-      VideoStatUpdaterWorker.new.perform(video_args, :loads, data)
+      VideoStatUpdaterWorker.new.perform(video_args, 'loads', data)
     end
   end
 end
