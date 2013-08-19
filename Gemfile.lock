@@ -199,7 +199,7 @@ GEM
       rspec-mocks (~> 2.14.0)
     ruby_gntp (0.3.4)
     safe_yaml (0.9.5)
-    shoulda-matchers (2.2.0)
+    shoulda-matchers (2.3.0)
       activesupport (>= 3.0.0)
     sidekiq (2.13.1)
       celluloid (>= 0.14.1)
@@ -232,7 +232,7 @@ GEM
     tilt (1.4.1)
     timecop (0.6.3)
     timers (1.1.0)
-    treetop (1.4.14)
+    treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
     tzinfo (0.3.37)
