@@ -13,7 +13,7 @@ gem 'kiqstand', github: 'mongoid/kiqstand'
 gem 'sidekiq'
 
 gem 'honeybadger'
-gem 'librato-rails', github: 'librato/librato-rails', branch: 'feature/rack_first'
+gem 'librato-rails', github: 'librato/librato-rails'
 gem 'librato-sidekiq'
 
 gem 'rack-status'
@@ -26,6 +26,7 @@ gem 'useragent', github: 'jilion/useragent' # needed for stat_request_parser
 group :staging, :production do
   gem 'unicorn'
   gem 'lograge'
+  gem 'memcachier'
   gem 'dalli'
   gem 'rack-cache'
 end
