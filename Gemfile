@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-source 'https://8dezqz7z7HWea9vtaFwg@gem.fury.io/me/' # thibaud@jilion.com account
+source 'https://8dezqz7z7HWea9vtaFwg:@gem.fury.io/me/' # thibaud@jilion.com account
 
 ruby '2.0.0'
 
@@ -13,7 +13,7 @@ gem 'kiqstand', github: 'mongoid/kiqstand'
 gem 'sidekiq'
 
 gem 'honeybadger'
-gem 'librato-rails', github: 'librato/librato-rails'
+gem 'librato-rails'
 gem 'librato-sidekiq'
 
 gem 'rack-status'
@@ -24,11 +24,12 @@ gem 'geoip'
 gem 'useragent', github: 'jilion/useragent' # needed for stat_request_parser
 
 group :staging, :production do
-  gem 'unicorn'
+  gem 'unicorn', require: false
   gem 'lograge'
   gem 'memcachier'
   gem 'dalli'
   gem 'rack-cache'
+  gem 'rails_12factor'
 end
 
 group :development, :test do
@@ -38,10 +39,10 @@ end
 
 group :development do
   # Guard
-  gem 'ruby_gntp'
+  gem 'ruby_gntp', require: false
 
-  gem 'guard-pow'
-  gem 'guard-rspec'
+  gem 'guard-pow', require: false
+  gem 'guard-rspec', require: false
 end
 
 group :test do
