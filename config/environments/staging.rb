@@ -1,6 +1,9 @@
 StatsSublimeVideo::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  # One-line logs
+  config.lograge.enabled = true
+
   # Code is not reloaded between requests.
   config.cache_classes = true
 
@@ -61,5 +64,5 @@ StatsSublimeVideo::Application.configure do
   # config.autoflush_log = false
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
-  config.log_formatter = ::Logger::Formatter.new
+  # config.log_formatter = ::Logger::Formatter.new
 end
