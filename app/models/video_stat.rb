@@ -8,5 +8,6 @@ class VideoStat
   include Mongoid::Document
   include VideoIdentifiable
   include Statsable
+  include LastHoursFindable
   include LastDaysStartsFindable
 end

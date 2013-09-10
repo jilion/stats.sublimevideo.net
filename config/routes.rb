@@ -6,7 +6,7 @@ StatsSublimeVideo::Application.routes.draw do
       get 'last_days_starts', on: :member
     end
     scope "/sites/:site_token" do
-      resources :video_stats, only: [] do
+      resources :video_stats, only: [:show] do
         get 'last_days_starts', on: :member
       end
     end
