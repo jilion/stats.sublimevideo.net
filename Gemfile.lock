@@ -67,6 +67,7 @@ GEM
     dotenv (0.9.0)
     dotenv-rails (0.9.0)
       dotenv (= 0.9.0)
+    encrypted_strings (0.3.3)
     erubis (2.7.0)
     factory_girl (4.2.0)
       activesupport (>= 3.0.0)
@@ -250,6 +251,7 @@ DEPENDENCIES
   dalli
   database_cleaner
   dotenv-rails
+  encrypted_strings
   factory_girl_rails
   geoip
   guard-pow

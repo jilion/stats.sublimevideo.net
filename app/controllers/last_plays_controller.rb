@@ -1,4 +1,6 @@
 class LastPlaysController < ActionController::Base
+  before_action :_verify_site_token_and_video_uid, only: :index
+
   include ActionController::Live
 
   # GET /plays
@@ -18,6 +20,15 @@ class LastPlaysController < ActionController::Base
   end
 
   private
+
+  def _verify_site_token_and_video_uid
+    key = params[:auth].decrypt(:symmetric)
+    matches = key.match(/([a-z0-9]{8}):(.*)/)
+    @site_token = matches[1]
+    @video_uid = matches[2]
+  rescue
+    render status: 401
+  end
 
   def _set_response_headers
     response.headers['Access-Control-Allow-Origin'] = '*'
