@@ -24,7 +24,7 @@ gem 'geoip'
 gem 'useragent', github: 'jilion/useragent' # needed for stat_request_parser
 
 group :staging, :production do
-  gem 'unicorn', require: false
+  gem 'puma', require: false
   gem 'lograge'
   gem 'memcachier'
   gem 'dalli'

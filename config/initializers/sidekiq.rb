@@ -9,5 +9,5 @@ Sidekiq.configure_server do |config|
 end
 
 Sidekiq.configure_client do |config|
-  config.redis = { size: 2 } # for web dyno
+  config.redis = { size: 16 } # for web dyno
 end
