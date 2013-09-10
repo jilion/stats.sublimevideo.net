@@ -11,7 +11,9 @@ class LastPlayCreatorWorker
 
   def perform(data)
     @data = DataHash.new(data)
-    LastPlay.create(_params)
+    params = _params
+    LastPlay.create(params)
+    _publish_on_redis(params)
   end
 
   private
@@ -24,4 +26,8 @@ class LastPlayCreatorWorker
     hash
   end
 
+  def _publish_on_redis(params)
+    channel = "#{params['s']}:#{params['u']}"
+    Sidekiq.redis { |con| con.publish(channel, params['t']) }
+  end
 end

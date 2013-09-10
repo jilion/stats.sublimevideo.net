@@ -20,7 +20,9 @@ describe LastPlayCreatorWorker do
       'ua' => 'USER AGENT',
       'ip' => '84.226.128.23'
     } }
+    let(:redis) { double('Redis', publish: true) }
     before {
+      Sidekiq.stub(:redis).and_yield(redis)
       DataHash.stub(:new) { data }
       data.stub(:country_code) { 'ch' }
       data.stub(:browser_code) { 'saf' }
@@ -38,6 +40,11 @@ describe LastPlayCreatorWorker do
         'co' => 'ch',
         'br' => 'saf',
         'pl' => 'osx')
+      LastPlayCreatorWorker.new.perform(data)
+    end
+
+    it "publishes on redis channel" do
+      expect(redis).to receive(:publish).with("site_token:video_uid", time)
       LastPlayCreatorWorker.new.perform(data)
     end
   end

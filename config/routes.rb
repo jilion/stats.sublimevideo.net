@@ -11,4 +11,6 @@ StatsSublimeVideo::Application.routes.draw do
       end
     end
   end
+
+  resources :last_plays, only: [:index], path: 'plays'
 end
