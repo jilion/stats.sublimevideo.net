@@ -20,9 +20,9 @@ describe LastPlayCreatorWorker do
       'ua' => 'USER AGENT',
       'ip' => '84.226.128.23'
     } }
-    let(:redis) { double('Redis', publish: true) }
+    let(:pusher_wrapper) { double(PusherWrapper, trigger: true)}
     before {
-      Sidekiq.stub(:redis).and_yield(redis)
+      PusherWrapper.stub(:new) { pusher_wrapper }
       DataHash.stub(:new) { data }
       data.stub(:country_code) { 'ch' }
       data.stub(:browser_code) { 'saf' }
@@ -43,8 +43,15 @@ describe LastPlayCreatorWorker do
       LastPlayCreatorWorker.new.perform(data)
     end
 
-    it "publishes on redis channel" do
-      expect(redis).to receive(:publish).with("site_token:video_uid", time)
+    it "triggers Pusher play event on site channel" do
+      expect(PusherWrapper).to receive(:new).with('private-site_token') { pusher_wrapper }
+      expect(pusher_wrapper).to receive(:trigger).with('play', time)
+      LastPlayCreatorWorker.new.perform(data)
+    end
+
+    it "triggers Pusher play event on video channel" do
+      expect(PusherWrapper).to receive(:new).with('private-site_token:video_uid') { pusher_wrapper }
+      expect(pusher_wrapper).to receive(:trigger).with('play', time)
       LastPlayCreatorWorker.new.perform(data)
     end
   end

@@ -22,7 +22,7 @@ gem 'newrelic_rpm'
 
 gem 'geoip'
 gem 'useragent', github: 'jilion/useragent' # needed for stat_request_parser
-gem 'encrypted_strings' # for /plays auth
+gem 'pusher'
 
 group :staging, :production do
   gem 'puma', require: false

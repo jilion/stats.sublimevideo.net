@@ -2,18 +2,19 @@ require 'sidekiq'
 
 require 'last_play'
 require 'data_hash'
+require 'pusher_wrapper'
 
 class LastPlayCreatorWorker
   include Sidekiq::Worker
   sidekiq_options queue: 'stats'
 
-  attr_accessor :data
+  attr_accessor :data, :params
 
   def perform(data)
     @data = DataHash.new(data)
-    params = _params
+    @params = _params
     LastPlay.create(params)
-    _publish_on_redis(params)
+    _trigger_pusher
   end
 
   private
@@ -26,8 +27,9 @@ class LastPlayCreatorWorker
     hash
   end
 
-  def _publish_on_redis(params)
-    channel = "#{params['s']}:#{params['u']}"
-    Sidekiq.redis { |con| con.publish(channel, params['t']) }
+  def _trigger_pusher
+    args = 'play', params['t'].to_i
+    PusherWrapper.new("private-#{params['s']}").trigger(*args)
+    PusherWrapper.new("private-#{params['s']}:#{params['u']}").trigger(*args)
   end
 end
