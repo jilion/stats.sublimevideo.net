@@ -30,6 +30,6 @@ class LastPlayCreatorWorker
   def _trigger_pusher
     args = 'play', params['t'].to_i
     PusherWrapper.new("private-#{params['s']}").trigger(*args)
-    PusherWrapper.new("private-#{params['s']}:#{params['u']}").trigger(*args)
+    PusherWrapper.new("private-#{params['s']}.#{params['u']}").trigger(*args)
   end
 end

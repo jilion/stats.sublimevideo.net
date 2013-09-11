@@ -50,7 +50,7 @@ describe LastPlayCreatorWorker do
     end
 
     it "triggers Pusher play event on video channel" do
-      expect(PusherWrapper).to receive(:new).with('private-site_token:video_uid') { pusher_wrapper }
+      expect(PusherWrapper).to receive(:new).with('private-site_token.video_uid') { pusher_wrapper }
       expect(pusher_wrapper).to receive(:trigger).with('play', time)
       LastPlayCreatorWorker.new.perform(data)
     end
