@@ -22,7 +22,7 @@ describe LastStatsable do
       LastStatsableModel.inc_stat(args, :loads)
       stat = LastStatsableModel.last
       stat.key_id.should eq key_id
-      stat.time.should eq Time.at(time)
+      stat.time.should eq Time.at(time).utc.change(sec: 0)
       stat.loads.should eq 1
     end
 
