@@ -9,9 +9,9 @@ class PrivateApi::VideoStatsController < SublimeVideoPrivateApiController
 
   # GET /private_api/sites/:site_token/videos/:video_uid/video_stats/last_days_starts
   def last_days_starts
-    stats = VideoStat.last_days_starts(_video_args, params[:days].to_i)
+    starts = VideoStat.last_days_starts(_video_args, params[:days].to_i)
 
-    respond_with(starts: stats)
+    respond_with(starts: starts)
   end
 
   private
