@@ -4,8 +4,8 @@ module LastHoursFindable
   included do
 
     scope :last_hours, ->(hours) {
-      from = Time.now.utc - hours.hours
-      to   = Time.now.utc.change(min: 0)
+      from = Time.now.utc - (hours + 1).hours
+      to   = Time.now.utc - 1.hour
       between(time: from..to)
     }
 
