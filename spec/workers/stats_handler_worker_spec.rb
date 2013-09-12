@@ -59,7 +59,7 @@ describe StatsHandlerWorker do
         SiteStatUpdaterWorker.should_receive(:perform_async).with(
           { site_token: site_token, time: time },
           :loads,
-          'ex' => '1')
+          'foo' => 'bar', 'ex' => '1')
         StatsHandlerWorker.new.perform('l', data)
       end
 
@@ -67,7 +67,7 @@ describe StatsHandlerWorker do
         VideoStatUpdaterWorker.should_receive(:perform_async).with(
           { site_token: site_token, video_uid: video_uid, time: time },
           :loads,
-          'ex' => '1')
+          'foo' => 'bar', 'ex' => '1')
         StatsHandlerWorker.new.perform('l', data)
       end
 
@@ -75,7 +75,7 @@ describe StatsHandlerWorker do
         SiteAdminStatUpdaterWorker.should_receive(:perform_async).with(
           { site_token: site_token, time: time },
           :loads,
-          'ex' => '1')
+          'foo' => 'bar', 'ex' => '1')
         StatsHandlerWorker.new.perform('l', data)
       end
     end
@@ -125,7 +125,7 @@ describe StatsHandlerWorker do
         SiteAdminStatUpdaterWorker.should_receive(:perform_async).with(
           { site_token: site_token, time: time },
           :starts,
-          'ex' => '1')
+          'foo' => 'bar', 'ex' => '1')
         StatsHandlerWorker.new.perform('s', data)
       end
     end
@@ -184,7 +184,7 @@ describe StatsHandlerWorker do
         SiteAdminStatUpdaterWorker.should_receive(:perform_async).with(
           { site_token: site_token, time: time },
           :loads,
-          'ex' => '1')
+          'foo' => 'bar', 'ex' => '1')
         StatsHandlerWorker.new.perform('l', data)
       end
     end
@@ -224,7 +224,7 @@ describe StatsHandlerWorker do
         SiteAdminStatUpdaterWorker.should_receive(:perform_async).with(
           { site_token: site_token, time: time },
           :starts,
-          'ex' => '1')
+          'foo' => 'bar', 'ex' => '1')
         StatsHandlerWorker.new.perform('s', data)
       end
     end

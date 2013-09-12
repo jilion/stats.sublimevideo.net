@@ -30,10 +30,10 @@ class StatsHandlerWorker
     if _valid_video_uid?
       LastSiteStatUpdaterWorker.perform_async(_site_args, :loads)
       LastVideoStatUpdaterWorker.perform_async(_video_args, :loads)
-      SiteStatUpdaterWorker.perform_async(_site_args, :loads, data.slice('ex'))
-      VideoStatUpdaterWorker.perform_async(_video_args, :loads, data.slice('ex'))
+      SiteStatUpdaterWorker.perform_async(_site_args, :loads, data)
+      VideoStatUpdaterWorker.perform_async(_video_args, :loads, data)
     end
-    SiteAdminStatUpdaterWorker.perform_async(_site_args, :loads, data.slice('ex'))
+    SiteAdminStatUpdaterWorker.perform_async(_site_args, :loads, data)
   end
 
   def _handle_s_event
@@ -44,7 +44,7 @@ class StatsHandlerWorker
       SiteStatUpdaterWorker.perform_async(_site_args, :starts, data)
       VideoStatUpdaterWorker.perform_async(_video_args, :starts, data)
     end
-    SiteAdminStatUpdaterWorker.perform_async(_site_args, :starts, data.slice('ex'))
+    SiteAdminStatUpdaterWorker.perform_async(_site_args, :starts, data)
   end
 
   def _site_args
