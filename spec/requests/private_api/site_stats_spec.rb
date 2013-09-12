@@ -13,7 +13,7 @@ describe "SiteStats private api requests" do
     }
 
     it "returns starts array" do
-      get "private_api/site_stats/#{site_token}/last_days_starts.json", { days: 2 }, @env
+      get "private_api/sites/#{site_token}/site_stats/last_days_starts.json", { days: 2 }, @env
       MultiJson.load(response.body).should eq({"starts" => [0, 2]})
     end
   end

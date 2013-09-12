@@ -14,7 +14,7 @@ describe "VideoStats private api requests" do
     }
 
     it "returns starts array" do
-      get "private_api/sites/#{site_token}/video_stats/#{video_uid}/last_days_starts.json", { days: 2 }, @env
+      get "private_api/sites/#{site_token}/videos/#{video_uid}/video_stats/last_days_starts.json", { days: 2 }, @env
       MultiJson.load(response.body).should eq({"starts" => [0, 2]})
     end
   end
@@ -29,7 +29,7 @@ describe "VideoStats private api requests" do
     }
 
     it "returns stats array" do
-      get "private_api/sites/#{site_token}/video_stats/#{video_uid}.json", { hours: 24 }, @env
+      get "private_api/sites/#{site_token}/videos/#{video_uid}/video_stats.json", { hours: 24 }, @env
       body = MultiJson.load(response.body)['stats']
 
       body[0]['st'].should eq({ 'w' => 1, 'e' => 1 })
