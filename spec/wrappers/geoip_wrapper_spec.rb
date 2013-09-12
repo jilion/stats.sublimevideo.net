@@ -10,7 +10,7 @@ describe GeoIPWrapper do
     end
 
     it "returns country code United Kingdom IPV4 address" do
-      GeoIPWrapper.country('46.231.14.49').should eq 'uk'
+      GeoIPWrapper.country('46.231.14.49').should eq 'gb'
     end
 
     it "returns country code China IPV4 address" do
