@@ -8,5 +8,6 @@ class SiteStat
   include Mongoid::Document
   include SiteIdentifiable
   include Statsable
+  include LastHoursFindable
   include LastDaysStartsFindable
 end

@@ -17,6 +17,6 @@ class PrivateApi::VideoStatsController < SublimeVideoPrivateApiController
   private
 
   def _video_args
-    { site_token: params[:site_token], video_uid: params[:video_uid] }
+    params.slice(:site_token, :video_uid)
   end
 end
