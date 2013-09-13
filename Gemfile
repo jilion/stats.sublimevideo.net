@@ -27,8 +27,8 @@ gem 'pusher'
 group :staging, :production do
   gem 'puma', require: false
   gem 'lograge'
-  gem 'memcachier'
   gem 'dalli'
+  gem 'memcachier'
   gem 'rack-cache'
   gem 'rails_12factor'
 end
