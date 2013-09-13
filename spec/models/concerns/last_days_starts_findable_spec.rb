@@ -17,21 +17,22 @@ describe LastDaysStartsFindable do
     context "with stats" do
       let(:yesterday_last_hour_of_day) { Time.now.utc.at_beginning_of_day - 1.hour }
       before {
-        48.times.each do |i|
+        4.times.each do |i|
+          next if i%2 == 0
           model_class.create(args.merge(
-            time: yesterday_last_hour_of_day - i.hours,
+            time: yesterday_last_hour_of_day - i.days,
             starts: { w: i, e: i }))
         end
       }
 
-      it "returns last 2 days of starts" do
-        starts = model_class.last_days_starts(args, 2)
-        starts.should eq [1704, 552]
+      it "returns last 4 days of starts" do
+        starts = model_class.last_days_starts(args, 4)
+        starts.should eq [6, 0, 2, 0]
       end
 
-      it "returns last 3 days of starts" do
-        starts = model_class.last_days_starts(args, 3)
-        starts.should eq [0, 1704, 552]
+      it "returns last 2 days of starts" do
+        starts = model_class.last_days_starts(args, 2)
+        starts.should eq [2, 0]
       end
     end
 
