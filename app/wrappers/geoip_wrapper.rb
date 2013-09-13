@@ -21,7 +21,6 @@ class GeoIPWrapper
 
   def self._handle_edge_case(result)
     case result
-    when 'gb' then 'uk'
     when '--' then nil
     else result
     end
