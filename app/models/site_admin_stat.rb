@@ -13,6 +13,12 @@ class SiteAdminStat
   field :ss, as: :ssl, type: Mongoid::Boolean # SSL used this day
   field :pa, as: :pages, type: Array # Last 10 active pages
 
+  scope :last_days, ->(days) {
+    from = Time.now.utc.at_beginning_of_day - days.days
+    to   = Time.now.utc.end_of_day - 1.day
+    between(time: from..to)
+  }
+
   def self.update_stats(args, updates)
     args = _day_precise_time(args)
     stat = where(args)
