@@ -27,7 +27,7 @@ module LastDaysStartsFindable
   end
 
   def starts_sum
-    starts.values.sum
+    starts.try(:values).to_a.sum
   end
 
 end
