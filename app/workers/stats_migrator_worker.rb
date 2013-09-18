@@ -34,10 +34,8 @@ class StatsMigratorWorker
 
   def _migrate_stat_video_day
     SiteAdminStat.update_stats(_site_args, _admin_stat_updates)
-    if _valid_video_uid?
-      SiteStat.update_stats(_site_args, _stat_updates)
-      VideoStat.update_stats(_video_args, _stat_updates)
-    end
+    SiteStat.update_stats(_site_args, _stat_updates)
+    VideoStat.update_stats(_video_args, _stat_updates) if _valid_video_uid?
   end
 
   def _admin_stat_updates

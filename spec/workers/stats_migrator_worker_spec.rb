@@ -90,7 +90,7 @@ describe StatsMigratorWorker do
         end
 
         it "doesn't updates SiteStat" do
-          SiteStat.should_not_receive(:update_stats)
+          SiteStat.should_receive(:update_stats)
           worker.perform(stat_class, data)
         end
 
