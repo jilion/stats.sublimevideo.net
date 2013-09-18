@@ -83,10 +83,8 @@ production:
   sessions:
     default:
       hosts:
-        - - candidate.5.mongolayer.com
-          - 10061
-        - - candidate.6.mongolayer.com
-          - 10061
+        - candidate.5.mongolayer.com:10061
+        - candidate.6.mongolayer.com:10061
       username: <%= URI(ENV['MONGOHQ_URL']).user %>
       password: <%= URI(ENV['MONGOHQ_URL']).password %>
       database: app13829477
