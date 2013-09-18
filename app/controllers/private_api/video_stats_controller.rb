@@ -1,7 +1,5 @@
 class PrivateApi::VideoStatsController < SublimeVideoPrivateApiController
 
-  has_scope :per
-
   # GET /private_api/sites/:site_token/videos/:video_uid/video_stats
   def index
     stats = VideoStat.last_hours_stats(_args, params[:hours].to_i)

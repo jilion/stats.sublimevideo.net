@@ -93,7 +93,6 @@ GEM
     guard-rspec (3.0.3)
       guard (>= 1.8)
       rspec (~> 2.13)
-    has_scope (0.5.1)
     her (0.6.8)
       activemodel (>= 3.0.0)
       activesupport (>= 3.0.0)
@@ -260,7 +259,6 @@ DEPENDENCIES
   geoip
   guard-pow
   guard-rspec
-  has_scope
   honeybadger
   kiqstand!
   librato-rails

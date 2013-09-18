@@ -17,7 +17,6 @@ gem 'librato-rails'
 gem 'librato-sidekiq'
 
 gem 'rack-status'
-gem 'has_scope'
 gem 'newrelic_rpm'
 
 gem 'geoip'
