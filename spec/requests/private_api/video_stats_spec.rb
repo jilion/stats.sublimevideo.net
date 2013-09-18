@@ -6,13 +6,20 @@ describe "VideoStats private api requests" do
   before { set_api_credentials }
 
   describe "index" do
-    before {
+    before do
       VideoStat.create(
         site_token: site_token, video_uid: video_uid,
         time: 1.hour.ago,
         starts: { w: 1, e: 1 },
         countries: { w:  { us: 12, fr: 42 }, e: { us: 13, fr: 43 } })
-    }
+    end
+
+    let(:url) { "private_api/sites/#{site_token}/videos/#{video_uid}/video_stats.json" }
+
+    it 'supports :per scope' do
+      get url, { per: 2 }, @env
+      MultiJson.load(response.body['stats']).should have(2).video_stats
+    end
 
     it "returns stats array" do
       get "private_api/sites/#{site_token}/videos/#{video_uid}/video_stats.json", { hours: 24 }, @env
