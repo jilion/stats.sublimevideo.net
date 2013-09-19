@@ -25,16 +25,22 @@ describe GeoIPWrapper do
       GeoIPWrapper.country('81.25.51.176').should eq 'ru'
     end
 
-    it "returns nil for 127.0.0.1" do
-      GeoIPWrapper.country('127.0.0.1').should be_nil
+    it "returns -- for 127.0.0.1" do
+      GeoIPWrapper.country('127.0.0.1').should eq '--'
     end
 
-    it "returns nil for localhost" do
-      GeoIPWrapper.country('localhost').should be_nil
+    it "returns -- for localhost" do
+      GeoIPWrapper.country('localhost').should eq '--'
     end
 
-    it "returns nil for non ip" do
-      GeoIPWrapper.country('').should be_nil
+    it "returns -- for non ip" do
+      GeoIPWrapper.country('').should eq '--'
+    end
+
+    it "returns -- when raise" do
+      GeoIPWrapper.remove_instance_variable(:@database)
+      GeoIP.stub(:new).and_raise('error')
+      GeoIPWrapper.country('81.25.51.176').should eq '--'
     end
   end
 

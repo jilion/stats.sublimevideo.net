@@ -3,10 +3,9 @@ require 'geoip'
 class GeoIPWrapper
 
   def self.country(ip)
-    result = _database.country(ip).country_code2.downcase
-    _handle_edge_case(result)
+    _database.country(ip).country_code2.downcase
   rescue
-    nil
+    '--'
   end
 
   private
@@ -17,13 +16,6 @@ class GeoIPWrapper
 
   def self._database_url
     Rails.root.join('vendor', 'geoip.dat')
-  end
-
-  def self._handle_edge_case(result)
-    case result
-    when '--' then nil
-    else result
-    end
   end
 
 end
