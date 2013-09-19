@@ -1,16 +1,18 @@
-require 'sidekiq'
 require 'librato-rails'
 
-require 'data_hash'
+class LibratoStatsIncrementer
+  attr_accessor :event_key, :data
 
-class LibratoStatsIncrementerWorker
-  include Sidekiq::Worker
-  sidekiq_options queue: 'stats-low'
+  def initialize(event_key, data)
+    @event_key = event_key
+    @data = data
+  end
 
-  attr_accessor :data, :event_key
+  def self.increment(event_key, data)
+    new(event_key, data).increment
+  end
 
-  def perform(event_key, data)
-    @data = DataHash.new(data)
+  def increment
     increments = send("_increments_for_#{event_key}")
     increments.each do |key, source|
       Librato.increment key, source: source

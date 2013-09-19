@@ -16,21 +16,21 @@ describe Statsable do
   it { should have_field(:co).with_alias(:countries).of_type(Hash) }
   it { should have_field(:bp).with_alias(:browser_and_platform).of_type(Hash) }
 
-  describe ".inc_stats" do
+  describe ".upsert_stats_from_data" do
     let(:key_id) { 'key_id' }
     let(:time) { Time.now.to_i }
     let(:args) { { 'key_id' => key_id, 't' => time.to_s } }
     let(:data) { double('DataHash', source_key: 'w', hostname: 'main') }
 
     it "precises time to hour" do
-      StatsableModel.inc_stats(args, :loads, data)
+      StatsableModel.upsert_stats_from_data(args, :loads, data)
       StatsableModel.last.time.should eq Time.at(time).utc.change(min: 0)
     end
 
     it "updates existing stat" do
-      expect{ StatsableModel.inc_stats(args, :loads, data) }
+      expect{ StatsableModel.upsert_stats_from_data(args, :loads, data) }
         .to change{StatsableModel.count}.from(0).to(1)
-      expect{ StatsableModel.inc_stats(args, :loads, data) }
+      expect{ StatsableModel.upsert_stats_from_data(args, :loads, data) }
         .to_not change{ StatsableModel.count }
     end
 
@@ -41,7 +41,7 @@ describe Statsable do
         before { data.stub(source_key: 'e') }
 
         it "increments externals loads" do
-          StatsableModel.inc_stats(args, event_field, data)
+          StatsableModel.upsert_stats_from_data(args, event_field, data)
           StatsableModel.last.external(:loads).should eq 1
         end
       end
@@ -50,7 +50,7 @@ describe Statsable do
         before { data.stub(hostname: 'extra') }
 
         it "increments externals loads" do
-          StatsableModel.inc_stats(args, event_field, data)
+          StatsableModel.upsert_stats_from_data(args, event_field, data)
           StatsableModel.last.website(:loads).should eq 1
         end
       end
@@ -60,7 +60,7 @@ describe Statsable do
           before { data.stub(hostname: hostname) }
 
           it "doesn't increments stat" do
-            StatsableModel.inc_stats(args, event_field, data)
+            StatsableModel.upsert_stats_from_data(args, event_field, data)
             StatsableModel.last.should be_nil
           end
         end
@@ -79,7 +79,7 @@ describe Statsable do
         }
 
         it "increments website stats" do
-          StatsableModel.inc_stats(args, event_field, data)
+          StatsableModel.upsert_stats_from_data(args, event_field, data)
           stat = StatsableModel.last
           stat.website(:starts).should eq 1
           stat.website(:devices).should eq({'m' => 1})
@@ -99,7 +99,7 @@ describe Statsable do
         }
 
         it "increments website stats" do
-          StatsableModel.inc_stats(args, event_field, data)
+          StatsableModel.upsert_stats_from_data(args, event_field, data)
           stat = StatsableModel.last
           stat.external(:starts).should eq 1
           stat.external(:devices).should eq({'m' => 1})
@@ -113,7 +113,7 @@ describe Statsable do
           before { data.stub(hostname: hostname) }
 
           it "doesn't increments stat" do
-            StatsableModel.inc_stats(args, event_field, data)
+            StatsableModel.upsert_stats_from_data(args, event_field, data)
             StatsableModel.last.should be_nil
           end
         end

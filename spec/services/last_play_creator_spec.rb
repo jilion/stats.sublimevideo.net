@@ -1,15 +1,13 @@
 require 'fast_spec_helper'
 
-require 'last_play_creator_worker'
+require 'data_hash'
+require 'last_play_creator'
 
-describe LastPlayCreatorWorker do
-  it "delays job in stats queue" do
-    LastPlayCreatorWorker.sidekiq_options_hash['queue'].should eq 'stats'
-  end
+describe LastPlayCreator do
 
-  describe ".perform" do
+  describe "#create" do
     let(:time) { Time.now.to_i }
-    let(:data) { {
+    let(:data) { DataHash.new(
       's' => 'site_token',
       'u' => 'video_uid',
       't' => time,
@@ -19,11 +17,10 @@ describe LastPlayCreatorWorker do
       'vsr' => '400x300',
       'ua' => 'USER AGENT',
       'ip' => '84.226.128.23'
-    } }
+    ) }
     let(:pusher_wrapper) { double(PusherWrapper, trigger: true)}
     before {
       PusherWrapper.stub(:new) { pusher_wrapper }
-      DataHash.stub(:new) { data }
       data.stub(:country_code) { 'ch' }
       data.stub(:browser_code) { 'saf' }
       data.stub(:platform_code) { 'osx' }
@@ -40,19 +37,19 @@ describe LastPlayCreatorWorker do
         'co' => 'ch',
         'br' => 'saf',
         'pl' => 'osx')
-      LastPlayCreatorWorker.new.perform(data)
+      LastPlayCreator.create(data)
     end
 
     it "triggers Pusher play event on site channel" do
       expect(PusherWrapper).to receive(:new).with('private-site_token') { pusher_wrapper }
       expect(pusher_wrapper).to receive(:trigger).with('play', time)
-      LastPlayCreatorWorker.new.perform(data)
+      LastPlayCreator.create(data)
     end
 
     it "triggers Pusher play event on video channel" do
       expect(PusherWrapper).to receive(:new).with('private-site_token.video_uid') { pusher_wrapper }
       expect(pusher_wrapper).to receive(:trigger).with('play', time)
-      LastPlayCreatorWorker.new.perform(data)
+      LastPlayCreator.create(data)
     end
   end
 end

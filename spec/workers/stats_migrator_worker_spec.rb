@@ -21,7 +21,7 @@ describe StatsMigratorWorker do
         'ssl' => 'true' } }
 
       it "updates SiteAdminStat" do
-        SiteAdminStat.should_receive(:update_stats).with(
+        SiteAdminStat.should_receive(:upsert_stats).with(
           { site_token: 'site_token', time: time },
           { :$inc => { 'al.m' => 1, 'al.e' => 2, 'al.s' => 3, 'al.d' => 4, 'al.i' => 5 },
             :$set => { 'ss' => true, 'sa' => %w[s b] } })
@@ -41,16 +41,16 @@ describe StatsMigratorWorker do
         'player_mode_and_device' => { 'h' => { 'd' => '1', 'm' => '2' }, 'f' => { 'd' => '3', 'm' => '4' } },
         'browser_and_platform' => { "saf-win" => '2', "saf-osx" => '4' } } }
       before {
-        SiteAdminStat.stub(:update_stats)
-        SiteStat.stub(:update_stats)
-        VideoStat.stub(:update_stats)
+        SiteAdminStat.stub(:upsert_stats)
+        SiteStat.stub(:upsert_stats)
+        VideoStat.stub(:upsert_stats)
       }
 
       context "with valid uid" do
         let(:video_uid) { 'valid_uid' }
 
         it "updates SiteAdminStat" do
-          SiteAdminStat.should_receive(:update_stats).with(
+          SiteAdminStat.should_receive(:upsert_stats).with(
             { site_token: 'site_token', time: time },
             { :$inc => {
               'lo.w' => 1 + 2, 'lo.e' => 6,
@@ -59,7 +59,7 @@ describe StatsMigratorWorker do
         end
 
         it "updates SiteStat" do
-          SiteStat.should_receive(:update_stats).with(
+          SiteStat.should_receive(:upsert_stats).with(
             { site_token: 'site_token', time: time },
             { :$inc => {
               'lo.w' => 1 + 2, 'lo.e' => 6,
@@ -70,7 +70,7 @@ describe StatsMigratorWorker do
         end
 
         it "updates VideoStat" do
-          VideoStat.should_receive(:update_stats).with(
+          VideoStat.should_receive(:upsert_stats).with(
             { site_token: 'site_token', video_uid: video_uid, time: time },
             { :$inc => {
               'lo.w' => 1 + 2, 'lo.e' => 6,
@@ -85,17 +85,17 @@ describe StatsMigratorWorker do
         let(:video_uid) { 'invalid_uid!$%?' }
 
         it "updates SiteAdminStat" do
-          SiteAdminStat.should_receive(:update_stats)
+          SiteAdminStat.should_receive(:upsert_stats)
           worker.perform(stat_class, data)
         end
 
         it "doesn't updates SiteStat" do
-          SiteStat.should_receive(:update_stats)
+          SiteStat.should_receive(:upsert_stats)
           worker.perform(stat_class, data)
         end
 
         it "doesn't updates VideoStat" do
-          VideoStat.should_not_receive(:update_stats)
+          VideoStat.should_not_receive(:upsert_stats)
           worker.perform(stat_class, data)
         end
       end

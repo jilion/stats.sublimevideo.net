@@ -1,12 +1,12 @@
 require 'sidekiq'
 
-require 'librato_stats_incrementer_worker'
-require 'last_play_creator_worker'
-require 'last_site_stat_updater_worker'
-require 'last_video_stat_updater_worker'
-require 'site_admin_stat_updater_worker'
-require 'site_stat_updater_worker'
-require 'video_stat_updater_worker'
+require 'last_site_stat'
+require 'last_video_stat'
+require 'site_stat'
+require 'video_stat'
+require 'librato_stats_incrementer'
+require 'last_play_creator'
+require 'site_admin_stat_upserter'
 
 class StatsHandlerWorker
   include Sidekiq::Worker
@@ -15,44 +15,44 @@ class StatsHandlerWorker
   attr_accessor :data
 
   def perform(event_key, data)
-    @data = data
+    @data = DataHash.new(data)
     send("_handle_#{event_key}_event")
-    LibratoStatsIncrementerWorker.perform_async(event_key, data)
+    LibratoStatsIncrementer.increment(event_key, data)
   end
 
   private
 
   def _handle_al_event
-    SiteAdminStatUpdaterWorker.perform_async(_site_args, :app_loads, data)
+    SiteAdminStatUpserter.upsert(_site_args, :app_loads, data)
   end
 
   def _handle_l_event
     if _valid_video_uid?
-      LastSiteStatUpdaterWorker.perform_async(_site_args, :loads)
-      LastVideoStatUpdaterWorker.perform_async(_video_args, :loads)
-      SiteStatUpdaterWorker.perform_async(_site_args, :loads, data)
-      VideoStatUpdaterWorker.perform_async(_video_args, :loads, data)
+      LastSiteStat.upsert_stat(_site_args, :loads)
+      LastVideoStat.upsert_stat(_video_args, :loads)
+      SiteStat.upsert_stats_from_data(_site_args, :loads, data)
+      VideoStat.upsert_stats_from_data(_video_args, :loads, data)
     end
-    SiteAdminStatUpdaterWorker.perform_async(_site_args, :loads, data)
+      SiteAdminStatUpserter.upsert(_site_args, :loads, data)
   end
 
   def _handle_s_event
     if _valid_video_uid?
-      LastPlayCreatorWorker.perform_async(data)
-      LastSiteStatUpdaterWorker.perform_async(_site_args, :starts)
-      LastVideoStatUpdaterWorker.perform_async(_video_args, :starts)
-      SiteStatUpdaterWorker.perform_async(_site_args, :starts, data)
-      VideoStatUpdaterWorker.perform_async(_video_args, :starts, data)
+      LastPlayCreator.create(data)
+      LastSiteStat.upsert_stat(_site_args, :starts)
+      LastVideoStat.upsert_stat(_video_args, :starts)
+      SiteStat.upsert_stats_from_data(_site_args, :starts, data)
+      VideoStat.upsert_stats_from_data(_video_args, :starts, data)
     end
-    SiteAdminStatUpdaterWorker.perform_async(_site_args, :starts, data)
+    SiteAdminStatUpserter.upsert(_site_args, :starts, data)
   end
 
   def _site_args
-    @site_args ||= { 's' => data.delete('s'), 't' => data.delete('t') }
+    @site_args ||= data.slice('s', 't')
   end
 
   def _video_args
-    @video_args ||= _site_args.merge('u' => data.delete('u'))
+    @video_args ||= data.slice('s', 'u', 't')
   end
 
   def _valid_video_uid?

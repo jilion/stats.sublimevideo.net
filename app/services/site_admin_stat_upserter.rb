@@ -1,18 +1,19 @@
-require 'sidekiq'
-
-require 'data_hash'
 require 'site_admin_stat'
 
-class SiteAdminStatUpdaterWorker
-  include Sidekiq::Worker
-  sidekiq_options queue: 'stats-low'
+class SiteAdminStatUpserter
+  attr_accessor :data, :updates
 
-  attr_accessor :data
+  def initialize(event_field, data)
+    @data = data
+    @updates = send("_updates_for_#{event_field}")
+  end
 
-  def perform(site_args, event_field, data)
-    @data = DataHash.new(data)
-    updates = send("_updates_for_#{event_field}")
-    SiteAdminStat.update_stats(site_args, updates)
+  def self.upsert(site_args, event_field, data)
+    new(event_field, data).upsert(site_args)
+  end
+
+  def upsert(site_args)
+    SiteAdminStat.upsert_stats(site_args, updates)
   end
 
   private

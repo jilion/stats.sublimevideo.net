@@ -1,18 +1,19 @@
-require 'sidekiq'
-
 require 'last_play'
-require 'data_hash'
 require 'pusher_wrapper'
 
-class LastPlayCreatorWorker
-  include Sidekiq::Worker
-  sidekiq_options queue: 'stats'
-
+class LastPlayCreator
   attr_accessor :data, :params
 
-  def perform(data)
-    @data = DataHash.new(data)
+  def initialize(data)
+    @data = data
     @params = _params
+  end
+
+  def self.create(data)
+    new(data).create
+  end
+
+  def create
     LastPlay.create(params)
     _trigger_pusher
   end

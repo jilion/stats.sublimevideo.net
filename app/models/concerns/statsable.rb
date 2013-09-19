@@ -10,15 +10,15 @@ module Statsable
   end
 
   module ClassMethods
-    def update_stats(args, updates)
+    def upsert_stats(args, updates)
       args = _hour_precise_time(args)
       self.collection.where(args).upsert(updates)
     end
 
-    def inc_stats(args, event_field, data)
+    def upsert_stats_from_data(args, event_field, data)
       return unless data.hostname.in? %w[main extra]
       updates = { :$inc => _incs(event_field, data) }
-      update_stats(args, updates)
+      upsert_stats(args, updates)
     end
 
     private

@@ -13,37 +13,37 @@ describe SiteAdminStat do
   it { should have_field(:ss).with_alias(:ssl).of_type(Mongoid::Boolean) }
   it { should have_field(:pa).with_alias(:pages).of_type(Array) }
 
-  describe ".update_stats" do
+  describe ".upsert_stats" do
     let(:time) { Time.now.to_i }
     let(:args) { { 's' => site_token, 't' => time.to_s } }
     let(:updates) { { :$inc => { 'al.m' => 1 } } }
 
     it "precises time to day" do
-      SiteAdminStat.update_stats(args, updates)
+      SiteAdminStat.upsert_stats(args, updates)
       SiteAdminStat.last.time.should eq Time.at(time).utc.change(hour: 0)
     end
 
     it "updates existing stat" do
-      expect{ SiteAdminStat.update_stats(args, updates) }
+      expect{ SiteAdminStat.upsert_stats(args, updates) }
         .to change{ SiteAdminStat.count }.from(0).to(1)
-      expect{ SiteAdminStat.update_stats(args, updates) }
+      expect{ SiteAdminStat.upsert_stats(args, updates) }
         .to_not change{ SiteAdminStat.count }
     end
 
     it "updates with $set" do
-      SiteAdminStat.update_stats(args, :$set => { 'ss' => false })
+      SiteAdminStat.upsert_stats(args, :$set => { 'ss' => false })
       SiteAdminStat.last.ssl.should be_false
     end
 
     it "updates with $addToSet" do
-      SiteAdminStat.update_stats(args, :$addToSet => { 'sa' => 'a' })
-      SiteAdminStat.update_stats(args, :$addToSet => { 'sa' => 'b' })
+      SiteAdminStat.upsert_stats(args, :$addToSet => { 'sa' => 'a' })
+      SiteAdminStat.upsert_stats(args, :$addToSet => { 'sa' => 'b' })
       SiteAdminStat.last.stages.should eq %w[alpha beta]
     end
 
     it "updates with $push & $slice" do
-      SiteAdminStat.update_stats(args, :$push => { 'pa' => { :$each => %w[url1 url2], :$slice => -2 } })
-      SiteAdminStat.update_stats(args, :$push => { 'pa' => { :$each => %w[url3], :$slice => -2 } })
+      SiteAdminStat.upsert_stats(args, :$push => { 'pa' => { :$each => %w[url1 url2], :$slice => -2 } })
+      SiteAdminStat.upsert_stats(args, :$push => { 'pa' => { :$each => %w[url3], :$slice => -2 } })
       SiteAdminStat.last.pages.should eq %w[url2 url3]
     end
   end

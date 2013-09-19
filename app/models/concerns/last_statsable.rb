@@ -7,7 +7,7 @@ module LastStatsable
   end
 
   module ClassMethods
-    def inc_stat(args, field)
+    def upsert_stat(args, field)
       updates = { :$inc => { database_field_name(field) => 1 } }
       args = _minute_precise_time(args)
       self.collection.where(args).upsert(updates)

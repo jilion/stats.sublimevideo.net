@@ -19,7 +19,7 @@ class SiteAdminStat
     between(time: from..to)
   }
 
-  def self.update_stats(args, updates)
+  def self.upsert_stats(args, updates)
     args = _day_precise_time(args)
     self.collection.where(args).upsert(updates)
   end
