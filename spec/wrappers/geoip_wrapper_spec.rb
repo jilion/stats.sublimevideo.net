@@ -38,7 +38,6 @@ describe GeoIPWrapper do
     end
 
     it "returns -- when raise" do
-      GeoIPWrapper.remove_instance_variable(:@database)
       GeoIP.stub(:new).and_raise('error')
       GeoIPWrapper.country('81.25.51.176').should eq '--'
     end
