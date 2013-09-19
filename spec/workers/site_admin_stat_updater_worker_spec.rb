@@ -4,7 +4,7 @@ require 'site_admin_stat_updater_worker'
 
 describe SiteAdminStatUpdaterWorker do
   it "delays job in stats queue" do
-    SiteAdminStatUpdaterWorker.sidekiq_options_hash['queue'].should eq 'stats-low'
+    SiteAdminStatUpdaterWorker.sidekiq_options_hash['queue'].should eq 'stats'
   end
 
   describe "#perform" do

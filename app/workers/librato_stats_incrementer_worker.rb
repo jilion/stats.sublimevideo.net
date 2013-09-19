@@ -5,7 +5,7 @@ require 'data_hash'
 
 class LibratoStatsIncrementerWorker
   include Sidekiq::Worker
-  sidekiq_options queue: 'stats-low'
+  sidekiq_options queue: 'stats'
 
   attr_accessor :data, :event_key
 

@@ -5,7 +5,7 @@ require 'site_admin_stat'
 
 class SiteAdminStatUpdaterWorker
   include Sidekiq::Worker
-  sidekiq_options queue: 'stats-low'
+  sidekiq_options queue: 'stats'
 
   attr_accessor :data
 
