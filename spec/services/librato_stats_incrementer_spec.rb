@@ -16,6 +16,7 @@ describe LibratoStatsIncrementer do
       before {
         data.stub(:hostname) { 'main' }
         data.stub(:ss) { '1' }
+        data.stub(:sa) { '1' }
         data.stub(:stage) { 'stable' }
         data.stub(:fv) { '1.0.0' }
         data.stub(:jq) { '2.0.0' }
@@ -31,6 +32,7 @@ describe LibratoStatsIncrementer do
         Librato.should_receive(:increment).with('data.app_load.platform', source: 'osx')
         Librato.should_receive(:increment).with('data.app_load.hostname', source: 'main')
         Librato.should_receive(:increment).with('data.app_load.ssl', source: 'on')
+        Librato.should_receive(:increment).with('data.app_load.stats_addon', source: 'on')
         Librato.should_receive(:increment).with('data.app_load.stage', source: 'stable')
         Librato.should_receive(:increment).with('data.app_load.flash_version', source: '1.0.0')
         Librato.should_receive(:increment).with('data.app_load.jquery_version', source: '2.0.0')

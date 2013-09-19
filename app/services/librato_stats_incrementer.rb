@@ -25,6 +25,7 @@ class LibratoStatsIncrementer
     _base_increments('app_load').merge({
       'data.app_load.hostname' => data.hostname,
       'data.app_load.ssl' => data.ss ? 'on' : 'off',
+      'data.app_load.stats_addon' => data.sa ? 'on' : 'off',
       'data.app_load.stage' => data.stage,
       'data.app_load.flash_version' => data.fv || 'none',
       'data.app_load.jquery_version' => data.jq || 'none',
