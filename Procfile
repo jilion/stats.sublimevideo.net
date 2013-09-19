@@ -1,2 +1,2 @@
-web: bundle exec puma -t 0:16 -p $PORT -e ${RACK_ENV:-development}
-worker: bundle exec sidekiq -c 20 -t 15 -q stats
+web:    bundle exec unicorn -p $PORT -c ./config/unicorn.rb
+worker: bundle exec sidekiq -c 50 -q stats,100 -q stats-low,1 -q stats-migration,1

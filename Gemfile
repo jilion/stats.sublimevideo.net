@@ -24,7 +24,7 @@ gem 'useragent', github: 'jilion/useragent' # needed for stat_request_parser
 gem 'pusher'
 
 group :staging, :production do
-  gem 'puma', require: false
+  gem 'unicorn', require: false
   gem 'lograge'
   gem 'dalli'
   gem 'memcachier'
