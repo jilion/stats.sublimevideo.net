@@ -28,7 +28,7 @@ describe StatsHandlerWorker do
 
       it "delays site admin stat updater worker" do
         SiteAdminStatUpdaterWorker.should_receive(:perform_async).with(
-          { site_token: site_token, time: time },
+          { 's' => site_token, 't' => time },
           :app_loads,
           data)
         StatsHandlerWorker.new.perform('al', data)
@@ -43,21 +43,21 @@ describe StatsHandlerWorker do
 
       it "delays last site stat updater worker" do
         LastSiteStatUpdaterWorker.should_receive(:perform_async).with(
-          { site_token: site_token, time: time },
+          { 's' => site_token, 't' => time },
           :loads)
         StatsHandlerWorker.new.perform('l', data)
       end
 
       it "delays last video stat updater worker" do
         LastVideoStatUpdaterWorker.should_receive(:perform_async).with(
-          { site_token: site_token, video_uid: video_uid, time: time },
+          { 's' => site_token, 'u' => video_uid, 't' => time },
           :loads)
         StatsHandlerWorker.new.perform('l', data)
       end
 
       it "delays site stat updater worker" do
         SiteStatUpdaterWorker.should_receive(:perform_async).with(
-          { site_token: site_token, time: time },
+          { 's' => site_token, 't' => time },
           :loads,
           'foo' => 'bar', 'ex' => '1')
         StatsHandlerWorker.new.perform('l', data)
@@ -65,7 +65,7 @@ describe StatsHandlerWorker do
 
       it "delays video stat updater worker" do
         VideoStatUpdaterWorker.should_receive(:perform_async).with(
-          { site_token: site_token, video_uid: video_uid, time: time },
+          { 's' => site_token, 'u' => video_uid, 't' => time },
           :loads,
           'foo' => 'bar', 'ex' => '1')
         StatsHandlerWorker.new.perform('l', data)
@@ -73,7 +73,7 @@ describe StatsHandlerWorker do
 
       it "delays site admin stat updater worker" do
         SiteAdminStatUpdaterWorker.should_receive(:perform_async).with(
-          { site_token: site_token, time: time },
+          { 's' => site_token, 't' => time },
           :loads,
           'foo' => 'bar', 'ex' => '1')
         StatsHandlerWorker.new.perform('l', data)
@@ -93,21 +93,21 @@ describe StatsHandlerWorker do
 
       it "delays last site stat updater worker" do
         LastSiteStatUpdaterWorker.should_receive(:perform_async).with(
-          { site_token: site_token, time: time },
+          { 's' => site_token, 't' => time },
           :starts)
         StatsHandlerWorker.new.perform('s', data)
       end
 
       it "delays last video stat updater worker" do
         LastVideoStatUpdaterWorker.should_receive(:perform_async).with(
-          { site_token: site_token, video_uid: video_uid, time: time },
+          { 's' => site_token, 'u' => video_uid, 't' => time },
           :starts)
         StatsHandlerWorker.new.perform('s', data)
       end
 
       it "delays site stat updater worker" do
         SiteStatUpdaterWorker.should_receive(:perform_async).with(
-          { site_token: site_token, time: time },
+          { 's' => site_token, 't' => time },
           :starts,
           'foo' => 'bar', 'ex' => '1')
         StatsHandlerWorker.new.perform('s', data)
@@ -115,7 +115,7 @@ describe StatsHandlerWorker do
 
       it "delays video stat updater worker" do
         VideoStatUpdaterWorker.should_receive(:perform_async).with(
-          { site_token: site_token, video_uid: video_uid, time: time },
+          { 's' => site_token, 'u' => video_uid, 't' => time },
           :starts,
           'foo' => 'bar', 'ex' => '1')
         StatsHandlerWorker.new.perform('s', data)
@@ -123,7 +123,7 @@ describe StatsHandlerWorker do
 
       it "delays site admin stat updater worker" do
         SiteAdminStatUpdaterWorker.should_receive(:perform_async).with(
-          { site_token: site_token, time: time },
+          { 's' => site_token, 't' => time },
           :starts,
           'foo' => 'bar', 'ex' => '1')
         StatsHandlerWorker.new.perform('s', data)
@@ -147,7 +147,7 @@ describe StatsHandlerWorker do
 
       it "delays site admin stat updater worker" do
         SiteAdminStatUpdaterWorker.should_receive(:perform_async).with(
-          { site_token: site_token, time: time },
+          { 's' => site_token, 't' => time },
           :app_loads,
           data)
         StatsHandlerWorker.new.perform('al', data)
@@ -182,7 +182,7 @@ describe StatsHandlerWorker do
 
       it "delays site admin stat updater worker" do
         SiteAdminStatUpdaterWorker.should_receive(:perform_async).with(
-          { site_token: site_token, time: time },
+          { 's' => site_token, 't' => time },
           :loads,
           'foo' => 'bar', 'ex' => '1')
         StatsHandlerWorker.new.perform('l', data)
@@ -222,7 +222,7 @@ describe StatsHandlerWorker do
 
       it "delays site admin stat updater worker" do
         SiteAdminStatUpdaterWorker.should_receive(:perform_async).with(
-          { site_token: site_token, time: time },
+          { 's' => site_token, 't' => time },
           :starts,
           'foo' => 'bar', 'ex' => '1')
         StatsHandlerWorker.new.perform('s', data)

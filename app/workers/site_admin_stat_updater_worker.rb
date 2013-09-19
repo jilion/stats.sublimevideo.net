@@ -12,7 +12,7 @@ class SiteAdminStatUpdaterWorker
   def perform(site_args, event_field, data)
     @data = DataHash.new(data)
     updates = send("_updates_for_#{event_field}")
-    SiteAdminStat.update_stats(site_args.symbolize_keys, updates)
+    SiteAdminStat.update_stats(site_args, updates)
   end
 
   private

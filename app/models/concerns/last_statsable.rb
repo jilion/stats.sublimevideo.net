@@ -10,14 +10,13 @@ module LastStatsable
     def inc_stat(args, field)
       updates = { :$inc => { database_field_name(field) => 1 } }
       args = _minute_precise_time(args)
-      stat = where(args)
-      stat.find_and_modify(updates, upsert: true, new: false)
+      self.collection.where(args).upsert(updates)
     end
 
     private
 
     def _minute_precise_time(args)
-      args[:time] = Time.at(args[:time]).utc.change(sec: 0)
+      args['t'] = Time.at(args['t']).utc.change(sec: 0)
       args
     end
 

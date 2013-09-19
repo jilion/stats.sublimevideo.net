@@ -12,8 +12,7 @@ module Statsable
   module ClassMethods
     def update_stats(args, updates)
       args = _hour_precise_time(args)
-      stat = where(args)
-      stat.find_and_modify(updates, upsert: true, new: false)
+      self.collection.where(args).upsert(updates)
     end
 
     def inc_stats(args, event_field, data)
@@ -25,7 +24,7 @@ module Statsable
     private
 
     def _hour_precise_time(args)
-      args[:time] = Time.at(args[:time]).utc.change(min: 0)
+      args['t'] = Time.at(args['t']).utc.change(min: 0)
       args
     end
 

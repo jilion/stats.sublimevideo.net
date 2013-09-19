@@ -5,7 +5,7 @@ describe Statsable do
     include Mongoid::Document
     include Statsable
 
-    field :time, as: :t, type: Time
+    field :t, as: :time, type: Time
     field :key_id
   end
   subject { StatsableModel }
@@ -19,7 +19,7 @@ describe Statsable do
   describe ".inc_stats" do
     let(:key_id) { 'key_id' }
     let(:time) { Time.now.to_i }
-    let(:args) { { key_id: key_id, time: time } }
+    let(:args) { { 'key_id' => key_id, 't' => time } }
     let(:data) { double('DataHash', source_key: 'w', hostname: 'main') }
 
     it "precises time to hour" do

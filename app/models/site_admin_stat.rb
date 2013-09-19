@@ -21,8 +21,7 @@ class SiteAdminStat
 
   def self.update_stats(args, updates)
     args = _day_precise_time(args)
-    stat = where(args)
-    stat.find_and_modify(updates, upsert: true, new: false)
+    self.collection.where(args).upsert(updates)
   end
 
   def self.last_pages(site_token, days: 30, limit: 10)
@@ -51,7 +50,7 @@ class SiteAdminStat
   private
 
   def self._day_precise_time(args)
-    args[:time] = Time.at(args[:time]).utc.change(hour: 0)
+    args['t'] = Time.at(args['t']).utc.change(hour: 0)
     args
   end
 end

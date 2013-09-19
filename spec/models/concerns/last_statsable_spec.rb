@@ -5,7 +5,7 @@ describe LastStatsable do
     include Mongoid::Document
     include LastStatsable
 
-    field :time, as: :t, type: Time
+    field :t, as: :time, type: Time
     field :key_id
   end
   subject { LastStatsableModel }
@@ -16,7 +16,7 @@ describe LastStatsable do
   describe ".inc_stat" do
     let(:key_id) { 'key_id' }
     let(:time) { Time.now.to_i }
-    let(:args) { { key_id: key_id, time: time } }
+    let(:args) { { 'key_id' => key_id, 't' => time } }
 
     it "creates stat if not present" do
       LastStatsableModel.inc_stat(args, :loads)

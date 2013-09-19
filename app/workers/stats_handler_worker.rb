@@ -48,11 +48,11 @@ class StatsHandlerWorker
   end
 
   def _site_args
-    @site_args ||= { site_token: data.delete('s'), time: data.delete('t') }
+    @site_args ||= { 's' => data.delete('s'), 't' => data.delete('t') }
   end
 
   def _video_args
-    @video_args ||= _site_args.merge(video_uid: data.delete('u'))
+    @video_args ||= _site_args.merge('u' => data.delete('u'))
   end
 
   def _valid_video_uid?
