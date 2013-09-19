@@ -17,34 +17,34 @@ class StatsHandlerWorker
   def perform(event_key, data)
     @data = data
     send("_handle_#{event_key}_event")
-    LibratoStatsIncrementerWorker.perform_async(event_key, data)
+    LibratoStatsIncrementerWorker.new.perform(event_key, data)
   end
 
   private
 
   def _handle_al_event
-    SiteAdminStatUpdaterWorker.perform_async(_site_args, :app_loads, data)
+    SiteAdminStatUpdaterWorker.new.perform(_site_args, :app_loads, data)
   end
 
   def _handle_l_event
     if _valid_video_uid?
-      LastSiteStatUpdaterWorker.perform_async(_site_args, :loads)
-      LastVideoStatUpdaterWorker.perform_async(_video_args, :loads)
-      SiteStatUpdaterWorker.perform_async(_site_args, :loads, data)
-      VideoStatUpdaterWorker.perform_async(_video_args, :loads, data)
+      LastSiteStatUpdaterWorker.new.perform(_site_args, :loads)
+      LastVideoStatUpdaterWorker.new.perform(_video_args, :loads)
+      SiteStatUpdaterWorker.new.perform(_site_args, :loads, data)
+      VideoStatUpdaterWorker.new.perform(_video_args, :loads, data)
     end
-    SiteAdminStatUpdaterWorker.perform_async(_site_args, :loads, data)
+    SiteAdminStatUpdaterWorker.new.perform(_site_args, :loads, data)
   end
 
   def _handle_s_event
     if _valid_video_uid?
-      LastPlayCreatorWorker.perform_async(data)
-      LastSiteStatUpdaterWorker.perform_async(_site_args, :starts)
-      LastVideoStatUpdaterWorker.perform_async(_video_args, :starts)
-      SiteStatUpdaterWorker.perform_async(_site_args, :starts, data)
-      VideoStatUpdaterWorker.perform_async(_video_args, :starts, data)
+      LastPlayCreatorWorker.new.perform(data)
+      LastSiteStatUpdaterWorker.new.perform(_site_args, :starts)
+      LastVideoStatUpdaterWorker.new.perform(_video_args, :starts)
+      SiteStatUpdaterWorker.new.perform(_site_args, :starts, data)
+      VideoStatUpdaterWorker.new.perform(_video_args, :starts, data)
     end
-    SiteAdminStatUpdaterWorker.perform_async(_site_args, :starts, data)
+    SiteAdminStatUpdaterWorker.new.perform(_site_args, :starts, data)
   end
 
   def _site_args
