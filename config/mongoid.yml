@@ -89,6 +89,8 @@ production:
       password: <%= URI(ENV['MONGOHQ_URL']).password %>
       database: app13829477
       options:
+        protect_sensitive_fields: false
+        identity_map_enabled: false
         skip_version_check: true
         safe: false
 
