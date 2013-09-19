@@ -16,7 +16,7 @@ describe LastStatsable do
   describe ".inc_stat" do
     let(:key_id) { 'key_id' }
     let(:time) { Time.now.to_i }
-    let(:args) { { 'key_id' => key_id, 't' => time } }
+    let(:args) { { 'key_id' => key_id, 't' => time.to_s } }
 
     it "creates stat if not present" do
       LastStatsableModel.inc_stat(args, :loads)

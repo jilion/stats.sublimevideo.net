@@ -24,7 +24,7 @@ module Statsable
     private
 
     def _hour_precise_time(args)
-      args['t'] = Time.at(args['t']).utc.change(min: 0)
+      args['t'] = Time.at(args['t'].to_i).utc.change(min: 0)
       args
     end
 

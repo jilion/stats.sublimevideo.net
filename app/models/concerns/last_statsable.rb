@@ -16,7 +16,7 @@ module LastStatsable
     private
 
     def _minute_precise_time(args)
-      args['t'] = Time.at(args['t']).utc.change(sec: 0)
+      args['t'] = Time.at(args['t'].to_i).utc.change(sec: 0)
       args
     end
 

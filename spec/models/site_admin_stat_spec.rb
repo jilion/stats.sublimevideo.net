@@ -15,7 +15,7 @@ describe SiteAdminStat do
 
   describe ".update_stats" do
     let(:time) { Time.now.to_i }
-    let(:args) { { 's' => site_token, 't' => time } }
+    let(:args) { { 's' => site_token, 't' => time.to_s } }
     let(:updates) { { :$inc => { 'al.m' => 1 } } }
 
     it "precises time to day" do
