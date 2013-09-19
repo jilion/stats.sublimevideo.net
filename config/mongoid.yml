@@ -90,5 +90,5 @@ production:
       database: app13829477
       options:
         skip_version_check: true
-        safe: true
+        safe: false
 
