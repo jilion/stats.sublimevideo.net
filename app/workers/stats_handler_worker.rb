@@ -1,5 +1,6 @@
 require 'sidekiq'
 
+require 'data_hash'
 require 'last_site_stat'
 require 'last_video_stat'
 require 'site_stat'
@@ -17,7 +18,7 @@ class StatsHandlerWorker
   def perform(event_key, data)
     @data = DataHash.new(data)
     send("_handle_#{event_key}_event")
-    LibratoStatsIncrementer.increment(event_key, data)
+    LibratoStatsIncrementer.increment(event_key, @data)
   end
 
   private
