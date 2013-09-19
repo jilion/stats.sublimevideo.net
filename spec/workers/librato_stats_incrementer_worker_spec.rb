@@ -4,7 +4,7 @@ require 'librato_stats_incrementer_worker'
 
 describe LibratoStatsIncrementerWorker do
   it "delays job in stats queue" do
-    LibratoStatsIncrementerWorker.sidekiq_options_hash['queue'].should eq 'stats'
+    LibratoStatsIncrementerWorker.sidekiq_options_hash['queue'].should eq 'stats-low'
   end
 
   describe ".perform" do
