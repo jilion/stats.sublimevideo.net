@@ -6,7 +6,7 @@ describe SiteAdminPagesMigratorWorker do
   let(:worker) { SiteAdminPagesMigratorWorker.new }
 
   it "delays job in stats (stsv) queue" do
-    SiteAdminPagesMigratorWorker.get_sidekiq_options['queue'].should eq 'stats'
+    SiteAdminPagesMigratorWorker.get_sidekiq_options['queue'].should eq 'stats-migration'
   end
 
   describe "#perform" do

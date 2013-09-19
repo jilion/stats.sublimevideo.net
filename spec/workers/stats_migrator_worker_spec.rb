@@ -4,7 +4,7 @@ require 'stats_migrator_worker'
 
 describe StatsMigratorWorker do
   it "delays job in stats (stsv) queue" do
-    StatsMigratorWorker.get_sidekiq_options['queue'].should eq 'stats'
+    StatsMigratorWorker.get_sidekiq_options['queue'].should eq 'stats-migration'
   end
 
   describe "#perform" do

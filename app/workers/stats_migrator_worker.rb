@@ -6,7 +6,7 @@ require 'video_stat'
 
 class StatsMigratorWorker
   include Sidekiq::Worker
-  sidekiq_options queue: 'stats'
+  sidekiq_options queue: 'stats-migration'
 
   attr_accessor :data
 
