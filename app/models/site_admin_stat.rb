@@ -22,7 +22,7 @@ class SiteAdminStat
   def self.update_stats(args, updates)
     args = _day_precise_time(args)
     stat = where(args)
-    stat.find_and_modify(updates, upsert: true, new: true)
+    stat.find_and_modify(updates, upsert: true, new: false)
   end
 
   def self.last_pages(site_token, days: 30, limit: 10)

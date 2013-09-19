@@ -11,7 +11,7 @@ module LastStatsable
       updates = { :$inc => { database_field_name(field) => 1 } }
       args = _minute_precise_time(args)
       stat = where(args)
-      stat.find_and_modify(updates, upsert: true, new: true)
+      stat.find_and_modify(updates, upsert: true, new: false)
     end
 
     private

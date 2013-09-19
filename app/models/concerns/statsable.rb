@@ -13,7 +13,7 @@ module Statsable
     def update_stats(args, updates)
       args = _hour_precise_time(args)
       stat = where(args)
-      stat.find_and_modify(updates, upsert: true, new: true)
+      stat.find_and_modify(updates, upsert: true, new: false)
     end
 
     def inc_stats(args, event_field, data)
