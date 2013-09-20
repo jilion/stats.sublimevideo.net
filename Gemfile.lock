@@ -5,16 +5,8 @@ GIT
     useragent (0.2.3)
 
 GIT
-  remote: git://github.com/mongoid/kiqstand.git
-  revision: fdd5ea62293707fe044180a220670b0142314d04
-  specs:
-    kiqstand (1.2.0)
-      mongoid (~> 4.0)
-      moped (~> 1.4)
-
-GIT
   remote: git://github.com/mongoid/mongoid.git
-  revision: b2381109a58b0b49fc0c06e9a425f39cf83bc19b
+  revision: a0021858bbb405b3e99dfdda4e81a1e9c3d9dc4e
   specs:
     mongoid (4.0.0)
       activemodel (~> 4.0.0)
@@ -265,7 +257,6 @@ DEPENDENCIES
   guard-pow
   guard-rspec
   honeybadger
-  kiqstand!
   librato-rails
   librato-sidekiq
   lograge
