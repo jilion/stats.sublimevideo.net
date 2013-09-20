@@ -20,7 +20,7 @@ describe SiteAdminStat do
 
     it "precises time to day" do
       SiteAdminStat.upsert_stats(args, updates)
-      SiteAdminStat.last.time.should eq Time.at(time).utc.change(hour: 0)
+      expect(SiteAdminStat.last.time).to eq Time.at(time).utc.change(hour: 0)
     end
 
     it "updates existing stat" do
@@ -32,19 +32,19 @@ describe SiteAdminStat do
 
     it "updates with $set" do
       SiteAdminStat.upsert_stats(args, :$set => { 'ss' => false })
-      SiteAdminStat.last.ssl.should be_false
+      expect(SiteAdminStat.last.ssl).to be_false
     end
 
     it "updates with $addToSet" do
       SiteAdminStat.upsert_stats(args, :$addToSet => { 'sa' => 'a' })
       SiteAdminStat.upsert_stats(args, :$addToSet => { 'sa' => 'b' })
-      SiteAdminStat.last.stages.should eq %w[alpha beta]
+      expect(SiteAdminStat.last.stages).to eq %w[alpha beta]
     end
 
     it "updates with $push & $slice" do
       SiteAdminStat.upsert_stats(args, :$push => { 'pa' => { :$each => %w[url1 url2], :$slice => -2 } })
       SiteAdminStat.upsert_stats(args, :$push => { 'pa' => { :$each => %w[url3], :$slice => -2 } })
-      SiteAdminStat.last.pages.should eq %w[url2 url3]
+      expect(SiteAdminStat.last.pages).to eq %w[url2 url3]
     end
   end
 
@@ -56,7 +56,7 @@ describe SiteAdminStat do
     }
 
     it "returns last most used pages" do
-      SiteAdminStat.last_pages(site_token, limit: 3).should eq %w[url2 url3 url1]
+      expect(SiteAdminStat.last_pages(site_token, limit: 3)).to eq %w[url2 url3 url1]
     end
   end
 
@@ -66,7 +66,7 @@ describe SiteAdminStat do
     let!(:stat3) { SiteAdminStat.create(site_token: site_token, time: 1.days.ago, pages: %w[url1]) }
 
     it "returns last without pages" do
-      SiteAdminStat.last_without_pages(site_token).should eq stat2
+      expect(SiteAdminStat.last_without_pages(site_token)).to eq stat2
     end
   end
 end

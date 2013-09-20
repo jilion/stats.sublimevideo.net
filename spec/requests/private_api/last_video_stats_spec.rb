@@ -19,8 +19,8 @@ describe "LastSiteStats private api requests" do
       get "private_api/sites/#{site_token}/videos/#{video_uid}/last_video_stats.json", { }, @env
       body = MultiJson.load(response.body)['stats']
 
-      body[0]['st'].should eq(1)
-      body[0]['lo'].should eq(2)
+      expect(body[0]['st']).to eq(1)
+      expect(body[0]['lo']).to eq(2)
     end
   end
 

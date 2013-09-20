@@ -4,66 +4,72 @@ require 'data_hash'
 
 describe DataHash do
   describe "#source_key" do
-    specify { DataHash.new('ex' => 1).source_key.should eq 'e' }
-    specify { DataHash.new('ex' => '1').source_key.should eq 'e' }
-    specify { DataHash.new.source_key.should eq 'w' }
+    specify { expect(DataHash.new('ex' => 1).source_key).to eq 'e' }
+    specify { expect(DataHash.new('ex' => '1').source_key).to eq 'e' }
+    specify { expect(DataHash.new.source_key).to eq 'w' }
   end
 
   describe "#source" do
-    specify { DataHash.new('ex' => 1).source.should eq 'external' }
-    specify { DataHash.new.source.should eq 'website' }
+    specify { expect(DataHash.new('ex' => 1).source).to eq 'external' }
+    specify { expect(DataHash.new.source).to eq 'website' }
   end
 
   describe "#xyz" do
-    specify { DataHash.new('x' => 1).x.should eq 1 }
-    specify { DataHash.new('z' => 1).z.should eq 1 }
-    specify { DataHash.new.z.should be_nil }
+    specify { expect(DataHash.new('x' => 1).x).to eq 1 }
+    specify { expect(DataHash.new('z' => 1).z).to eq 1 }
+    specify { expect(DataHash.new.z).to be_nil }
+  end
+
+  describe "#stats_addon?" do
+    specify { expect(DataHash.new().stats_addon?).to be_false }
+    specify { expect(DataHash.new('sa' => '1').stats_addon?).to be_true }
+    specify { expect(DataHash.new('sa' => 1).stats_addon?).to be_true }
   end
 
   describe "#country_code" do
     it "uses GeoIPWrapper" do
-      GeoIPWrapper.should_receive(:country).with('84.226.128.23') { 'ch' }
-      DataHash.new('ip' => '84.226.128.23').country_code.should eq 'ch'
+      expect(GeoIPWrapper).to receive(:country).with('84.226.128.23') { 'ch' }
+      expect(DataHash.new('ip' => '84.226.128.23').country_code).to eq 'ch'
     end
   end
 
   describe "#browser_code" do
     it "uses UserAgentWrapper" do
-      UserAgentWrapper.should_receive(:new).with('user agent') { double('user_agent', browser_code: 'saf' ) }
-      DataHash.new('ua' => 'user agent').browser_code.should eq 'saf'
+      expect(UserAgentWrapper).to receive(:new).with('user agent') { double('user_agent', browser_code: 'saf' ) }
+      expect(DataHash.new('ua' => 'user agent').browser_code).to eq 'saf'
     end
   end
 
   describe "#platform_code" do
     it "uses UserAgentWrapper" do
-      UserAgentWrapper.should_receive(:new).with('user agent') { double('user_agent', platform_code: 'osx' ) }
-      DataHash.new('ua' => 'user agent').platform_code.should eq 'osx'
+      expect(UserAgentWrapper).to receive(:new).with('user agent') { double('user_agent', platform_code: 'osx' ) }
+      expect(DataHash.new('ua' => 'user agent').platform_code).to eq 'osx'
     end
   end
 
   describe "#hostname" do
-    specify { DataHash.new('ho' => 'm').hostname.should eq 'main' }
-    specify { DataHash.new('ho' => 'e').hostname.should eq 'extra' }
-    specify { DataHash.new('ho' => 's').hostname.should eq 'staging' }
-    specify { DataHash.new('ho' => 'd').hostname.should eq 'dev' }
-    specify { DataHash.new('ho' => 'i').hostname.should eq 'invalid' }
+    specify { expect(DataHash.new('ho' => 'm').hostname).to eq 'main' }
+    specify { expect(DataHash.new('ho' => 'e').hostname).to eq 'extra' }
+    specify { expect(DataHash.new('ho' => 's').hostname).to eq 'staging' }
+    specify { expect(DataHash.new('ho' => 'd').hostname).to eq 'dev' }
+    specify { expect(DataHash.new('ho' => 'i').hostname).to eq 'invalid' }
   end
 
   describe "#stage" do
-    specify { DataHash.new('st' => 'a').stage.should eq 'alpha' }
-    specify { DataHash.new('st' => 'b').stage.should eq 'beta' }
-    specify { DataHash.new('st' => 's').stage.should eq 'stable' }
+    specify { expect(DataHash.new('st' => 'a').stage).to eq 'alpha' }
+    specify { expect(DataHash.new('st' => 'b').stage).to eq 'beta' }
+    specify { expect(DataHash.new('st' => 's').stage).to eq 'stable' }
   end
 
   describe "#device" do
-    specify { DataHash.new('de' => 'd').device.should eq 'desktop' }
-    specify { DataHash.new('de' => 'm').device.should eq 'mobile' }
+    specify { expect(DataHash.new('de' => 'd').device).to eq 'desktop' }
+    specify { expect(DataHash.new('de' => 'm').device).to eq 'mobile' }
   end
 
   describe "#tech" do
-    specify { DataHash.new('te' => 'h').tech.should eq 'html' }
-    specify { DataHash.new('te' => 'f').tech.should eq 'flash' }
-    specify { DataHash.new('te' => 'y').tech.should eq 'youtube' }
-    specify { DataHash.new('te' => 'd').tech.should eq 'dailymotion' }
+    specify { expect(DataHash.new('te' => 'h').tech).to eq 'html' }
+    specify { expect(DataHash.new('te' => 'f').tech).to eq 'flash' }
+    specify { expect(DataHash.new('te' => 'y').tech).to eq 'youtube' }
+    specify { expect(DataHash.new('te' => 'd').tech).to eq 'dailymotion' }
   end
 end

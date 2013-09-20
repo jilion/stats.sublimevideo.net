@@ -16,7 +16,7 @@ describe "SiteAdminStats private api requests" do
       get "private_api/sites/#{site_token}/site_admin_stats.json", { days: 4 }, @env
       body = MultiJson.load(response.body)['stats']
 
-      body[0]['st'].should eq({ 'w' => 1, 'e' => 1 })
+      expect(body[0]['st']).to eq({ 'w' => 1, 'e' => 1 })
     end
   end
 end

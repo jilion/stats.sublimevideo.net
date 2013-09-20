@@ -21,16 +21,16 @@ describe LastStatsable do
     it "creates stat if not present" do
       LastStatsableModel.upsert_stat(args, :loads)
       stat = LastStatsableModel.last
-      stat.key_id.should eq key_id
-      stat.time.should eq Time.at(time).utc.change(sec: 0)
-      stat.loads.should eq 1
+      expect(stat.key_id).to eq key_id
+      expect(stat.time).to eq Time.at(time).utc.change(sec: 0)
+      expect(stat.loads).to eq 1
     end
 
     it "increments stat if present" do
       LastStatsableModel.upsert_stat(args, :loads)
       LastStatsableModel.upsert_stat(args, :loads)
-      LastStatsableModel.count.should eq 1
-      LastStatsableModel.last.loads.should eq 2
+      expect(LastStatsableModel.count).to eq 1
+      expect(LastStatsableModel.last.loads).to eq 2
     end
   end
 

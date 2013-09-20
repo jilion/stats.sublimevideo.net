@@ -26,7 +26,7 @@ describe LastHoursFindable do
 
       it "returns last 2 hours of stats" do
         starts = model_class.last_hours_stats(args, 2).entries
-        starts.should eq [
+        expect(starts).to eq [
           model_class.where(t: 2.hours.ago.utc.change(min: 0)).first,
           model_class.where(t: 1.hour.ago.utc.change(min: 0)).first
         ]
@@ -34,7 +34,7 @@ describe LastHoursFindable do
 
       it "returns last 3 hours of stats" do
         starts = model_class.last_hours_stats(args, 3)
-        starts.should eq [
+        expect(starts).to eq [
           model_class.where(t: 3.hours.ago.utc.change(min: 0)).first,
           model_class.where(t: 2.hours.ago.utc.change(min: 0)).first,
           model_class.where(t: 1.hour.ago.utc.change(min: 0)).first
@@ -45,7 +45,7 @@ describe LastHoursFindable do
     context "with unexistant stats" do
       it "returns 0 array" do
         starts = model_class.last_hours_stats(args, 4)
-        starts.should be_empty
+        expect(starts).to be_empty
       end
     end
   end

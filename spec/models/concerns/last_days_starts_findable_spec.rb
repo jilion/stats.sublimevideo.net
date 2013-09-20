@@ -27,19 +27,19 @@ describe LastDaysStartsFindable do
 
       it "returns last 4 days of starts" do
         starts = model_class.last_days_starts(args, 4)
-        starts.should eq [6, 0, 2, 0]
+        expect(starts).to eq [6, 0, 2, 0]
       end
 
       it "returns last 2 days of starts" do
         starts = model_class.last_days_starts(args, 2)
-        starts.should eq [2, 0]
+        expect(starts).to eq [2, 0]
       end
     end
 
     context "with unexistant stats" do
       it "returns 0 array" do
         starts = model_class.last_days_starts(args, 4)
-        starts.should eq [0, 0, 0, 0]
+        expect(starts).to eq [0, 0, 0, 0]
       end
     end
   end

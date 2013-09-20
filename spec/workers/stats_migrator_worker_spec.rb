@@ -4,7 +4,7 @@ require 'stats_migrator_worker'
 
 describe StatsMigratorWorker do
   it "delays job in stats (stsv) queue" do
-    StatsMigratorWorker.get_sidekiq_options['queue'].should eq 'stats-migration'
+    expect(StatsMigratorWorker.get_sidekiq_options['queue']).to eq 'stats-migration'
   end
 
   describe "#perform" do
@@ -21,7 +21,7 @@ describe StatsMigratorWorker do
         'ssl' => 'true' } }
 
       it "updates SiteAdminStat" do
-        SiteAdminStat.should_receive(:upsert_stats).with(
+        expect(SiteAdminStat).to receive(:upsert_stats).with(
           { site_token: 'site_token', time: time },
           { :$inc => { 'al.m' => 1, 'al.e' => 2, 'al.s' => 3, 'al.d' => 4, 'al.i' => 5 },
             :$set => { 'ss' => true, 'sa' => %w[s b] } })
@@ -50,7 +50,7 @@ describe StatsMigratorWorker do
         let(:video_uid) { 'valid_uid' }
 
         it "updates SiteAdminStat" do
-          SiteAdminStat.should_receive(:upsert_stats).with(
+          expect(SiteAdminStat).to receive(:upsert_stats).with(
             { site_token: 'site_token', time: time },
             { :$inc => {
               'lo.w' => 1 + 2, 'lo.e' => 6,
@@ -59,7 +59,7 @@ describe StatsMigratorWorker do
         end
 
         it "updates SiteStat" do
-          SiteStat.should_receive(:upsert_stats).with(
+          expect(SiteStat).to receive(:upsert_stats).with(
             { site_token: 'site_token', time: time },
             { :$inc => {
               'lo.w' => 1 + 2, 'lo.e' => 6,
@@ -70,7 +70,7 @@ describe StatsMigratorWorker do
         end
 
         it "updates VideoStat" do
-          VideoStat.should_receive(:upsert_stats).with(
+          expect(VideoStat).to receive(:upsert_stats).with(
             { site_token: 'site_token', video_uid: video_uid, time: time },
             { :$inc => {
               'lo.w' => 1 + 2, 'lo.e' => 6,
@@ -85,17 +85,17 @@ describe StatsMigratorWorker do
         let(:video_uid) { 'invalid_uid!$%?' }
 
         it "updates SiteAdminStat" do
-          SiteAdminStat.should_receive(:upsert_stats)
+          expect(SiteAdminStat).to receive(:upsert_stats)
           worker.perform(stat_class, data)
         end
 
         it "doesn't updates SiteStat" do
-          SiteStat.should_receive(:upsert_stats)
+          expect(SiteStat).to receive(:upsert_stats)
           worker.perform(stat_class, data)
         end
 
         it "doesn't updates VideoStat" do
-          VideoStat.should_not_receive(:upsert_stats)
+          expect(VideoStat).to_not receive(:upsert_stats)
           worker.perform(stat_class, data)
         end
       end

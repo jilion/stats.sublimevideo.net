@@ -25,11 +25,11 @@ describe "VideoStats private api requests" do
       get url, { hours: 24 }, @env
       body = MultiJson.load(response.body)['stats']
 
-      body[0]['st'].should eq({ 'w' => 1, 'e' => 1 })
-      body[0]['co'].should eq({ 'w' => { 'us' => 12, 'fr' => 42 }, 'e' => { 'us' => 13, 'fr' => 43 } })
+      expect(body[0]['st']).to eq({ 'w' => 1, 'e' => 1 })
+      expect(body[0]['co']).to eq({ 'w' => { 'us' => 12, 'fr' => 42 }, 'e' => { 'us' => 13, 'fr' => 43 } })
 
-      body[1]['st'].should eq({ 'w' => 2, 'e' => 2 })
-      body[1]['co'].should eq({ 'w' => { 'us' => 12, 'fr' => 42 }, 'e' => { 'us' => 13, 'fr' => 43 } })
+      expect(body[1]['st']).to eq({ 'w' => 2, 'e' => 2 })
+      expect(body[1]['co']).to eq({ 'w' => { 'us' => 12, 'fr' => 42 }, 'e' => { 'us' => 13, 'fr' => 43 } })
     end
   end
 
@@ -43,7 +43,7 @@ describe "VideoStats private api requests" do
 
     it "returns starts array" do
       get "private_api/sites/#{site_token}/videos/#{video_uid}/video_stats/last_days_starts.json", { days: 2 }, @env
-      MultiJson.load(response.body).should eq({"starts" => [0, 2]})
+      expect(MultiJson.load(response.body)).to eq({"starts" => [0, 2]})
     end
   end
 

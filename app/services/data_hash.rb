@@ -34,6 +34,10 @@ class DataHash < Hash
     _user_agent.platform_code
   end
 
+  def stats_addon?
+    sa.present?
+  end
+
   def hostname
     case ho
     when 'm' then 'main'

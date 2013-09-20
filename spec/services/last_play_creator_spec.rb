@@ -27,7 +27,7 @@ describe LastPlayCreator do
     }
 
     it "creates last play with good params" do
-      LastPlay.should_receive(:create).with(
+      expect(LastPlay).to receive(:create).with(
         's' => 'site_token',
         'u' => 'video_uid',
         't' => time,

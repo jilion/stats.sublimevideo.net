@@ -14,7 +14,7 @@ describe SiteAdminStatUpserter do
       let(:data) { DataHash.new('ho' => 'm', 'ss' => '1', 'st' => 'a') }
 
       it "increments app_loads, updates stages and sets ssl" do
-        SiteAdminStat.should_receive(:upsert_stats).with(site_args,
+        expect(SiteAdminStat).to receive(:upsert_stats).with(site_args,
           :$inc => { 'al.m' => 1 },
           :$set => { 'ss' => '1' },
           :$addToSet => { 'sa' => 'a' })
@@ -27,7 +27,7 @@ describe SiteAdminStatUpserter do
       let(:data) { DataHash.new('ex' => '1') }
 
       it "increments app_loads stats" do
-        SiteAdminStat.should_receive(:upsert_stats).with(site_args,
+        expect(SiteAdminStat).to receive(:upsert_stats).with(site_args,
           :$inc => { 'lo.e' => 1 })
         upserter.upsert(site_args)
       end
@@ -38,7 +38,7 @@ describe SiteAdminStatUpserter do
       let(:data) { DataHash.new('du' => 'document_url') }
 
       it "increments app_loads stats and pushes document url to pages" do
-        SiteAdminStat.should_receive(:upsert_stats).with(site_args,
+        expect(SiteAdminStat).to receive(:upsert_stats).with(site_args,
           :$inc => { 'st.w' => 1 },
           :$push => { 'pa' => { :$each => ['document_url'], :$slice => -10 } })
         upserter.upsert(site_args)

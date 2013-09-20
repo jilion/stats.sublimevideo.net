@@ -28,7 +28,7 @@ class StatsHandlerWorker
   end
 
   def _handle_l_event
-    if _valid_video_uid?
+    if _save_stats?
       LastSiteStat.upsert_stat(_site_args, :loads)
       LastVideoStat.upsert_stat(_video_args, :loads)
       SiteStat.upsert_stats_from_data(_site_args, :loads, data)
@@ -38,7 +38,7 @@ class StatsHandlerWorker
   end
 
   def _handle_s_event
-    if _valid_video_uid?
+    if _save_stats?
       LastPlayCreator.create(data)
       LastSiteStat.upsert_stat(_site_args, :starts)
       LastVideoStat.upsert_stat(_video_args, :starts)
@@ -54,6 +54,10 @@ class StatsHandlerWorker
 
   def _video_args
     @video_args ||= data.slice('s', 'u', 't')
+  end
+
+  def _save_stats?
+    data.stats_addon? && _valid_video_uid?
   end
 
   def _valid_video_uid?
