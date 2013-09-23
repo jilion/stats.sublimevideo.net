@@ -9,7 +9,7 @@ module Mongoid
     Sessions.with_session(&block)
   end
   module Config
-    option :session_pool_size, :default        => 50
+    option :session_pool_size, :default        => 75
     option :session_checkout_timeout, :default => 2
     option :session_reap_frequency, :default   => 10
   end
