@@ -4,6 +4,7 @@ class PrivateApi::LastPlaysController < SublimeVideoPrivateApiController
   # GET /private_api/sites/:site_token/videos/:video_uid/last_plays
   def index
     plays = LastPlay.where(_args).desc(:time).limit(5)
+    plays = plays.since(params[:since]) if params.has_key?(:since)
 
     if stale?(etag: _args, last_modified: plays.max(:time))
       respond_with(plays: plays)

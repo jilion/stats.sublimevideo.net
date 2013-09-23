@@ -19,54 +19,54 @@ describe SiteAdminStat do
     let(:updates) { { :$inc => { 'al.m' => 1 } } }
 
     it "precises time to day" do
-      SiteAdminStat.upsert_stats(args, updates)
-      expect(SiteAdminStat.last.time).to eq Time.at(time).utc.change(hour: 0)
+      described_class.upsert_stats(args, updates)
+      expect(described_class.last.time).to eq Time.at(time).utc.change(hour: 0)
     end
 
     it "updates existing stat" do
-      expect{ SiteAdminStat.upsert_stats(args, updates) }
-        .to change{ SiteAdminStat.count }.from(0).to(1)
-      expect{ SiteAdminStat.upsert_stats(args, updates) }
-        .to_not change{ SiteAdminStat.count }
+      expect{ described_class.upsert_stats(args, updates) }
+        .to change{ described_class.count }.from(0).to(1)
+      expect{ described_class.upsert_stats(args, updates) }
+        .to_not change{ described_class.count }
     end
 
     it "updates with $set" do
-      SiteAdminStat.upsert_stats(args, :$set => { 'ss' => false })
-      expect(SiteAdminStat.last.ssl).to be_false
+      described_class.upsert_stats(args, :$set => { 'ss' => false })
+      expect(described_class.last.ssl).to be_false
     end
 
     it "updates with $addToSet" do
-      SiteAdminStat.upsert_stats(args, :$addToSet => { 'sa' => 'a' })
-      SiteAdminStat.upsert_stats(args, :$addToSet => { 'sa' => 'b' })
-      expect(SiteAdminStat.last.stages).to eq %w[alpha beta]
+      described_class.upsert_stats(args, :$addToSet => { 'sa' => 'a' })
+      described_class.upsert_stats(args, :$addToSet => { 'sa' => 'b' })
+      expect(described_class.last.stages).to eq %w[alpha beta]
     end
 
     it "updates with $push & $slice" do
-      SiteAdminStat.upsert_stats(args, :$push => { 'pa' => { :$each => %w[url1 url2], :$slice => -2 } })
-      SiteAdminStat.upsert_stats(args, :$push => { 'pa' => { :$each => %w[url3], :$slice => -2 } })
-      expect(SiteAdminStat.last.pages).to eq %w[url2 url3]
+      described_class.upsert_stats(args, :$push => { 'pa' => { :$each => %w[url1 url2], :$slice => -2 } })
+      described_class.upsert_stats(args, :$push => { 'pa' => { :$each => %w[url3], :$slice => -2 } })
+      expect(described_class.last.pages).to eq %w[url2 url3]
     end
   end
 
   describe ".last_pages" do
     before {
-      SiteAdminStat.create(site_token: site_token, time: 1.days.ago, pages: %w[url1 url2])
-      SiteAdminStat.create(site_token: site_token, time: 2.days.ago, pages: %w[url2 url3 url4])
-      SiteAdminStat.create(site_token: site_token, time: 31.days.ago, pages: %w[old_url])
+      described_class.create(site_token: site_token, time: 1.days.ago, pages: %w[url1 url2])
+      described_class.create(site_token: site_token, time: 2.days.ago, pages: %w[url2 url3 url4])
+      described_class.create(site_token: site_token, time: 31.days.ago, pages: %w[old_url])
     }
 
     it "returns last most used pages" do
-      expect(SiteAdminStat.last_pages(site_token, limit: 3)).to eq %w[url2 url3 url1]
+      expect(described_class.last_pages(site_token, limit: 3)).to eq %w[url2 url3 url1]
     end
   end
 
   describe ".last_without_pages" do
-    let!(:stat1) { SiteAdminStat.create(site_token: site_token, time: 3.days.ago) }
-    let!(:stat2) { SiteAdminStat.create(site_token: site_token, time: 2.days.ago) }
-    let!(:stat3) { SiteAdminStat.create(site_token: site_token, time: 1.days.ago, pages: %w[url1]) }
+    let!(:stat1) { described_class.create(site_token: site_token, time: 3.days.ago) }
+    let!(:stat2) { described_class.create(site_token: site_token, time: 2.days.ago) }
+    let!(:stat3) { described_class.create(site_token: site_token, time: 1.days.ago, pages: %w[url1]) }
 
     it "returns last without pages" do
-      expect(SiteAdminStat.last_without_pages(site_token)).to eq stat2
+      expect(described_class.last_without_pages(site_token)).to eq stat2
     end
   end
 end

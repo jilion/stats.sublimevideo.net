@@ -1,6 +1,6 @@
 class PrivateApi::LastVideoStatsController < SublimeVideoPrivateApiController
 
-  # GET /private_api/sites/:site_token/videos/:video_uid/video_stats
+  # GET /private_api/sites/:site_token/videos/:video_uid/last_video_stats
   def index
     stats = LastVideoStat.where(_args).asc(:time).limit(60)
 

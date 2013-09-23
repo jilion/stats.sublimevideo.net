@@ -16,4 +16,6 @@ class LastPlay
   field :br, as: :browser
   field :pl, as: :platform
   field :co, as: :country
+
+  scope :since, ->(time) { where(:time.gt => time) }
 end

@@ -14,4 +14,16 @@ describe LastPlay do
     expect(LastPlay.new(external: '1').external).to be_true
     expect(LastPlay.new(external: 1).external).to be_true
   end
+
+  describe '.since' do
+    before do
+      @latest_stat = described_class.create(time: 1.days.ago)
+      described_class.create(time: 2.days.ago)
+      described_class.create(time: 31.days.ago)
+    end
+
+    it 'returns the right records' do
+      expect(described_class.since(2.days.ago).entries).to eq [@latest_stat]
+    end
+  end
 end
