@@ -1,8 +1,8 @@
 require 'fast_spec_helper'
 
-require 'stats_handler_worker'
+require 'stats_with_addon_handler_worker'
 
-describe StatsHandlerWorker do
+describe StatsWithAddonHandlerWorker do
   let(:site_token) { 'site_token' }
   let(:video_uid) { 'video_uid' }
   let(:time) { Time.now.to_i }
@@ -21,28 +21,27 @@ describe StatsHandlerWorker do
   }
 
   it "delays job in stats queue" do
-    expect(StatsHandlerWorker.sidekiq_options_hash['queue']).to eq 'stats'
+    expect(StatsWithAddonHandlerWorker.sidekiq_options_hash['queue']).to eq 'stats'
   end
 
-  context "with stats_addon & video_uid (u) data" do
+  context "with video_uid (u) data" do
     let(:data) { {
       's' => site_token,
       'u' => video_uid,
       't' => time,
-      'sa' => '1',
       'foo' => 'bar',
       'ex' => '1'
     } }
 
     context "app_load (al) event" do
-      after { StatsHandlerWorker.new.perform('al', data) }
+      after { StatsWithAddonHandlerWorker.new.perform('al', data) }
 
       specify { expect(LibratoStatsIncrementer).to receive(:increment).with('al', data_hash) }
       specify { expect(SiteAdminStatUpserter).to receive(:upsert).with(site_args, :app_loads, data_hash) }
     end
 
     context "load (l) event" do
-      after { StatsHandlerWorker.new.perform('l', data) }
+      after { StatsWithAddonHandlerWorker.new.perform('l', data) }
 
       specify { expect(LibratoStatsIncrementer).to receive(:increment).with('l', data_hash) }
       specify { expect(LastSiteStat).to receive(:upsert_stat).with(site_args, :loads) }
@@ -53,7 +52,7 @@ describe StatsHandlerWorker do
     end
 
     context "start (s) event" do
-      after { StatsHandlerWorker.new.perform('s', data) }
+      after { StatsWithAddonHandlerWorker.new.perform('s', data) }
 
       specify { expect(LibratoStatsIncrementer).to receive(:increment).with('s', data_hash) }
       specify { expect(LastPlayCreator).to receive(:create).with(data) }
@@ -65,7 +64,7 @@ describe StatsHandlerWorker do
     end
   end
 
-  context "without stats_addon & video_uid (u) data" do
+  context "without video_uid (u) data" do
     let(:data) { {
       's' => site_token,
       't' => time,
@@ -74,14 +73,14 @@ describe StatsHandlerWorker do
     } }
 
     context "app_load (al) event" do
-      after { StatsHandlerWorker.new.perform('al', data) }
+      after { StatsWithAddonHandlerWorker.new.perform('al', data) }
 
       specify { expect(LibratoStatsIncrementer).to receive(:increment).with('al', data_hash) }
       specify { expect(SiteAdminStatUpserter).to receive(:upsert).with(site_args, :app_loads, data_hash) }
     end
 
     context "load (l) event" do
-      after { StatsHandlerWorker.new.perform('l', data) }
+      after { StatsWithAddonHandlerWorker.new.perform('l', data) }
 
       specify { expect(LibratoStatsIncrementer).to receive(:increment).with('l', data_hash) }
       specify { expect(LastSiteStat).to_not receive(:upsert_stat).with(site_args, :loads) }
@@ -92,7 +91,7 @@ describe StatsHandlerWorker do
     end
 
     context "start (s) event" do
-      after { StatsHandlerWorker.new.perform('s', data) }
+      after { StatsWithAddonHandlerWorker.new.perform('s', data) }
 
       specify { expect(LibratoStatsIncrementer).to receive(:increment).with('s', data_hash) }
       specify { expect(LastPlayCreator).to_not receive(:create).with(data) }
