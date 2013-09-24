@@ -25,9 +25,9 @@ describe "LastPlays private api requests" do
     end
 
     context "sites last_plays" do
-      it "returns 5 last_plays" do
+      it "returns 3 last_plays" do
         get "private_api/sites/#{site_token}/last_plays.json", {}, @env
-        expect(MultiJson.load(response.body)['plays']).to have(5).plays
+        expect(MultiJson.load(response.body)['plays']).to have(3).plays
       end
     end
 
