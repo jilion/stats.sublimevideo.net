@@ -6,7 +6,7 @@ GIT
 
 GIT
   remote: git://github.com/mongoid/mongoid.git
-  revision: aeaab28cb107fd1aad5e6fa6b82a008a56573ad3
+  revision: f91feef0a0c6b83a1b878e154f1014536aa1c298
   specs:
     mongoid (4.0.0)
       activemodel (~> 4.0.0)
@@ -36,6 +36,10 @@ GEM
       activesupport (= 4.0.0)
       arel (~> 4.0.0)
     activerecord-deprecated_finders (1.0.3)
+    activeresource (4.0.0)
+      activemodel (~> 4.0)
+      activesupport (~> 4.0)
+      rails-observers (~> 0.1.1)
     activesupport (4.0.0)
       i18n (~> 0.6, >= 0.6.4)
       minitest (~> 4.2)
@@ -60,6 +64,7 @@ GEM
     dotenv-rails (0.9.0)
       dotenv (= 0.9.0)
     erubis (2.7.0)
+    excon (0.25.3)
     factory_girl (4.2.0)
       activesupport (>= 3.0.0)
     factory_girl_rails (4.2.1)
@@ -90,6 +95,8 @@ GEM
       activesupport (>= 3.0.0)
       faraday (~> 0.8)
       multi_json (~> 1.7)
+    heroku-api (0.3.15)
+      excon (~> 0.25.1)
     hike (1.2.3)
     honeybadger (1.8.0)
       json
@@ -134,7 +141,8 @@ GEM
     moped (1.5.1)
     multi_json (1.8.0)
     multipart-post (1.2.0)
-    newrelic_rpm (3.6.7.152)
+    newrelic_api (1.2.4)
+    newrelic_rpm (3.6.7.159)
     origin (1.1.0)
     polyglot (0.3.3)
     pry (0.9.12.2)
@@ -159,6 +167,8 @@ GEM
       bundler (>= 1.3.0, < 2.0)
       railties (= 4.0.0)
       sprockets-rails (~> 2.0.0)
+    rails-observers (0.1.2)
+      activemodel (~> 4.0)
     rails_12factor (0.0.2)
       rails_serve_static_assets
       rails_stdout_logging
@@ -250,6 +260,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activeresource
   dalli
   database_cleaner
   dotenv-rails
@@ -257,6 +268,7 @@ DEPENDENCIES
   geoip
   guard-pow
   guard-rspec
+  heroku-api
   honeybadger
   librato-rails
   librato-sidekiq
@@ -264,6 +276,7 @@ DEPENDENCIES
   memcachier
   mongoid!
   mongoid-rspec
+  newrelic_api
   newrelic_rpm
   pusher
   rack-cache

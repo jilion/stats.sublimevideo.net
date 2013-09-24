@@ -16,3 +16,5 @@
 
 !.env
 !.bundle
+
+.env.development
