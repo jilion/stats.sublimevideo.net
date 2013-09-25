@@ -4,7 +4,7 @@ class PrivateApi::LastSiteStatsController < SublimeVideoPrivateApiController
   def index
     stats = LastSiteStat.where(_args).asc(:time).limit(60)
 
-    if stale?(etag: _args, last_modified: stats.max(:time))
+    if stale?(etag: _args, last_modified: params[:since] || stats.max(:time))
       respond_with(stats: stats)
     end
   end
