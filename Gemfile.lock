@@ -6,11 +6,11 @@ GIT
 
 GIT
   remote: git://github.com/mongoid/mongoid.git
-  revision: f91feef0a0c6b83a1b878e154f1014536aa1c298
+  revision: f89502d7d0b418c20f5b04f5d106b61b4091cd68
   specs:
     mongoid (4.0.0)
       activemodel (~> 4.0.0)
-      moped (~> 1.5)
+      moped (~> 2.0.beta)
       origin (~> 1.0)
       tzinfo (~> 0.3.37)
 
@@ -50,6 +50,7 @@ GEM
     aggregate (0.2.2)
     arel (4.0.0)
     atomic (1.1.14)
+    bson (2.0.0.rc2)
     builder (3.1.4)
     celluloid (0.15.1)
       timers (~> 1.1.0)
@@ -138,11 +139,14 @@ GEM
       mongoid (>= 3.0.1)
       rake
       rspec (>= 2.14)
-    moped (1.5.1)
+    moped (2.0.0.beta)
+      bson (~> 2.0.0.rc2)
+      optionable (~> 0.1.1)
     multi_json (1.8.0)
     multipart-post (1.2.0)
     newrelic_api (1.2.4)
     newrelic_rpm (3.6.7.159)
+    optionable (0.1.1)
     origin (1.1.0)
     polyglot (0.3.3)
     pry (0.9.12.2)
