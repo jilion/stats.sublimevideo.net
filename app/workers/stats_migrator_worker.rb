@@ -34,6 +34,8 @@ class StatsMigratorWorker
 
   def _migrate_stat_video_day
     SiteAdminStat.upsert_stats(_site_args, _admin_stat_updates)
+
+    return unless _stats_addon?
     SiteStat.upsert_stats(_site_args, _stat_updates)
     VideoStat.upsert_stats(_video_args, _stat_updates) if _valid_video_uid?
   end
@@ -86,4 +88,9 @@ class StatsMigratorWorker
   def _valid_video_uid?
     data[:video_uid] =~ /^[a-z0-9_\-]{1,64}$/i
   end
+
+  def _stats_addon?
+    data[:sa]
+  end
+
 end

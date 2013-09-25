@@ -30,12 +30,14 @@ describe StatsMigratorWorker do
     end
 
     context "with Stat::Video::Day stat" do
+      let(:video_uid) { 'valid_uid' }
       let(:stat_class) { 'Stat::Video::Day' }
       let(:time) { 3.days.ago.utc.beginning_of_day }
       let(:data) { {
         'site_token' => 'site_token',
         'video_uid' => video_uid,
         'time' => time.to_s,
+        'sa' => true,
         'loads' => { 'm' => '1', 'e' => '2', 's' => '3', 'd' => '4', 'i' => '5', 'em' => '6' },
         'starts' => { 'm' => '1', 'e' => '2', 's' => '3', 'd' => '4', 'i' => '5', 'em' => '6' },
         'player_mode_and_device' => { 'h' => { 'd' => '1', 'm' => '2' }, 'f' => { 'd' => '3', 'm' => '4' } },
@@ -47,8 +49,6 @@ describe StatsMigratorWorker do
       }
 
       context "with valid uid" do
-        let(:video_uid) { 'valid_uid' }
-
         it "updates SiteAdminStat" do
           expect(SiteAdminStat).to receive(:upsert_stats).with(
             { site_token: 'site_token', time: time },
@@ -89,8 +89,27 @@ describe StatsMigratorWorker do
           worker.perform(stat_class, data)
         end
 
-        it "doesn't updates SiteStat" do
+        it "updates SiteStat" do
           expect(SiteStat).to receive(:upsert_stats)
+          worker.perform(stat_class, data)
+        end
+
+        it "doesn't updates VideoStat" do
+          expect(VideoStat).to_not receive(:upsert_stats)
+          worker.perform(stat_class, data)
+        end
+      end
+
+      context "without stats addon" do
+        before { data['sa'] = false }
+
+        it "updates SiteAdminStat" do
+          expect(SiteAdminStat).to receive(:upsert_stats)
+          worker.perform(stat_class, data)
+        end
+
+        it "doesn't updates SiteStat" do
+          expect(SiteStat).to_not receive(:upsert_stats)
           worker.perform(stat_class, data)
         end
 
