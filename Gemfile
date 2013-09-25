@@ -7,10 +7,8 @@ gem 'rails', '4.0.0'
 
 gem 'sublime_video_private_api', '~> 1.0' # hosted on gemfury
 
-gem 'mongoid', github: 'mongoid'
-# gem 'moped', github: 'mongoid/moped'
+gem 'mongoid', github: 'mongoid', ref: 'f91fe'
 
-# gem 'kiqstand', github: 'mongoid/kiqstand'
 gem 'sidekiq'
 
 gem 'honeybadger'
