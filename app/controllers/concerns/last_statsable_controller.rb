@@ -7,7 +7,7 @@ module LastStatsableController
   end
 
   def _last_modified
-    params.key?(:since) ? Time.at(params[:since].to_i) : @stats.max(:time)
+    @stats.max(:updated_at)
   end
 
 end

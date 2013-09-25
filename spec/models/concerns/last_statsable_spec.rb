@@ -26,6 +26,14 @@ describe LastStatsable do
       expect(stat.loads).to eq 1
     end
 
+    it "sets updated_at" do
+      LastStatsableModel.upsert_stat(args, :loads)
+      old_stat = LastStatsableModel.last
+      LastStatsableModel.upsert_stat(args, :loads)
+      stat = LastStatsableModel.last
+      expect(old_stat.updated_at).to_not eq stat.updated_at
+    end
+
     it "increments stat if present" do
       LastStatsableModel.upsert_stat(args, :loads)
       LastStatsableModel.upsert_stat(args, :loads)
