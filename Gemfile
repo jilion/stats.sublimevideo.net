@@ -54,7 +54,7 @@ group :test do
   gem 'timecop'
   gem 'shoulda-matchers'
   gem 'mongoid-rspec'
-  gem 'webmock', '>= 1.8.0', '< 1.10'
+  gem 'webmock'
   gem 'vcr'
   gem 'factory_girl_rails'
   gem 'database_cleaner'
