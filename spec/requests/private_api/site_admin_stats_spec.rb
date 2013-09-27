@@ -19,4 +19,23 @@ describe "SiteAdminStats private api requests" do
       expect(body[0]['st']).to eq({ 'w' => 1, 'e' => 1 })
     end
   end
+
+  describe "last_pages" do
+    let(:url) { "private_api/sites/#{site_token}/site_admin_stats/last_pages.json" }
+    before {
+      SiteAdminStat.create(
+        site_token: site_token,
+        time: 1.day.ago.utc.change(hour: 0),
+        pages: ['http://example.com'])
+    }
+
+    it_behaves_like 'valid caching headers', cache_control: 'max-age=3600, public', cache_validation: false
+
+    it "returns pages array" do
+      get url, {}, @env
+      body = MultiJson.load(response.body)['pages']
+
+      expect(body).to eq ['http://example.com']
+    end
+  end
 end

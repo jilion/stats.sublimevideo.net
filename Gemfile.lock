@@ -119,7 +119,7 @@ GEM
       rails (>= 3.0)
     librato-sidekiq (0.1.2)
       sidekiq
-    listen (2.0.0.beta.2)
+    listen (2.0.0.pre.1)
       celluloid (>= 0.15.1)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
@@ -227,7 +227,7 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (~> 2.8)
-    sublime_video_private_api (1.5.2)
+    sublime_video_private_api (1.5.3)
       activesupport (>= 3.2)
       faraday-http-cache (~> 0.2.1)
       her (~> 0.6.1)
