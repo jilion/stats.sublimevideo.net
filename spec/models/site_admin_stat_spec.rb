@@ -52,6 +52,7 @@ describe SiteAdminStat do
     before {
       described_class.create(site_token: site_token, time: 1.days.ago, pages: %w[url1 url2])
       described_class.create(site_token: site_token, time: 2.days.ago, pages: %w[url2 url3 url4])
+      described_class.create(site_token: site_token, time: 3.days.ago, pages: nil)
       described_class.create(site_token: site_token, time: 31.days.ago, pages: %w[old_url])
     }
 

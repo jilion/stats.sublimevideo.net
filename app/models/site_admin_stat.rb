@@ -27,7 +27,7 @@ class SiteAdminStat
   def self.last_pages(site_token, days: 30, limit: 10)
     stats = self.where(site_token: site_token, time: { :$gte => days.days.ago })
     scored_pages = stats.inject(Hash.new(0)) { |pages, stat|
-      stat.pages.each { |p| pages[p] += 1 }
+      stat.pages.each { |p| pages[p] += 1 } if stat.pages.present?
       pages }
     pages = scored_pages.keys.sort { |a, b| scored_pages[b] <=> scored_pages[a] }
     pages.shift(limit)
