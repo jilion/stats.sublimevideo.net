@@ -14,7 +14,7 @@ module LastHoursFindable
   module ClassMethods
 
     def last_hours_stats(args, hours)
-      where(args).last_hours(hours).asc(:time).all
+      where(args).last_hours(hours.to_i).asc(:time).all
     end
 
   end

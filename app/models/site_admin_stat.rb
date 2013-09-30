@@ -5,6 +5,7 @@ require 'site_identifiable'
 class SiteAdminStat
   include Mongoid::Document
   include SiteIdentifiable
+  include LastDaysStartsFindable
 
   field :al, as: :app_loads, type: Hash # { m(main): 1, e(extra): 3, s(staging): 5, d(dev): 11, i(invalid): 1 }
   field :lo, as: :loads, type: Hash # { w(website): 3, e(external): 9 }, even without video_uid

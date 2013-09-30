@@ -20,6 +20,20 @@ describe "SiteAdminStats private api requests" do
     end
   end
 
+  describe "last_days_starts" do
+    before {
+      SiteAdminStat.create(
+        site_token: site_token,
+        time: Time.now.utc.at_beginning_of_day - 1.hour,
+        starts: { w: 1, e: 1 })
+    }
+
+    it "returns starts array" do
+      get "private_api/sites/#{site_token}/site_admin_stats/last_days_starts.json", { days: 2 }, @env
+      expect(MultiJson.load(response.body)).to eq({"starts" => [0, 2]})
+    end
+  end
+
   describe "last_pages" do
     let(:url) { "private_api/sites/#{site_token}/site_admin_stats/last_pages.json" }
     before {

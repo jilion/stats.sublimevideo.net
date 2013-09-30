@@ -5,6 +5,7 @@ describe SiteAdminStat do
 
   it { should be_kind_of Mongoid::Document }
   it { should be_kind_of SiteIdentifiable }
+  it { should be_kind_of LastDaysStartsFindable }
 
   it { should have_field(:al).with_alias(:app_loads).of_type(Hash) }
   it { should have_field(:lo).with_alias(:loads).of_type(Hash) }
