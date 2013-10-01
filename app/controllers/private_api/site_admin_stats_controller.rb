@@ -7,7 +7,7 @@ class PrivateApi::SiteAdminStatsController < SublimeVideoPrivateApiController
     stats = stats.last_days(params[:days].to_i) if params.key?(:days)
 
     if stale?(etag: params, last_modified: stats.max(:time))
-      respond_with(stats: stats)
+      respond_with(stats)
     end
   end
 
