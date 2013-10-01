@@ -2,7 +2,8 @@ class PrivateApi::SiteAdminStatsController < SublimeVideoPrivateApiController
 
   # GET /private_api/sites/:site_token/site_admin_stats
   def index
-    stats = SiteAdminStat.where(_args).last_days(params[:days].to_i).asc(:time).all
+    stats = SiteAdminStat.where(_args).asc(:time)
+    stats = stats.last_days(params[:days].to_i) if params.key?(:days)
 
     if stale?(etag: params, last_modified: stats.max(:time))
       respond_with(stats: stats)
