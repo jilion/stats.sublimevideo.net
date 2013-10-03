@@ -1,6 +1,6 @@
 class PrivateApi::SiteAdminStatsController < SublimeVideoPrivateApiController
 
-  # GET /private_api/sites/:site_token/site_admin_stats
+  # GET /private_api/site_admin_stats
   def index
     stats = SiteAdminStat.where(_args).asc(:time)
     stats = stats.page(params[:page]).per(params[:per] || params[:days])
@@ -11,14 +11,14 @@ class PrivateApi::SiteAdminStatsController < SublimeVideoPrivateApiController
     end
   end
 
-  # GET /private_api/sites/:site_token/site_admin_stats/last_days_starts
+  # GET /private_api/site_admin_stats/last_days_starts
   def last_days_starts
     starts = SiteAdminStat.last_days_starts(_args, params[:days])
 
     respond_with(starts: starts)
   end
 
-  # GET /private_api/sites/:site_token/site_admin_stats/last_pages
+  # GET /private_api/site_admin_stats/last_pages
   def last_pages
     pages = SiteAdminStat.last_pages(params[:site_token], params.slice(:days, :limit))
 

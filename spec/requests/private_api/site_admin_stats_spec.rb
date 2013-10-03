@@ -17,7 +17,7 @@ describe "SiteAdminStats private api requests" do
     }
 
     it "returns stats array with days" do
-      get "private_api/sites/#{site_token}/site_admin_stats.json", { days: 4 }, @env
+      get "private_api/site_admin_stats.json", { site_token: site_token, days: 4 }, @env
       body = MultiJson.load(response.body)
 
       expect(body).to have(1).stats
@@ -25,7 +25,7 @@ describe "SiteAdminStats private api requests" do
     end
 
     it "returns stats array without days" do
-      get "private_api/sites/#{site_token}/site_admin_stats.json", { }, @env
+      get "private_api/site_admin_stats.json", { site_token: site_token }, @env
       body = MultiJson.load(response.body)
 
       expect(body).to have(2).stats
@@ -41,13 +41,13 @@ describe "SiteAdminStats private api requests" do
     }
 
     it "returns starts array" do
-      get "private_api/sites/#{site_token}/site_admin_stats/last_days_starts.json", { days: 2 }, @env
+      get "private_api/site_admin_stats/last_days_starts.json", { site_token: site_token, days: 2 }, @env
       expect(MultiJson.load(response.body)).to eq({"starts" => [0, 2]})
     end
   end
 
   describe "last_pages" do
-    let(:url) { "private_api/sites/#{site_token}/site_admin_stats/last_pages.json" }
+    let(:url) { "private_api/site_admin_stats/last_pages.json" }
     before {
       SiteAdminStat.create(
         site_token: site_token,
@@ -58,7 +58,7 @@ describe "SiteAdminStats private api requests" do
     it_behaves_like 'valid caching headers', cache_control: 'max-age=3600, public', cache_validation: false
 
     it "returns pages array" do
-      get url, {}, @env
+      get url, { site_token: site_token }, @env
       body = MultiJson.load(response.body)['pages']
 
       expect(body).to eq ['http://example.com']
