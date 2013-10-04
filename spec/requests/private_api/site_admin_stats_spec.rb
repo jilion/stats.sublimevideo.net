@@ -93,7 +93,7 @@ describe "SiteAdminStats private api requests" do
       get url, { day: day.to_date, threshold: 1 }, @env
       body = MultiJson.load(response.body)
 
-      expect(body).to eq 2
+      expect(body).to eq("count" => 2)
     end
   end
 

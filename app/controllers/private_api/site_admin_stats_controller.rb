@@ -36,7 +36,7 @@ class PrivateApi::SiteAdminStatsController < SublimeVideoPrivateApiController
   # GET /private_api/site_admin_stats/last_30_days_sites_with_starts?day=2013-10-04&threshold=2
   def last_30_days_sites_with_starts
     count = SiteAdminStat.last_30_days_sites_with_starts(_day, threshold: params[:threshold])
-    respond_with(count)
+    respond_with(count: count)
   end
 
   private
