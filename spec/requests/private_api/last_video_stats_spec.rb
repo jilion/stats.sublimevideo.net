@@ -16,8 +16,8 @@ describe "LastSiteStats private api requests" do
     }
 
     it "returns stats array" do
-      get "private_api/sites/#{site_token}/videos/#{video_uid}/last_video_stats.json", { }, @env
-      body = MultiJson.load(response.body)['stats']
+      get "private_api/last_video_stats.json", { site_token: site_token, video_uid: video_uid }, @env
+      body = MultiJson.load(response.body)
 
       expect(body[0]['st']).to eq(1)
       expect(body[0]['lo']).to eq(2)

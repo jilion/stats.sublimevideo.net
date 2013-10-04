@@ -20,21 +20,21 @@ describe "LastPlays private api requests" do
     }
 
     it "sets cache header" do
-      get "private_api/sites/#{site_token}/last_plays.json", {}, @env
+      get "private_api/last_plays.json", { site_token: site_token }, @env
       expect(response.headers.keys).to include("ETag", "Last-Modified")
     end
 
     context "sites last_plays" do
       it "returns 3 last_plays" do
-        get "private_api/sites/#{site_token}/last_plays.json", {}, @env
-        expect(MultiJson.load(response.body)['plays']).to have(3).plays
+        get "private_api/last_plays.json", { site_token: site_token }, @env
+        expect(MultiJson.load(response.body)).to have(3).plays
       end
     end
 
     context "videos last_plays" do
       it "returns 3 last_plays" do
-        get "private_api/sites/#{site_token}/videos/#{video_uid}/last_plays.json", {}, @env
-        expect(MultiJson.load(response.body)['plays']).to have(3).plays
+        get "private_api/last_plays.json", { site_token: site_token, video_uid: video_uid }, @env
+        expect(MultiJson.load(response.body)).to have(3).plays
       end
     end
   end

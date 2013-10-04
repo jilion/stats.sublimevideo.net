@@ -19,11 +19,11 @@ describe "VideoStats private api requests" do
         countries: { w:  { us: 12, fr: 42 }, e: { us: 13, fr: 43 } })
     end
 
-    let(:url) { "private_api/sites/#{site_token}/videos/#{video_uid}/video_stats.json" }
+    let(:url) { "private_api/video_stats.json" }
 
     it "returns stats array" do
-      get url, { hours: 24 }, @env
-      body = MultiJson.load(response.body)['stats']
+      get url, { site_token: site_token, video_uid: video_uid, hours: 24 }, @env
+      body = MultiJson.load(response.body)
 
       expect(body[0]['st']).to eq({ 'w' => 1, 'e' => 1 })
       expect(body[0]['co']).to eq({ 'w' => { 'us' => 12, 'fr' => 42 }, 'e' => { 'us' => 13, 'fr' => 43 } })
@@ -42,8 +42,8 @@ describe "VideoStats private api requests" do
     }
 
     it "returns starts array" do
-      get "private_api/sites/#{site_token}/videos/#{video_uid}/video_stats/last_days_starts.json", { days: 2 }, @env
-      expect(MultiJson.load(response.body)).to eq({"starts" => [0, 2]})
+      get "private_api/video_stats/last_days_starts.json", { site_token: site_token, video_uid: video_uid, days: 2 }, @env
+      expect(MultiJson.load(response.body)).to eq [0, 2]
     end
   end
 

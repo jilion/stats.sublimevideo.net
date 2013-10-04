@@ -14,8 +14,8 @@ describe "SiteStats private api requests" do
     }
 
     it "returns stats array" do
-      get "private_api/sites/#{site_token}/site_stats.json", { hours: 24 }, @env
-      body = MultiJson.load(response.body)['stats']
+      get "private_api/site_stats.json", { site_token: site_token, hours: 24 }, @env
+      body = MultiJson.load(response.body)
 
       expect(body[0]['st']).to eq({ 'w' => 1, 'e' => 1 })
       expect(body[0]['co']).to eq({ 'w' => { 'us' => 12, 'fr' => 42 }, 'e' => { 'us' => 13, 'fr' => 43 } })
@@ -31,8 +31,8 @@ describe "SiteStats private api requests" do
     }
 
     it "returns starts array" do
-      get "private_api/sites/#{site_token}/site_stats/last_days_starts.json", { days: 2 }, @env
-      expect(MultiJson.load(response.body)).to eq({"starts" => [0, 2]})
+      get "private_api/site_stats/last_days_starts.json", { site_token: site_token, days: 2 }, @env
+      expect(MultiJson.load(response.body)).to eq [0, 2]
     end
   end
 end

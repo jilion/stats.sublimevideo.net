@@ -42,7 +42,7 @@ describe "SiteAdminStats private api requests" do
 
     it "returns starts array" do
       get "private_api/site_admin_stats/last_days_starts.json", { site_token: site_token, days: 2 }, @env
-      expect(MultiJson.load(response.body)).to eq({"starts" => [0, 2]})
+      expect(MultiJson.load(response.body)).to eq [0, 2]
     end
   end
 
@@ -59,7 +59,7 @@ describe "SiteAdminStats private api requests" do
 
     it "returns pages array" do
       get url, { site_token: site_token }, @env
-      body = MultiJson.load(response.body)['pages']
+      body = MultiJson.load(response.body)
 
       expect(body).to eq ['http://example.com']
     end
