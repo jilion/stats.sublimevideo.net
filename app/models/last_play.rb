@@ -23,6 +23,8 @@ class LastPlay
              Time.at(time.to_i)
            when Time
              time
+            else
+              60.minutes.ago
            end
 
     where(:time.gt => time)

@@ -17,21 +17,25 @@ describe LastPlay do
 
   describe '.since' do
     before do
-      @latest_stat1 = described_class.create(time: 1.days.ago)
-      @latest_stat2 = described_class.create(time: 2.days.ago)
-      described_class.create(time: 31.days.ago)
+      @latest_stat1 = described_class.create(time: 1.minute.ago)
+      @latest_stat2 = described_class.create(time: 2.minutes.ago)
+      described_class.create(time: 61.minutes.ago)
     end
 
     it 'returns the right records with a Time object' do
-      expect(described_class.since(3.days.ago).entries).to eq [@latest_stat1, @latest_stat2]
+      expect(described_class.since(3.minutes.ago).entries).to eq [@latest_stat1, @latest_stat2]
     end
 
     it 'returns the right records with an Integer' do
-      expect(described_class.since(3.days.ago.to_i).entries).to eq [@latest_stat1, @latest_stat2]
+      expect(described_class.since(3.minutes.ago.to_i).entries).to eq [@latest_stat1, @latest_stat2]
     end
 
     it 'returns the right records with a String' do
-      expect(described_class.since(3.days.ago.to_i.to_s).entries).to eq [@latest_stat1, @latest_stat2]
+      expect(described_class.since(3.minutes.ago.to_i.to_s).entries).to eq [@latest_stat1, @latest_stat2]
+    end
+
+    it 'returns the right records with nil' do
+      expect(described_class.since(nil).entries).to eq [@latest_stat1, @latest_stat2]
     end
   end
 end
