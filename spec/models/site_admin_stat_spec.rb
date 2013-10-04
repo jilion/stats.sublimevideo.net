@@ -71,4 +71,41 @@ describe SiteAdminStat do
       expect(described_class.last_without_pages(site_token)).to eq stat2
     end
   end
+
+  describe ".global_day_stat" do
+    let(:day) { 1.days.ago.midnight.utc }
+    let!(:stat1) { described_class.create(site_token: '1', time: day, app_loads: { 'm' => 1, 'e' => 2 }, loads: { 'w' => 1 }) }
+    let!(:stat2) { described_class.create(site_token: '2', time: day, app_loads: { 'm' => 1, 's' => 2 }, starts: { 'e' => 3 }) }
+    let!(:stat3) { described_class.create(site_token: '3', time: day, loads: { 'w' => 1, 'e' => 1 }, starts: { 'w' => 3, 'e' => 1 }) }
+
+    it "merges all stats from every sites that day" do
+      stat = SiteAdminStat.global_day_stat(day.to_date, [:app_loads, :loads, :starts])
+      expect(stat.app_loads).to eq({ 'm' => 2, 'e' => 2, 's' => 2 })
+      expect(stat.loads).to eq({ 'w' => 2, 'e' => 1 })
+      expect(stat.starts).to eq({ 'w' => 3, 'e' => 4 })
+    end
+  end
+
+  describe ".last_30_days_sites_with_starts" do
+    let!(:stat1) { described_class.create(site_token: '1', time: 1.days.ago, starts: { 'e' => 3, 'w' => 1}) }
+    let!(:stat2) { described_class.create(site_token: '2', time: 5.days.ago, starts: { 'e' => 5 }) }
+    let!(:stat3) { described_class.create(site_token: '2', time: 5.days.ago, starts: { 'w' => 3 }) }
+    let!(:stat4) { described_class.create(site_token: '3', time: 19.days.ago, starts: { 'w' => 1, 'e' => 1 }) }
+    let!(:stat5) { described_class.create(site_token: '4', time: 31.days.ago, starts: { 'w' => 1, 'e' => 1 }) }
+
+    it "counts number of site with more than threshold in the last 30 days" do
+      count = SiteAdminStat.last_30_days_sites_with_starts(Date.yesterday, threshold: 2)
+      expect(count).to eq 3
+    end
+
+    it "counts number of site with more than threshold in the last 30 days (threshold: 4)" do
+      count = SiteAdminStat.last_30_days_sites_with_starts(Date.yesterday, threshold: 4)
+      expect(count).to eq 2
+    end
+
+    it "counts number of site with more than threshold in the last 30 days (5 days ago)" do
+      count = SiteAdminStat.last_30_days_sites_with_starts(5.days.ago, threshold: 2)
+      expect(count).to eq 3
+    end
+  end
 end

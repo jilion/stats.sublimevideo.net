@@ -64,4 +64,37 @@ describe "SiteAdminStats private api requests" do
       expect(body).to eq ['http://example.com']
     end
   end
+
+  describe "global_day_stat" do
+    let(:day) { 1.days.ago.midnight.utc }
+    let(:url) { "private_api/site_admin_stats/global_day_stat.json" }
+    before {
+      SiteAdminStat.create(site_token: '1', time: day, app_loads: { 'm' => 1 })
+      SiteAdminStat.create(site_token: '2', time: day, app_loads: { 'm' => 1 })
+    }
+
+    it "returns global stat" do
+      get url, { day: day.to_date }, @env
+      body = MultiJson.load(response.body)
+
+      expect(body).to eq({"al" => { "m" => 2 }, "lo" => {}, "st" => {} })
+    end
+  end
+
+  describe "last_30_days_sites_with_starts" do
+    let(:day) { 1.days.ago }
+    let(:url) { "private_api/site_admin_stats/last_30_days_sites_with_starts.json" }
+    before {
+      SiteAdminStat.create(site_token: '1', time: 1.days.ago, starts: { 'w' => 1 })
+      SiteAdminStat.create(site_token: '2', time: 5.days.ago, starts: { 'e' => 1 })
+    }
+
+    it "returns global stat" do
+      get url, { day: day.to_date, threshold: 1 }, @env
+      body = MultiJson.load(response.body)
+
+      expect(body).to eq 2
+    end
+  end
+
 end

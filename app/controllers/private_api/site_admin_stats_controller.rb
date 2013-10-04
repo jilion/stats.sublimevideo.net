@@ -25,10 +25,28 @@ class PrivateApi::SiteAdminStatsController < SublimeVideoPrivateApiController
     end
   end
 
+  # GET /private_api/site_admin_stats/global_day_stat?day=2013-10-04
+  def global_day_stat
+    day = Date.parse(params[:day])
+    fields = [:app_loads, :loads, :starts]
+    stat = SiteAdminStat.global_day_stat(day, [:app_loads, :loads, :starts])
+    respond_with(stat.as_json(only: [:al, :lo, :st]))
+  end
+
+  # GET /private_api/site_admin_stats/last_30_days_sites_with_starts?day=2013-10-04&threshold=2
+  def last_30_days_sites_with_starts
+    count = SiteAdminStat.last_30_days_sites_with_starts(_day, threshold: params[:threshold])
+    respond_with(count)
+  end
+
   private
 
   def _args
     params.slice(:site_token)
+  end
+
+  def _day
+    Date.parse(params[:day])
   end
 
 end
