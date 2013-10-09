@@ -2,7 +2,7 @@ class PrivateApi::LastPlaysController < SublimeVideoPrivateApiController
 
   # GET /private_api/last_plays
   def index
-    @plays = LastPlay.where(_args).since(params[:since]).desc(:time).limit(3)
+    @plays = LastPlay.where(_args).since(params[:since]).desc(:time).limit(100)
     if stale?(etag: _args, last_modified: @plays.max(:time))
       respond_with(@plays)
     end

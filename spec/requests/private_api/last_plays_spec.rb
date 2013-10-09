@@ -7,11 +7,11 @@ describe "LastPlays private api requests" do
 
   describe "index" do
     before {
-      3.times do |i|
+      101.times do |i|
         LastPlay.create(
           site_token: site_token,
           video_uid: video_uid,
-          time: i.minutes.ago)
+          time: (i / 2).minutes.ago)
         LastPlay.create(
           site_token: site_token,
           video_uid: 'video_uid2',
@@ -25,16 +25,16 @@ describe "LastPlays private api requests" do
     end
 
     context "sites last_plays" do
-      it "returns 3 last_plays" do
+      it "returns 100 last_plays" do
         get "private_api/last_plays.json", { site_token: site_token }, @env
-        expect(MultiJson.load(response.body)).to have(3).plays
+        expect(MultiJson.load(response.body)).to have(100).plays
       end
     end
 
     context "videos last_plays" do
-      it "returns 3 last_plays" do
+      it "returns 100 last_plays" do
         get "private_api/last_plays.json", { site_token: site_token, video_uid: video_uid }, @env
-        expect(MultiJson.load(response.body)).to have(3).plays
+        expect(MultiJson.load(response.body)).to have(100).plays
       end
     end
   end
