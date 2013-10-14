@@ -20,7 +20,7 @@ class SiteAdminStatUpserter
 
   def _updates_for_app_loads
     { :$inc => { "al.#{data.ho}" => 1 },
-      :$set => { 'ss' => data.ss },
+      :$set => { 'ss' => data.ss.present? },
       :$addToSet => { 'sa' => data.st } }
   end
 

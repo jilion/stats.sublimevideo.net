@@ -1,6 +1,7 @@
 require 'mongoid'
 
 require 'site_identifiable'
+require 'last_days_starts_findable'
 
 class SiteAdminStat
   include Mongoid::Document

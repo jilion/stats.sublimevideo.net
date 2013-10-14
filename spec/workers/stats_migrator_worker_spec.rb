@@ -18,7 +18,7 @@ describe StatsMigratorWorker do
         'time' => time.to_s,
         'app_loads' => { 'm' => '1', 'e' => '2', 's' => '3', 'd' => '4', 'i' => '5', 'em' => '6' },
         'stages' => %w[s b],
-        'ssl' => 'true' } }
+        'ssl' => true } }
 
       it "updates SiteAdminStat" do
         expect(SiteAdminStat).to receive(:upsert_stats).with(

@@ -2,6 +2,7 @@ require 'mongoid'
 
 require 'site_identifiable'
 require 'statsable'
+require 'last_hours_findable'
 require 'last_days_starts_findable'
 
 class SiteStat

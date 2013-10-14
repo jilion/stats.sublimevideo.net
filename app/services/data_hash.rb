@@ -9,10 +9,7 @@ class DataHash < Hash
   end
 
   def source_key
-    case ex
-    when 1, '1' then 'e'
-    else 'w'
-    end
+    ex.present? ? 'e' : 'w'
   end
 
   def source

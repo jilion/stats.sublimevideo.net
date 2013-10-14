@@ -4,13 +4,12 @@ require 'data_hash'
 
 describe DataHash do
   describe "#source_key" do
-    specify { expect(DataHash.new('ex' => 1).source_key).to eq 'e' }
-    specify { expect(DataHash.new('ex' => '1').source_key).to eq 'e' }
+    specify { expect(DataHash.new('ex' => true).source_key).to eq 'e' }
     specify { expect(DataHash.new.source_key).to eq 'w' }
   end
 
   describe "#source" do
-    specify { expect(DataHash.new('ex' => 1).source).to eq 'external' }
+    specify { expect(DataHash.new('ex' => true).source).to eq 'external' }
     specify { expect(DataHash.new.source).to eq 'website' }
   end
 
@@ -22,8 +21,7 @@ describe DataHash do
 
   describe "#stats_addon?" do
     specify { expect(DataHash.new().stats_addon?).to be_false }
-    specify { expect(DataHash.new('sa' => '1').stats_addon?).to be_true }
-    specify { expect(DataHash.new('sa' => 1).stats_addon?).to be_true }
+    specify { expect(DataHash.new('sa' => true).stats_addon?).to be_true }
   end
 
   describe "#country_code" do

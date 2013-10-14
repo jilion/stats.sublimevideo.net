@@ -21,7 +21,7 @@ class StatsMigratorWorker
     updates = {
       :$inc => _app_loads_inc,
       :$set => {
-        'ss' => data[:ssl] == 'true',
+        'ss' => data[:ssl].present?,
         'sa' => data[:stages] } }
     SiteAdminStat.upsert_stats(_site_args, updates)
   end

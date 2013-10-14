@@ -16,7 +16,7 @@ describe SiteAdminStatUpserter do
       it "increments app_loads, updates stages and sets ssl" do
         expect(SiteAdminStat).to receive(:upsert_stats).with(site_args,
           :$inc => { 'al.m' => 1 },
-          :$set => { 'ss' => '1' },
+          :$set => { 'ss' => true },
           :$addToSet => { 'sa' => 'a' })
         upserter.upsert(site_args)
       end
