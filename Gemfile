@@ -44,7 +44,6 @@ end
 group :development do
   # Guard
   gem 'ruby_gntp', require: false
-
   gem 'guard', '>= 2.0.0.pre.2', require: false
   gem 'guard-pow', require: false
   gem 'guard-rspec', require: false
@@ -54,8 +53,8 @@ group :test do
   gem 'timecop'
   gem 'shoulda-matchers'
   gem 'mongoid-rspec'
-  gem 'webmock'
   gem 'vcr'
+  gem 'webmock', '~> 1.13.0'
   gem 'factory_girl_rails'
   gem 'database_cleaner'
 end

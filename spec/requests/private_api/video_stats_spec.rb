@@ -25,10 +25,10 @@ describe "VideoStats private api requests" do
       get url, { site_token: site_token, video_uid: video_uid, hours: 24 }, @env
       body = MultiJson.load(response.body)
 
-      expect(body[0]['st']).to eq({ 'w' => 1, 'e' => 1 })
+      expect(body[0]['st']).to eq({ 'w' => 2, 'e' => 2 })
       expect(body[0]['co']).to eq({ 'w' => { 'us' => 12, 'fr' => 42 }, 'e' => { 'us' => 13, 'fr' => 43 } })
 
-      expect(body[1]['st']).to eq({ 'w' => 2, 'e' => 2 })
+      expect(body[1]['st']).to eq({ 'w' => 1, 'e' => 1 })
       expect(body[1]['co']).to eq({ 'w' => { 'us' => 12, 'fr' => 42 }, 'e' => { 'us' => 13, 'fr' => 43 } })
     end
   end

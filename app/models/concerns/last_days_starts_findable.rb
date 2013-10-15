@@ -5,7 +5,7 @@ module LastDaysStartsFindable
 
     def last_days_starts(args, days)
       range = _last_days_range(days.to_i)
-      stats = where(args).between(time: range).only(:time, :starts).asc(:time)
+      stats = where(args).between(time: range).only(:time, :starts).desc(:time)
       _group_starts_by_days(stats, range)
     end
 

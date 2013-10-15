@@ -27,17 +27,17 @@ describe LastHoursFindable do
       it "returns last 2 hours of stats" do
         starts = model_class.last_hours_stats(args, 2).entries
         expect(starts).to eq [
-          model_class.where(t: 2.hours.ago.utc.change(min: 0)).first,
-          model_class.where(t: 1.hour.ago.utc.change(min: 0)).first
+          model_class.where(t: 1.hours.ago.utc.change(min: 0)).first,
+          model_class.where(t: 2.hour.ago.utc.change(min: 0)).first
         ]
       end
 
       it "returns last 3 hours of stats" do
         starts = model_class.last_hours_stats(args, 3)
         expect(starts).to eq [
-          model_class.where(t: 3.hours.ago.utc.change(min: 0)).first,
+          model_class.where(t: 1.hours.ago.utc.change(min: 0)).first,
           model_class.where(t: 2.hours.ago.utc.change(min: 0)).first,
-          model_class.where(t: 1.hour.ago.utc.change(min: 0)).first
+          model_class.where(t: 3.hour.ago.utc.change(min: 0)).first
         ]
       end
     end
