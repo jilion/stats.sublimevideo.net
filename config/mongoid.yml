@@ -93,5 +93,5 @@ production:
         protect_sensitive_fields: false
         identity_map_enabled: false
         skip_version_check: true
-        safe: false
+        safe: true
 
