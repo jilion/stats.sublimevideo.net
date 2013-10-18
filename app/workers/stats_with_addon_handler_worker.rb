@@ -18,7 +18,7 @@ class StatsWithAddonHandlerWorker < StatsHandlerBaseWorker
       SiteStat.upsert_stats_from_data(_site_args, :loads, data)
       VideoStat.upsert_stats_from_data(_video_args, :loads, data)
     end
-      SiteAdminStatUpserter.upsert(_site_args, :loads, data)
+    SiteAdminStatUpserter.upsert(_site_args, :loads, data)
   end
 
   def _handle_s_event

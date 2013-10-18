@@ -40,7 +40,7 @@ end
 def dynos_required
   new_relic = NewRelicWrapper.new(1898958) # data2.sv.app
   rpm = new_relic.throughput
-  (rpm / 1400.0).ceil
+  (rpm / 1100.0).ceil
 end
 
 namespace :scheduler do
