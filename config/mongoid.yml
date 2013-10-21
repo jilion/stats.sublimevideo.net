@@ -95,4 +95,5 @@ production:
         skip_version_check: true
         safe: true
         pool_size: 100
+        pool_timeout: 30
 
