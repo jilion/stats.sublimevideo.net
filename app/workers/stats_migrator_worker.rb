@@ -74,15 +74,15 @@ class StatsMigratorWorker
   end
 
   def _site_args
-    data.slice(:site_token).merge(time: _parsed_time)
+    { 's' => data[:site_token], 't' => _parsed_time }
   end
 
   def _video_args
-    data.slice(:site_token, :video_uid).merge(time: _parsed_time)
+    { 's' => data[:site_token], 'u' => data[:video_uid], 't' => _parsed_time }
   end
 
   def _parsed_time
-    Time.parse(data[:time])
+    Time.parse(data[:time]).utc
   end
 
   def _valid_video_uid?

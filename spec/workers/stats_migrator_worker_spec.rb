@@ -22,7 +22,7 @@ describe StatsMigratorWorker do
 
       it "updates SiteAdminStat" do
         expect(SiteAdminStat).to receive(:upsert_stats).with(
-          { site_token: 'site_token', time: time },
+          { 's' => 'site_token', 't' => time },
           { :$inc => { 'al.m' => 1, 'al.e' => 2, 'al.s' => 3, 'al.d' => 4, 'al.i' => 5 },
             :$set => { 'ss' => true, 'sa' => %w[s b] } })
         worker.perform(stat_class, data)
@@ -42,6 +42,7 @@ describe StatsMigratorWorker do
         'starts' => { 'm' => '1', 'e' => '2', 's' => '3', 'd' => '4', 'i' => '5', 'em' => '6' },
         'player_mode_and_device' => { 'h' => { 'd' => '1', 'm' => '2' }, 'f' => { 'd' => '3', 'm' => '4' } },
         'browser_and_platform' => { "saf-win" => '2', "saf-osx" => '4' } } }
+
       before {
         SiteAdminStat.stub(:upsert_stats)
         SiteStat.stub(:upsert_stats)
@@ -51,7 +52,7 @@ describe StatsMigratorWorker do
       context "with valid uid" do
         it "updates SiteAdminStat" do
           expect(SiteAdminStat).to receive(:upsert_stats).with(
-            { site_token: 'site_token', time: time },
+            { 's' => 'site_token', 't' => time },
             { :$inc => {
               'lo.w' => 1 + 2, 'lo.e' => 6,
               'st.w' => 1 + 2, 'st.e' => 6 } })
@@ -60,7 +61,7 @@ describe StatsMigratorWorker do
 
         it "updates SiteStat" do
           expect(SiteStat).to receive(:upsert_stats).with(
-            { site_token: 'site_token', time: time },
+            { 's' => 'site_token', 't' => time },
             { :$inc => {
               'lo.w' => 1 + 2, 'lo.e' => 6,
               'st.w' => 1 + 2, 'st.e' => 6,
@@ -71,7 +72,7 @@ describe StatsMigratorWorker do
 
         it "updates VideoStat" do
           expect(VideoStat).to receive(:upsert_stats).with(
-            { site_token: 'site_token', video_uid: video_uid, time: time },
+            { 's' => 'site_token', 'u' => video_uid, 't' => time },
             { :$inc => {
               'lo.w' => 1 + 2, 'lo.e' => 6,
               'st.w' => 1 + 2, 'st.e' => 6,
