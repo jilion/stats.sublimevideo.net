@@ -94,6 +94,5 @@ production:
         identity_map_enabled: false
         skip_version_check: true
         safe: true
-        pool_size: 100
-        pool_timeout: 30
+        pool_size: 20
 
