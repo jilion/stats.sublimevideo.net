@@ -50,8 +50,5 @@ namespace :scheduler do
 
     stats = HerokuWrapper.new('sv-stats')
     stats.ps_scale(:worker, dynos * 2)
-
-    data  = HerokuWrapper.new('sv-data2')
-    data.ps_scale(:web, [dynos, 2].max)
   end
 end
