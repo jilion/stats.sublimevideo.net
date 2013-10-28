@@ -16,6 +16,8 @@ StatsSublimeVideo::Application.routes.draw do
       get :last_pages, on: :collection
       get :global_day_stat, on: :collection
       get :last_30_days_sites_with_starts, on: :collection
+
+      get :migration_totals, on: :collection
     end
   end
 end
