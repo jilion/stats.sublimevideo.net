@@ -40,7 +40,7 @@ end
 def dynos_required
   new_relic = NewRelicWrapper.new(1898958) # data2.sv.app
   rpm = new_relic.throughput
-  (rpm / 1100.0).ceil
+  (rpm / 1250.0).ceil
 end
 
 namespace :scheduler do
@@ -49,7 +49,7 @@ namespace :scheduler do
     dynos = dynos_required
 
     stats = HerokuWrapper.new('sv-stats')
-    stats.ps_scale(:worker, dynos)
+    stats.ps_scale(:worker, dynos * 2)
 
     data  = HerokuWrapper.new('sv-data2')
     data.ps_scale(:web, [dynos, 2].max)
