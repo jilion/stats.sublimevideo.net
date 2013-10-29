@@ -6,7 +6,7 @@ GIT
 
 GIT
   remote: git://github.com/mongoid/mongoid.git
-  revision: 867a194afdc8f1c2cfcde8336732d908b3723076
+  revision: 9b3bc1264032209b7a6c0e82d0ca656f401e476b
   specs:
     mongoid (4.0.0)
       activemodel (~> 4.0.0)
@@ -36,10 +36,6 @@ GEM
       activesupport (= 4.0.0)
       arel (~> 4.0.0)
     activerecord-deprecated_finders (1.0.3)
-    activeresource (4.0.0)
-      activemodel (~> 4.0)
-      activesupport (~> 4.0)
-      rails-observers (~> 0.1.1)
     activesupport (4.0.0)
       i18n (~> 0.6, >= 0.6.4)
       minitest (~> 4.2)
@@ -48,7 +44,7 @@ GEM
       tzinfo (~> 0.3.37)
     addressable (2.3.5)
     aggregate (0.2.2)
-    arel (4.0.0)
+    arel (4.0.1)
     atomic (1.1.14)
     bson (2.0.0.rc3)
     builder (3.1.4)
@@ -65,7 +61,6 @@ GEM
     dotenv-rails (0.9.0)
       dotenv (= 0.9.0)
     erubis (2.7.0)
-    excon (0.25.3)
     factory_girl (4.2.0)
       activesupport (>= 3.0.0)
     factory_girl_rails (4.2.1)
@@ -79,8 +74,8 @@ GEM
       multi_json (~> 1.3)
     ffi (1.9.0)
     formatador (0.2.4)
-    geoip (1.3.2)
-    guard (2.1.1)
+    geoip (1.3.3)
+    guard (2.2.2)
       formatador (>= 0.2.4)
       listen (~> 2.1)
       lumberjack (~> 1.0)
@@ -96,10 +91,9 @@ GEM
       activesupport (>= 3.0.0)
       faraday (~> 0.8)
       multi_json (~> 1.7)
-    heroku-api (0.3.15)
-      excon (~> 0.25.1)
     hike (1.2.3)
-    honeybadger (1.8.1)
+    honeybadger (1.9.2)
+      faraday
       json
     httpclient (2.3.4.1)
     i18n (0.6.5)
@@ -119,7 +113,7 @@ GEM
       rails (>= 3.0)
     librato-sidekiq (0.1.2)
       sidekiq
-    listen (2.1.1)
+    listen (2.2.0)
       celluloid (>= 0.15.2)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
@@ -144,7 +138,6 @@ GEM
       optionable (~> 0.1.1)
     multi_json (1.8.2)
     multipart-post (1.2.0)
-    newrelic_api (1.2.4)
     newrelic_rpm (3.6.8.168)
     optionable (0.1.1)
     origin (1.1.0)
@@ -171,8 +164,6 @@ GEM
       bundler (>= 1.3.0, < 2.0)
       railties (= 4.0.0)
       sprockets-rails (~> 2.0.0)
-    rails-observers (0.1.2)
-      activemodel (~> 4.0)
     rails_12factor (0.0.2)
       rails_serve_static_assets
       rails_stdout_logging
@@ -213,7 +204,7 @@ GEM
     safe_yaml (0.9.7)
     shoulda-matchers (2.4.0)
       activesupport (>= 3.0.0)
-    sidekiq (2.15.2)
+    sidekiq (2.16.0)
       celluloid (>= 0.15.2)
       connection_pool (>= 1.0.0)
       json
@@ -262,7 +253,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activeresource
   dalli
   database_cleaner
   dotenv-rails
@@ -271,7 +261,6 @@ DEPENDENCIES
   guard (>= 2.0.0.pre.2)
   guard-pow
   guard-rspec
-  heroku-api
   honeybadger
   librato-rails
   librato-sidekiq
@@ -279,7 +268,6 @@ DEPENDENCIES
   memcachier
   mongoid!
   mongoid-rspec
-  newrelic_api
   newrelic_rpm
   pusher
   rack-cache

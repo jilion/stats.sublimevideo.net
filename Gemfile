@@ -22,11 +22,6 @@ gem 'geoip'
 gem 'useragent', github: 'jilion/useragent' # needed for stat_request_parser
 gem 'pusher'
 
-# scaler rake task
-gem 'newrelic_api', require: false
-gem 'activeresource', require: false
-gem 'heroku-api', require: false
-
 group :staging, :production do
   gem 'unicorn', require: false
   gem 'lograge'
