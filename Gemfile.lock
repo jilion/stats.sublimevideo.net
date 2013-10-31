@@ -72,7 +72,7 @@ GEM
       activesupport (>= 3.0)
       faraday (~> 0.8)
       multi_json (~> 1.3)
-    ffi (1.9.2)
+    ffi (1.9.3)
     formatador (0.2.4)
     geoip (1.3.3)
     guard (2.2.2)
@@ -204,7 +204,7 @@ GEM
     safe_yaml (0.9.7)
     shoulda-matchers (2.4.0)
       activesupport (>= 3.0.0)
-    sidekiq (2.16.0)
+    sidekiq (2.16.1)
       celluloid (>= 0.15.2)
       connection_pool (>= 1.0.0)
       json
