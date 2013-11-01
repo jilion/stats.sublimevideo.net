@@ -48,7 +48,7 @@ group :test do
   gem 'shoulda-matchers'
   gem 'mongoid-rspec'
   gem 'vcr'
-  gem 'webmock', '~> 1.13.0'
+  gem 'webmock'
   gem 'factory_girl_rails'
   gem 'database_cleaner'
 end
