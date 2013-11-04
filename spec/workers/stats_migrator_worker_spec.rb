@@ -57,15 +57,15 @@ describe StatsMigratorWorker do
           worker.perform(stat_class, data)
         end
 
-        it "doesn't updates SiteStat" do
-          expect(SiteStat).to_not receive(:upsert_stats)
-          worker.perform(stat_class, data)
-        end
+        # it "doesn't updates SiteStat" do
+        #   expect(SiteStat).to_not receive(:upsert_stats)
+        #   worker.perform(stat_class, data)
+        # end
 
-        it "doesn't updates VideoStat" do
-          expect(VideoStat).to_not receive(:upsert_stats)
-          worker.perform(stat_class, data)
-        end
+        # it "doesn't updates VideoStat" do
+        #   expect(VideoStat).to_not receive(:upsert_stats)
+        #   worker.perform(stat_class, data)
+        # end
       end
 
       context "with valid uid" do
@@ -78,27 +78,27 @@ describe StatsMigratorWorker do
           worker.perform(stat_class, data)
         end
 
-        it "updates SiteStat" do
-          expect(SiteStat).to receive(:upsert_stats).with(
-            { 's' => 'site_token', 't' => time },
-            { :$inc => {
-              'lo.w' => 1 + 2, 'lo.e' => 6,
-              'st.w' => 1 + 2, 'st.e' => 6,
-              'de.w.d' => 1 + 3, 'de.w.m' => 2 + 4,
-              'bp.w.saf-win' => 2, 'bp.w.saf-osx' => 4 } })
-          worker.perform(stat_class, data)
-        end
+        # it "updates SiteStat" do
+        #   expect(SiteStat).to receive(:upsert_stats).with(
+        #     { 's' => 'site_token', 't' => time },
+        #     { :$inc => {
+        #       'lo.w' => 1 + 2, 'lo.e' => 6,
+        #       'st.w' => 1 + 2, 'st.e' => 6,
+        #       'de.w.d' => 1 + 3, 'de.w.m' => 2 + 4,
+        #       'bp.w.saf-win' => 2, 'bp.w.saf-osx' => 4 } })
+        #   worker.perform(stat_class, data)
+        # end
 
-        it "updates VideoStat" do
-          expect(VideoStat).to receive(:upsert_stats).with(
-            { 's' => 'site_token', 'u' => video_uid, 't' => time },
-            { :$inc => {
-              'lo.w' => 1 + 2, 'lo.e' => 6,
-              'st.w' => 1 + 2, 'st.e' => 6,
-              'de.w.d' => 1 + 3, 'de.w.m' => 2 + 4,
-              'bp.w.saf-win' => 2, 'bp.w.saf-osx' => 4 } })
-          worker.perform(stat_class, data)
-        end
+        # it "updates VideoStat" do
+        #   expect(VideoStat).to receive(:upsert_stats).with(
+        #     { 's' => 'site_token', 'u' => video_uid, 't' => time },
+        #     { :$inc => {
+        #       'lo.w' => 1 + 2, 'lo.e' => 6,
+        #       'st.w' => 1 + 2, 'st.e' => 6,
+        #       'de.w.d' => 1 + 3, 'de.w.m' => 2 + 4,
+        #       'bp.w.saf-win' => 2, 'bp.w.saf-osx' => 4 } })
+        #   worker.perform(stat_class, data)
+        # end
       end
 
       context "with invalid uid" do
@@ -109,15 +109,15 @@ describe StatsMigratorWorker do
           worker.perform(stat_class, data)
         end
 
-        it "updates SiteStat" do
-          expect(SiteStat).to receive(:upsert_stats)
-          worker.perform(stat_class, data)
-        end
+        # it "updates SiteStat" do
+        #   expect(SiteStat).to receive(:upsert_stats)
+        #   worker.perform(stat_class, data)
+        # end
 
-        it "doesn't updates VideoStat" do
-          expect(VideoStat).to_not receive(:upsert_stats)
-          worker.perform(stat_class, data)
-        end
+        # it "doesn't updates VideoStat" do
+        #   expect(VideoStat).to_not receive(:upsert_stats)
+        #   worker.perform(stat_class, data)
+        # end
       end
 
       context "without stats addon" do
@@ -128,15 +128,15 @@ describe StatsMigratorWorker do
           worker.perform(stat_class, data)
         end
 
-        it "doesn't updates SiteStat" do
-          expect(SiteStat).to_not receive(:upsert_stats)
-          worker.perform(stat_class, data)
-        end
+        # it "doesn't updates SiteStat" do
+        #   expect(SiteStat).to_not receive(:upsert_stats)
+        #   worker.perform(stat_class, data)
+        # end
 
-        it "doesn't updates VideoStat" do
-          expect(VideoStat).to_not receive(:upsert_stats)
-          worker.perform(stat_class, data)
-        end
+        # it "doesn't updates VideoStat" do
+        #   expect(VideoStat).to_not receive(:upsert_stats)
+        #   worker.perform(stat_class, data)
+        # end
       end
     end
   end
