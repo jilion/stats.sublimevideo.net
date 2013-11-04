@@ -28,6 +28,7 @@ class StatsMigratorWorker
 
   def _app_loads_inc
     loads = data[:app_loads].slice(*%w[m e s d i])
+    loads['m'] = loads['m'].to_i + data[:app_loads]['em'].to_i
     loads = loads.map { |k, v| ["al.#{k}", v.to_i] }
     Hash[*loads.flatten]
   end
@@ -35,16 +36,21 @@ class StatsMigratorWorker
   def _migrate_stat_video_day
     SiteAdminStat.upsert_stats(_site_args, _admin_stat_updates)
 
-    return unless _stats_addon?
+    return if !_stats_addon? || _parsed_time.to_i < (1.year + 1.day).ago.to_i
     SiteStat.upsert_stats(_site_args, _stat_updates)
     VideoStat.upsert_stats(_video_args, _stat_updates) if _valid_video_uid?
   end
 
   def _admin_stat_updates
     { :$inc => [
-      _sum_inc(:loads, :lo),
-      _sum_inc(:starts, :st)
+      _sum_admin_inc(:loads, :lo),
+      _sum_admin_inc(:starts, :st)
     ].inject(:merge) }
+  end
+
+  def _sum_admin_inc(key, field)
+    { "#{field}.w" => data[key]['m'].to_i + data[key]['e'].to_i + data[key]['s'].to_i + data[key]['d'].to_i + data[key]['i'].to_i,
+      "#{field}.e" => data[key]['em'].to_i }
   end
 
   def _stat_updates

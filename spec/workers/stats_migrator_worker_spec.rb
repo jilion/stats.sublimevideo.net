@@ -23,7 +23,7 @@ describe StatsMigratorWorker do
       it "updates SiteAdminStat" do
         expect(SiteAdminStat).to receive(:upsert_stats).with(
           { 's' => 'site_token', 't' => time },
-          { :$inc => { 'al.m' => 1, 'al.e' => 2, 'al.s' => 3, 'al.d' => 4, 'al.i' => 5 },
+          { :$inc => { 'al.m' => 7, 'al.e' => 2, 'al.s' => 3, 'al.d' => 4, 'al.i' => 5 },
             :$set => { 'ss' => true, 'sa' => %w[s b] } })
         worker.perform(stat_class, data)
       end
@@ -49,13 +49,32 @@ describe StatsMigratorWorker do
         VideoStat.stub(:upsert_stats)
       }
 
+      context "with old stat" do
+        let(:time) { (1.year + 2.days).ago.utc.beginning_of_day }
+
+        it "updates SiteAdminStat" do
+          expect(SiteAdminStat).to receive(:upsert_stats)
+          worker.perform(stat_class, data)
+        end
+
+        it "doesn't updates SiteStat" do
+          expect(SiteStat).to_not receive(:upsert_stats)
+          worker.perform(stat_class, data)
+        end
+
+        it "doesn't updates VideoStat" do
+          expect(VideoStat).to_not receive(:upsert_stats)
+          worker.perform(stat_class, data)
+        end
+      end
+
       context "with valid uid" do
         it "updates SiteAdminStat" do
           expect(SiteAdminStat).to receive(:upsert_stats).with(
             { 's' => 'site_token', 't' => time },
             { :$inc => {
-              'lo.w' => 1 + 2, 'lo.e' => 6,
-              'st.w' => 1 + 2, 'st.e' => 6 } })
+              'lo.w' => 1 + 2 + 3 + 4 + 5, 'lo.e' => 6,
+              'st.w' => 1 + 2 + 3 + 4 + 5, 'st.e' => 6 } })
           worker.perform(stat_class, data)
         end
 
