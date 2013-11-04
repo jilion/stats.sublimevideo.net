@@ -10,14 +10,14 @@ class StatsMigratorWorker
 
   attr_accessor :data
 
-  def perform(stat_class, data)
+  def perform(type, data)
     @data = data.symbolize_keys
-    send("_migrate_#{stat_class.parameterize('_')}")
+    send("_migrate_#{type}_stat")
   end
 
   private
 
-  def _migrate_stat_site_day
+  def _migrate_site_stat
     updates = {
       :$inc => _app_loads_inc,
       :$set => {
@@ -33,7 +33,7 @@ class StatsMigratorWorker
     Hash[*loads.flatten]
   end
 
-  def _migrate_stat_video_day
+  def _migrate_video_stat
     SiteAdminStat.upsert_stats(_site_args, _admin_stat_updates)
     # return if !_stats_addon? || _parsed_time.to_i < (1.year + 1.day).ago.to_i
     # SiteStat.upsert_stats(_site_args, _stat_updates)

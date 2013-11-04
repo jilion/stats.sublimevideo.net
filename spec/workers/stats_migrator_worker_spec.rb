@@ -10,8 +10,8 @@ describe StatsMigratorWorker do
   describe "#perform" do
     let(:worker) { StatsMigratorWorker.new }
 
-    context "with Stat::Site::Day stat" do
-      let(:stat_class) { 'Stat::Site::Day' }
+    context "with site stat" do
+      let(:stat_class) { 'site' }
       let(:time) { 3.days.ago.utc.beginning_of_day }
       let(:data) { {
         'site_token' => 'site_token',
@@ -29,9 +29,9 @@ describe StatsMigratorWorker do
       end
     end
 
-    context "with Stat::Video::Day stat" do
+    context "with video stat" do
       let(:video_uid) { 'valid_uid' }
-      let(:stat_class) { 'Stat::Video::Day' }
+      let(:stat_class) { 'video' }
       let(:time) { 3.days.ago.utc.beginning_of_day }
       let(:data) { {
         'site_token' => 'site_token',
