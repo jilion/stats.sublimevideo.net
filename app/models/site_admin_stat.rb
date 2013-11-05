@@ -53,8 +53,8 @@ class SiteAdminStat
     .count
   end
 
-  def self.migration_totals(site_token, until_day = Time.utc(2013,10,22))
-    totals = where(site_token: site_token, time: { :$lte => until_day }).all.inject(new) do |global_stat, stat|
+  def self.migration_totals(site_token, until_day = Time.utc(2013,11))
+    totals = where(site_token: site_token, time: { :$lt => until_day }).all.inject(new) do |global_stat, stat|
       _merge_stat(global_stat, stat, [:al, :lo, :st])
     end
     { app_loads: totals[:app_loads].values.sum,
