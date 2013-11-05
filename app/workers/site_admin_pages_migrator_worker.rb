@@ -9,7 +9,8 @@ class SiteAdminPagesMigratorWorker
   attr_accessor :site_token
 
   def perform(site_token, pages)
-    site_admin_stat = SiteAdminStat.last_without_pages(site_token)
-    site_admin_stat.update_attribute(:pages, pages)
+    if site_admin_stat = SiteAdminStat.last_without_pages(site_token)
+      site_admin_stat.update_attribute(:pages, pages)
+    end
   end
 end
