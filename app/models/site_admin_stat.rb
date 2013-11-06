@@ -54,10 +54,13 @@ class SiteAdminStat
   end
 
   def self.migration_totals(site_token, day)
-    stat = where(site_token: site_token, time: day).first
-    { app_loads: stat.app_loads.values.sum,
-      loads: stat.loads.values.sum,
-      starts: stat.starts.values.sum }
+    if stat = where(site_token: site_token, time: day).first
+      { app_loads: stat.app_loads.values.sum,
+        loads: stat.loads.values.sum,
+        starts: stat.starts.values.sum }
+    else
+      { app_loads: 0, loads: 0, starts: 0 }
+    end
   end
 
   def stages
