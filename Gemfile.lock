@@ -5,9 +5,8 @@ GIT
     useragent (0.2.3)
 
 GIT
-  remote: git://github.com/simi/mongoid.git
-  revision: df4580b84e173081cd2c51de989722e2aa0b56a5
-  branch: fix-rack
+  remote: git://github.com/mongoid/mongoid.git
+  revision: 7699b3580c73be707f68369b5f87b8f30bb83ffc
   specs:
     mongoid (4.0.0)
       activemodel (~> 4.0.0)
