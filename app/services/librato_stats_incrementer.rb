@@ -28,10 +28,7 @@ class LibratoStatsIncrementer
       'data.app_load.stats_addon' => data.stats_addon? ? 'on' : 'off',
       'data.app_load.stage' => data.stage,
       'data.app_load.flash_version' => data.fv || 'none',
-      'data.app_load.jquery_version' => data.jq || 'none',
-      'data.app_load.screen_resolution' => data.sr,
-      'data.app_load.screen_dpr' => data.sd,
-      'data.app_load.browser_language' => data.bl || 'undefined' })
+      'data.app_load.jquery_version' => data.jq || 'none' })
   end
 
   def _increments_for_l

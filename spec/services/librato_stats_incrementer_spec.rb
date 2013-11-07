@@ -36,9 +36,6 @@ describe LibratoStatsIncrementer do
         expect(Librato).to receive(:increment).with('data.app_load.stage', source: 'stable')
         expect(Librato).to receive(:increment).with('data.app_load.flash_version', source: '1.0.0')
         expect(Librato).to receive(:increment).with('data.app_load.jquery_version', source: '2.0.0')
-        expect(Librato).to receive(:increment).with('data.app_load.screen_resolution', source: '2400x1920')
-        expect(Librato).to receive(:increment).with('data.app_load.screen_dpr', source: '180')
-        expect(Librato).to receive(:increment).with('data.app_load.browser_language', source: 'ch-fr')
         icrementer.increment
       end
     end
