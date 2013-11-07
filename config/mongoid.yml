@@ -94,5 +94,5 @@ production:
         identity_map_enabled: false
         skip_version_check: true
         safe: true
-        pool_size: <%= (ENV['SIDEKIQ_CONCURRENCY'] || 5) %>
+        pool_size: <%= (ENV['SIDEKIQ_CONCURRENCY'] || 5 ) + 5 %>
 
