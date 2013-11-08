@@ -14,14 +14,6 @@ GIT
       origin (~> 1.0)
       tzinfo (~> 0.3.37)
 
-GIT
-  remote: git://github.com/mongoid/moped.git
-  revision: a87255b0dd17558e35f39f1948d28f524ab63a88
-  specs:
-    moped (2.0.0.beta3)
-      bson (~> 2.0.0.rc3)
-      optionable (~> 0.1.1)
-
 GEM
   remote: https://rubygems.org/
   remote: https://8dezqz7z7HWea9vtaFwg:@gem.fury.io/me/
@@ -141,6 +133,9 @@ GEM
       mongoid (>= 3.0.1)
       rake
       rspec (>= 2.14)
+    moped (2.0.0.beta3)
+      bson (~> 2.0.0.rc3)
+      optionable (~> 0.1.1)
     multi_json (1.8.2)
     multipart-post (1.2.0)
     newrelic_rpm (3.6.9.171)
@@ -272,7 +267,6 @@ DEPENDENCIES
   memcachier
   mongoid!
   mongoid-rspec
-  moped!
   newrelic_rpm
   pusher
   rack-cache
