@@ -6,13 +6,22 @@ GIT
 
 GIT
   remote: git://github.com/mongoid/mongoid.git
-  revision: 86b642722dd2b6e17456a3007196addda3799f4d
+  revision: e0d54e8b20ff178c8773cfb8c6b0ee293343dd28
   specs:
     mongoid (4.0.0)
       activemodel (~> 4.0.0)
       moped (~> 2.0.beta3)
       origin (~> 1.0)
       tzinfo (~> 0.3.37)
+
+GIT
+  remote: git://github.com/mongoid/moped.git
+  revision: 6f211acfdde53718490c01be928841d2705e794a
+  branch: auth_connection_pool
+  specs:
+    moped (2.0.0.beta3)
+      bson (~> 2.0.0.rc3)
+      optionable (~> 0.1.1)
 
 GEM
   remote: https://rubygems.org/
@@ -50,7 +59,7 @@ GEM
     builder (3.1.4)
     celluloid (0.15.2)
       timers (~> 1.1.0)
-    coderay (1.0.9)
+    coderay (1.1.0)
     connection_pool (1.1.0)
     crack (0.4.1)
       safe_yaml (~> 0.9.0)
@@ -83,7 +92,7 @@ GEM
       thor (>= 0.18.1)
     guard-pow (2.0.0)
       guard (~> 2.0)
-    guard-rspec (4.0.3)
+    guard-rspec (4.0.4)
       guard (>= 2.1.1)
       rspec (~> 2.14)
     her (0.6.8)
@@ -133,17 +142,14 @@ GEM
       mongoid (>= 3.0.1)
       rake
       rspec (>= 2.14)
-    moped (2.0.0.beta3)
-      bson (~> 2.0.0.rc3)
-      optionable (~> 0.1.1)
     multi_json (1.8.2)
     multipart-post (1.2.0)
     newrelic_rpm (3.6.9.171)
     optionable (0.1.1)
     origin (1.1.0)
     polyglot (0.3.3)
-    pry (0.9.12.2)
-      coderay (~> 1.0.5)
+    pry (0.9.12.3)
+      coderay (~> 1.0)
       method_source (~> 0.8)
       slop (~> 3.4)
     pusher (0.12.0)
@@ -267,6 +273,7 @@ DEPENDENCIES
   memcachier
   mongoid!
   mongoid-rspec
+  moped!
   newrelic_rpm
   pusher
   rack-cache
