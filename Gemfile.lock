@@ -6,7 +6,7 @@ GIT
 
 GIT
   remote: git://github.com/mongoid/mongoid.git
-  revision: e0d54e8b20ff178c8773cfb8c6b0ee293343dd28
+  revision: b91705b0ded88ed82aedbf0acf17f0a3cf1af471
   specs:
     mongoid (4.0.0)
       activemodel (~> 4.0.0)
@@ -16,7 +16,7 @@ GIT
 
 GIT
   remote: git://github.com/mongoid/moped.git
-  revision: 6f211acfdde53718490c01be928841d2705e794a
+  revision: 413c858fab9e642372f715dc3598281ac5848f15
   branch: auth_connection_pool
   specs:
     moped (2.0.0.beta3)
@@ -101,7 +101,7 @@ GEM
       faraday (~> 0.8)
       multi_json (~> 1.7)
     hike (1.2.3)
-    honeybadger (1.9.3)
+    honeybadger (1.9.4)
       faraday (~> 0.7)
       json
     httpclient (2.3.4.1)
