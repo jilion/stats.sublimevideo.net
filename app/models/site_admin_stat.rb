@@ -48,7 +48,7 @@ class SiteAdminStat
   def self.last_30_days_sites_with_starts(day, threshold: 100)
     time = date_to_utc_time(day)
     between(time: (time - 29.days)..time.end_of_day)
-    .where("((this.st.w || 0) + (this.st.e || 0)) >= #{threshold.to_i}")
+    .where("((this.st && (this.st.w || 0) + (this.st.e || 0)) || 0) >= #{threshold.to_i}")
     .distinct(:site_token)
     .count
   end

@@ -90,8 +90,9 @@ describe SiteAdminStat do
     let!(:stat1) { described_class.create(site_token: '1', time: 1.days.ago, starts: { 'e' => 3, 'w' => 1}) }
     let!(:stat2) { described_class.create(site_token: '2', time: 5.days.ago, starts: { 'e' => 5 }) }
     let!(:stat3) { described_class.create(site_token: '2', time: 5.days.ago, starts: { 'w' => 3 }) }
-    let!(:stat4) { described_class.create(site_token: '3', time: 19.days.ago, starts: { 'w' => 1, 'e' => 1 }) }
-    let!(:stat5) { described_class.create(site_token: '4', time: 31.days.ago, starts: { 'w' => 1, 'e' => 1 }) }
+    let!(:stat4) { described_class.create(site_token: '2', time: 5.days.ago, starts: nil) }
+    let!(:stat5) { described_class.create(site_token: '3', time: 19.days.ago, starts: { 'w' => 1, 'e' => 1 }) }
+    let!(:stat6) { described_class.create(site_token: '4', time: 31.days.ago, starts: { 'w' => 1, 'e' => 1 }) }
 
     it "counts number of site with more than threshold in the last 30 days" do
       count = SiteAdminStat.last_30_days_sites_with_starts(Date.yesterday, threshold: 2)
