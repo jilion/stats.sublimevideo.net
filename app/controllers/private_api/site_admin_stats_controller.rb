@@ -39,12 +39,6 @@ class PrivateApi::SiteAdminStatsController < SublimeVideoPrivateApiController
     respond_with(count: count)
   end
 
-  # GET /private_api/site_admin_stats/migration_totals
-  def migration_totals
-    totals = SiteAdminStat.migration_totals(params[:site_token], params[:day])
-    respond_with(totals: totals)
-  end
-
   private
 
   def _args
