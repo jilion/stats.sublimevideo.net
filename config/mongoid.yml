@@ -94,5 +94,6 @@ production:
         identity_map_enabled: false
         skip_version_check: true
         safe: true
+        timeout: 30
         pool_size: <%= ENV['MONGOID_POOL_SIZE'] || ENV['SIDEKIQ_CONCURRENCY'] || 5 %>
 
