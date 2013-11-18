@@ -8,7 +8,7 @@ gem 'rails', '4.0.1'
 gem 'sublime_video_private_api', '~> 1.0' # hosted on gemfury
 
 gem 'mongoid', github: 'mongoid'
-gem 'moped', github: 'mongoid/moped', branch: 'auth_connection_pool'
+gem 'moped', github: 'mongoid/moped'
 
 gem 'sidekiq'
 
