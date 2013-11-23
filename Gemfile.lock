@@ -6,7 +6,7 @@ GIT
 
 GIT
   remote: git://github.com/mongoid/mongoid.git
-  revision: 1e480cf0df948375b220c29ce9602d13fb5430f8
+  revision: d35eaab4460540d3016baac9b40e5ebb0ed18b44
   specs:
     mongoid (4.0.0)
       activemodel (~> 4.0.0)
@@ -16,7 +16,7 @@ GIT
 
 GIT
   remote: git://github.com/mongoid/moped.git
-  revision: da92f1b4e935e2831986d26e8d89bf7edaf8c02a
+  revision: 073e30bbc49f10d71a1ff3c8462f779f457e28f0
   specs:
     moped (2.0.0.beta3)
       bson (~> 2.0.0.rc3)
@@ -106,7 +106,7 @@ GEM
     httpclient (2.3.4.1)
     i18n (0.6.5)
     json (1.8.1)
-    kaminari (0.14.1)
+    kaminari (0.15.0)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
     kgio (2.8.1)
@@ -217,7 +217,7 @@ GEM
       redis-namespace (>= 1.3.1)
     signature (0.1.7)
     slop (3.4.7)
-    sprockets (2.10.0)
+    sprockets (2.10.1)
       hike (~> 1.2)
       multi_json (~> 1.0)
       rack (~> 1.0)
