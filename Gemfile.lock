@@ -16,7 +16,8 @@ GIT
 
 GIT
   remote: git://github.com/mongoid/moped.git
-  revision: 073e30bbc49f10d71a1ff3c8462f779f457e28f0
+  revision: da92f1b4e935e2831986d26e8d89bf7edaf8c02a
+  ref: da92f1b4e935e2831986d26e8d89bf7edaf8c02a
   specs:
     moped (2.0.0.beta3)
       bson (~> 2.0.0.rc3)
