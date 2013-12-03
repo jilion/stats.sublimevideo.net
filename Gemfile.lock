@@ -1,16 +1,16 @@
 GIT
   remote: git://github.com/jilion/useragent.git
-  revision: 9fd0f887527850994c543caa7cf5327bd635dc02
+  revision: 742f29d8643f378773a933b3c0a37ce1bc52a7aa
   specs:
     useragent (0.2.3)
 
 GIT
   remote: git://github.com/mongoid/mongoid.git
-  revision: d35eaab4460540d3016baac9b40e5ebb0ed18b44
+  revision: f8b439dd9a59b769389aff81a42502cd857cf7fa
   specs:
-    mongoid (4.0.0)
+    mongoid (4.0.0.alpha1)
       activemodel (~> 4.0.0)
-      moped (~> 2.0.beta3)
+      moped (~> 2.0.beta4)
       origin (~> 1.0)
       tzinfo (~> 0.3.37)
 
@@ -55,12 +55,12 @@ GEM
     aggregate (0.2.2)
     arel (4.0.1)
     atomic (1.1.14)
-    bson (2.0.0.rc3)
+    bson (2.0.0)
     builder (3.1.4)
     celluloid (0.15.2)
       timers (~> 1.1.0)
     coderay (1.1.0)
-    connection_pool (1.1.0)
+    connection_pool (1.2.0)
     crack (0.4.1)
       safe_yaml (~> 0.9.0)
     dalli (2.6.4)
@@ -92,7 +92,7 @@ GEM
       thor (>= 0.18.1)
     guard-pow (2.0.0)
       guard (~> 2.0)
-    guard-rspec (4.0.4)
+    guard-rspec (4.1.0)
       guard (>= 2.1.1)
       rspec (~> 2.14)
     her (0.6.8)
@@ -136,7 +136,7 @@ GEM
       treetop (~> 1.4.8)
     memcachier (0.0.2)
     method_source (0.8.2)
-    mime-types (1.25)
+    mime-types (1.25.1)
     minitest (4.7.5)
     mongoid-rspec (1.9.0)
       mongoid (>= 3.0.1)
@@ -148,7 +148,7 @@ GEM
     optionable (0.1.1)
     origin (1.1.0)
     polyglot (0.3.3)
-    pry (0.9.12.3)
+    pry (0.9.12.4)
       coderay (~> 1.0)
       method_source (~> 0.8)
       slop (~> 3.4)
@@ -210,7 +210,7 @@ GEM
     safe_yaml (0.9.7)
     shoulda-matchers (2.4.0)
       activesupport (>= 3.0.0)
-    sidekiq (2.16.1)
+    sidekiq (2.17.0)
       celluloid (>= 0.15.2)
       connection_pool (>= 1.0.0)
       json
@@ -240,7 +240,7 @@ GEM
     thread_safe (0.1.3)
       atomic
     tilt (1.4.1)
-    timecop (0.6.3)
+    timecop (0.7.0)
     timers (1.1.0)
     treetop (1.4.15)
       polyglot
@@ -250,7 +250,7 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
-    vcr (2.7.0)
+    vcr (2.8.0)
     webmock (1.16.0)
       addressable (>= 2.2.7)
       crack (>= 0.3.2)
