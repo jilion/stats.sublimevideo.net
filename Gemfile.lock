@@ -92,7 +92,7 @@ GEM
       thor (>= 0.18.1)
     guard-pow (2.0.0)
       guard (~> 2.0)
-    guard-rspec (4.1.0)
+    guard-rspec (4.1.1)
       guard (>= 2.1.1)
       rspec (~> 2.14)
     her (0.6.8)
