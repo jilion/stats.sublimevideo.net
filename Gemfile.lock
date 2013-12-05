@@ -4,25 +4,6 @@ GIT
   specs:
     useragent (0.2.3)
 
-GIT
-  remote: git://github.com/mongoid/mongoid.git
-  revision: f8b439dd9a59b769389aff81a42502cd857cf7fa
-  specs:
-    mongoid (4.0.0.alpha1)
-      activemodel (~> 4.0.0)
-      moped (~> 2.0.beta4)
-      origin (~> 1.0)
-      tzinfo (~> 0.3.37)
-
-GIT
-  remote: git://github.com/mongoid/moped.git
-  revision: da92f1b4e935e2831986d26e8d89bf7edaf8c02a
-  ref: da92f1b4e935e2831986d26e8d89bf7edaf8c02a
-  specs:
-    moped (2.0.0.beta3)
-      bson (~> 2.0.0.rc3)
-      optionable (~> 0.1.1)
-
 GEM
   remote: https://rubygems.org/
   remote: https://8dezqz7z7HWea9vtaFwg:@gem.fury.io/me/
@@ -92,9 +73,9 @@ GEM
       thor (>= 0.18.1)
     guard-pow (2.0.0)
       guard (~> 2.0)
-    guard-rspec (4.1.1)
+    guard-rspec (4.2.0)
       guard (>= 2.1.1)
-      rspec (~> 2.14)
+      rspec (>= 2.14, < 4.0)
     her (0.6.8)
       activemodel (>= 3.0.0)
       activesupport (>= 3.0.0)
@@ -138,14 +119,23 @@ GEM
     method_source (0.8.2)
     mime-types (1.25.1)
     minitest (4.7.5)
+    mongoid (4.0.0.alpha1)
+      activemodel (~> 4.0.0)
+      moped (~> 2.0.beta4)
+      origin (~> 1.0)
+      tzinfo (~> 0.3.37)
     mongoid-rspec (1.9.0)
       mongoid (>= 3.0.1)
       rake
       rspec (>= 2.14)
+    moped (2.0.0.beta4)
+      bson (~> 2.0)
+      connection_pool (~> 1.2)
+      optionable (~> 0.2.0)
     multi_json (1.8.2)
     multipart-post (1.2.0)
     newrelic_rpm (3.6.9.171)
-    optionable (0.1.1)
+    optionable (0.2.0)
     origin (1.1.0)
     polyglot (0.3.3)
     pry (0.9.12.4)
@@ -271,9 +261,8 @@ DEPENDENCIES
   librato-sidekiq
   lograge
   memcachier
-  mongoid!
+  mongoid (~> 4.0.0.alpha1)
   mongoid-rspec
-  moped!
   newrelic_rpm
   pusher
   rack-cache
