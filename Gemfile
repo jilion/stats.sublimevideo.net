@@ -7,7 +7,8 @@ gem 'rails', '~> 4.0.2'
 
 gem 'sublime_video_private_api', '~> 1.0' # hosted on gemfury
 
-gem 'mongoid', '~> 4.0.0.alpha1'
+gem 'mongoid', github: 'mongoid'
+gem 'moped', github: 'mongoid/moped'
 
 gem 'sidekiq'
 
@@ -19,7 +20,7 @@ gem 'rack-status'
 gem 'newrelic_rpm'
 
 gem 'geoip'
-gem 'useragent', github: 'jilion/useragent' # needed for stat_request_parser
+gem 'useragent', github: 'jilion/useragent'
 gem 'pusher'
 
 group :staging, :production do
