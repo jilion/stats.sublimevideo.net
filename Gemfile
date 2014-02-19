@@ -3,7 +3,7 @@ source 'https://8dezqz7z7HWea9vtaFwg:@gem.fury.io/me/' # thibaud@jilion.com acco
 
 ruby '2.0.0'
 
-gem 'rails', '~> 4.0.2'
+gem 'rails', '~> 4.0.3'
 
 gem 'sublime_video_private_api', '~> 1.0' # hosted on gemfury
 
@@ -22,6 +22,7 @@ gem 'newrelic_rpm'
 gem 'geoip'
 gem 'useragent', github: 'jilion/useragent'
 gem 'pusher'
+gem 'faraday', '~> 0.8.9'
 
 group :staging, :production do
   gem 'unicorn', require: false
